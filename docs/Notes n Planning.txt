@@ -1,0 +1,34 @@
+﻿Website:
+	Options:
+		Light Mode
+		Dark Mode
+		Music toggle
+
+	Play area:
+		Output space
+		Input space
+
+	Inventory:
+		Items in a list, with image
+
+	Map:
+		Live updating map, new rooms are 'uncovered'
+
+Welcome:
+(startup: welcome screen transitions up from bottom of page)
+
+	
+
+Character:
+
+	stats:
+		- Con (health)
+		- Dex (agil)
+		- Str (base. att)
+		- Int
+		- Wis 
+		- Cha
+
+	name
+	inventory
+

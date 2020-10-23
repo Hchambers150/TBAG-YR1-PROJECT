@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Text Based Adventure Game</title>
+    <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+
+    <!--<button id="playBtn" onclick="startAnim()">PLEASE PLAY IN FULLSCREEN & CLICK ME TO CONTINUE.</button>-->
+
+    <div id="startup">
+            <span id="title">Welcome to my project!</span>
+            <br>
+            <span style="display:block;">What is your name? </span><input class="Input" id="charName" type="text">
+            <br><br>
+             <!-- stat grid-->
+                <div id="stat_grid">
+
+                    <div id="con" class="stats">
+                        <div class="statBox">
+                            <span class="statText" id="conText">Con</span>
+                            <div class="shape">
+                                <div class="minus" onclick="decreaseStat('conStat')" >-</div>
+                                <div class="plus" onclick="increaseStat('conStat')">+</div>
+                            </div>
+                            <span class="stat" id="conStat">0</span>
+                        </div>
+                        <div class="statExplained">
+                            <span class="statETitle">Constitution</span>
+                            <br><br>
+                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                        </div>
+                    </div>
+
+                    <div id="con" class="stats">
+                        <div class="statBox">
+                            <span class="statText" id="conText">Con</span>
+                            <div class="shape">
+                                <div class="minus">-</div>
+                                <div class="plus">+</div>
+                            </div>
+                            <span class="stat" id="conStat">0</span>
+                            <div class="miniStat"></div>
+                        </div>
+                        <div class="statExplained">
+                            <span class="statETitle">Constitution</span>
+                            <br><br>
+                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                        </div>
+                    </div>
+
+                    <div id="con" class="stats">
+                        <div class="statBox">
+                            <span class="statText" id="conText">Con</span>
+                            <div class="shape">
+                                <div class="minus">-</div>
+                                <div class="plus">+</div>
+                            </div>
+                            <span class="stat" id="conStat">0</span>
+                            <div class="miniStat"></div>
+                        </div>
+                        <div class="statExplained">
+                            <span class="statETitle">Constitution</span>
+                            <br><br>
+                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                        </div>
+                    </div>
+
+                    <div id="con" class="stats">
+                        <div class="statBox">
+                            <span class="statText" id="conText">Con</span>
+                            <div class="shape">
+                                <div class="minus">-</div>
+                                <div class="plus">+</div>
+                            </div>
+                            <span class="stat" id="conStat">0</span>
+                            <div class="miniStat"></div>
+                        </div>
+                        <div class="statExplained">
+                            <span class="statETitle">Constitution</span>
+                            <br><br>
+                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                        </div>
+                    </div>
+
+                    <div id="con" class="stats">
+                        <div class="statBox">
+                            <span class="statText" id="conText">Con</span>
+                            <div class="shape">
+                                <div class="minus">-</div>
+                                <div class="plus">+</div>
+                            </div>
+                            <span class="stat" id="conStat">0</span>
+                            <div class="miniStat"></div>
+                        </div>
+                        <div class="statExplained">
+                            <span class="statETitle">Constitution</span>
+                            <br><br>
+                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                        </div>
+                    </div>
+
+                    <div id="con" class="stats">
+                        <div class="statBox">
+                            <span class="statText" id="conText">Con</span>
+                            <div class="shape">
+                                <div class="minus">-</div>
+                                <div class="plus">+</div>
+                            </div>
+                            <span class="stat" id="conStat">0</span>
+                            <div class="miniStat"></div>
+                        </div>
+                        <div class="statExplained">
+                            <span class="statETitle">Constitution</span>
+                            <br><br>
+                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            <br><br>
+            <br><br>
+            <button id="go_btn">Continue...</button>
+    </div>
+
+</body>
+</html>
+
+<script>
+    //startup.style.webkitAnimationPlayState = "paused";
+
+    function startAnim() {
+        startup.style.webkitAnimationPlayState = "running";
+        document.getElementById("playBtn").style.display = "none";
+    }
+
+    function increaseStat(x) {
+        console.log(x);
+        document.getElementById(x).innerText = parseInt(document.getElementById(x).innerText)+1;
+    }
+
+    function decreaseStat(x) {
+        console.log(x);
+        document.getElementById(x).innerText = parseInt(document.getElementById(x).innerText)-1;
+    }
+
+</script>

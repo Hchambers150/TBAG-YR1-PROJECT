@@ -1,0 +1,186 @@
+﻿@font-face {
+    font-family: MSDOS;
+    src: url('MSDOS Font.ttf');
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100vh);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutToTop {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100vh);
+        display:none;
+    }
+
+}
+
+html {
+    overflow:hidden;
+}
+
+body {
+    background-color: #000;
+    color: white;
+    font-family: MSDOS;
+
+    padding: 0;
+    margin: 0;
+    height: 96vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Input {
+    background-color: black;
+    border: 1px dotted white;
+    color: white;
+    display: block;
+}
+
+#startup {
+    animation: 1s ease-out 0s 1 slideInFromBottom;
+    width:75vw;
+}
+
+#title {
+    font-size:1.5em;
+    display:block;
+}
+
+#charname {
+    margin:0;
+    padding:0;
+
+}
+
+#go_btn {
+    background-color:black;
+    color:white;
+}
+
+#stat_grid {
+    display:grid;
+    grid-template-columns:repeat(2,auto);
+    grid-gap:35px;
+}
+
+
+.stats {
+}
+
+.statBox {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    float:left;
+}
+
+.statText {
+    margin-left:35%;
+    position:static;
+
+}
+
+.stat {
+    font-size: 3em;
+    position:relative;
+    left:-0.5em;
+    top:0.4em;
+}
+
+.shape {
+    position: absolute;
+    color:white;
+    width: inherit;
+    height: inherit;
+    border: 1px solid white;
+    transform: rotate(45deg);
+    display: block;
+}
+
+.statExplained {
+    display:block;
+    width:600px;
+    height:100%;
+    margin-left:100px;
+    margin-top:0;
+    float:;
+}
+
+.statETitle {
+
+    font-size:1.2em;
+
+}
+
+.statEText {
+
+
+
+}
+
+.plus {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    margin: 4px;
+    user-select: none;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+    .plus:hover {
+        background-color:white;
+        color:black;
+    }
+
+    .plus:active {
+        background-color:black;
+        border:1px solid white;
+        color:white;
+    }
+
+.minus {
+    transform: rotate(-45deg);
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 4px;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .minus:hover {
+        background-color: white;
+        color: black;
+    }
+
+    .minus:active {
+        background-color: black;
+        border: 1px solid white;
+        color: white;
+        user-select:none;
+    }
+
+

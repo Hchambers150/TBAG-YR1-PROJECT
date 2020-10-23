@@ -77,10 +77,6 @@ body {
     grid-gap:35px;
 }
 
-
-.stats {
-}
-
 .statBox {
     width: 75px;
     height: 75px;
@@ -92,7 +88,6 @@ body {
 .statText {
     margin-left:35%;
     position:static;
-
 }
 
 .stat {

@@ -3,123 +3,133 @@
 <head>
     <meta charset="utf-8" />
     <title>Text Based Adventure Game</title>
-    <link rel="stylesheet" href="index.css"/>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="startup.css" />
+
 </head>
 <body>
 
     <!--<button id="playBtn" onclick="startAnim()">PLEASE PLAY IN FULLSCREEN & CLICK ME TO CONTINUE.</button>-->
 
-    <div id="startup">
-            <span id="title">Welcome to my project!</span>
-            <br>
-            <span style="display:block;">What is your name? </span><input class="Input" id="charName" type="text">
-            <br><br>
-             <!-- stat grid-->
-                <div id="stat_grid">
+    <div id="startup" style="">
+        <div id="errors"></div>
 
-                    <div id="con" class="stats">
-                        <div class="statBox">
-                            <span class="statText" id="conText">Con</span>
-                            <div class="shape">
-                                <div class="minus" onclick="decreaseStat('conStat')">-</div>
-                                <div class="plus" onclick="increaseStat('conStat')">+</div>
-                            </div>
-                            <span class="stat" id="conStat">10</span>
-                        </div>
-                        <div class="statExplained">
-                            <span class="statETitle">Constitution</span>
-                            <br><br>
-                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
-                        </div>
+        <span id="title">Welcome to my project!</span>
+        <br>
+        <span style="display:block;">What is your name? </span><input class="Input" id="charName" type="text">
+        <br><br>
+        <!-- stat grid-->
+        <div id="stat_grid">
+
+            <div id="con" class="stats">
+                <div class="statBox">
+                    <span class="statText" id="conText">Con</span>
+                    <div class="shape">
+                        <div class="minus" onclick="decreaseStat('conStat')">-</div>
+                        <div class="plus" onclick="increaseStat('conStat')">+</div>
                     </div>
+                    <span class="stat" id="conStat">8</span>
+                </div>
+                <div class="statExplained">
+                    <span class="statETitle">Constitution</span>
+                    <br><br>
+                    <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                </div>
+            </div>
 
-                    <div id="con" class="stats">
-                        <div class="statBox">
-                            <span class="statText" id="conText">Con</span>
-                            <span class="stat" id="conStat">10</span>
-                            <div class="shape">
-                                <div class="minus" onclick="decreaseStat('conStat')">-</div>
-                                <div class="plus" onclick="increaseStat('conStat')">+</div>
-                            </div>
-
-                        </div>
-                        <div class="statExplained">
-                            <span class="statETitle">Constitution</span>
-                            <br><br>
-                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
-                        </div>
+            <div id="dex" class="stats">
+                <div class="statBox">
+                    <span class="statText" id="dexText">Dex</span>
+                    <span class="stat" id="dexStat">8</span>
+                    <div class="shape">
+                        <div class="minus" onclick="decreaseStat('dexStat')">-</div>
+                        <div class="plus" onclick="increaseStat('dexStat')">+</div>
                     </div>
-
-                    <div id="con" class="stats">
-                        <div class="statBox">
-                            <span class="statText" id="conText">Con</span>
-                            <div class="shape">
-                                <div class="minus" onclick="decreaseStat('conStat')">-</div>
-                                <div class="plus" onclick="increaseStat('conStat')">+</div>
-                            </div>
-                            <span class="stat" id="conStat">10</span>
-                        </div>
-                        <div class="statExplained">
-                            <span class="statETitle">Constitution</span>
-                            <br><br>
-                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
-                        </div>
-                    </div>
-
-                    <div id="con" class="stats">
-                        <div class="statBox">
-                            <span class="statText" id="conText">Con</span>
-                            <div class="shape">
-                                <div class="minus" onclick="decreaseStat('conStat')">-</div>
-                                <div class="plus" onclick="increaseStat('conStat')">+</div>
-                            </div>
-                            <span class="stat" id="conStat">10</span>
-                        </div>
-                        <div class="statExplained">
-                            <span class="statETitle">Constitution</span>
-                            <br><br>
-                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
-                        </div>
-                    </div>
-
-                    <div id="con" class="stats">
-                        <div class="statBox">
-                            <span class="statText" id="conText">Con</span>
-                            <div class="shape">
-                                <div class="minus" onclick="decreaseStat('conStat')">-</div>
-                                <div class="plus" onclick="increaseStat('conStat')">+</div>
-                            </div>
-                            <span class="stat" id="conStat">10</span>
-                        </div>
-                        <div class="statExplained">
-                            <span class="statETitle">Constitution</span>
-                            <br><br>
-                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
-                        </div>
-                    </div>
-
-                    <div id="con" class="stats">
-                        <div class="statBox">
-                            <span class="statText" id="conText">Con</span>
-                            <div class="shape">
-                                <div class="minus" onclick="decreaseStat('conStat')">-</div>
-                                <div class="plus" onclick="increaseStat('conStat')">+</div>
-                            </div>
-                            <span class="stat" id="conStat">10</span>
-                        </div>
-                        <div class="statExplained">
-                            <span class="statETitle">Constitution</span>
-                            <br><br>
-                            <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
-                        </div>
-                    </div>
-
-
 
                 </div>
-            <br><br>
-            <br><br>
-            <button id="go_btn">Continue...</button>
+                <div class="statExplained">
+                    <span class="statETitle">dexstitution</span>
+                    <br><br>
+                    <span class="statEText">dexstituion is your <b>health</b>. By having a higher dexstitution, you'll be able to endure more attacks.</span>
+                </div>
+            </div>
+
+            <div id="str" class="stats">
+                <div class="statBox">
+                    <span class="statText" id="strText">Str</span>
+                    <div class="shape">
+                        <div class="minus" onclick="decreaseStat('strStat')">-</div>
+                        <div class="plus" onclick="increaseStat('strStat')">+</div>
+                    </div>
+                    <span class="stat" id="strStat">8</span>
+                </div>
+                <div class="statExplained">
+                    <span class="statETitle">strstitution</span>
+                    <br><br>
+                    <span class="statEText">strstituion is your <b>health</b>. By having a higher strstitution, you'll be able to endure more attacks.</span>
+                </div>
+            </div>
+
+            <div id="int" class="stats">
+                <div class="statBox">
+                    <span class="statText" id="intText">Int</span>
+                    <div class="shape">
+                        <div class="minus" onclick="decreaseStat('intStat')">-</div>
+                        <div class="plus" onclick="increaseStat('intStat')">+</div>
+                    </div>
+                    <span class="stat" id="intStat">8</span>
+                </div>
+                <div class="statExplained">
+                    <span class="statETitle">intstitution</span>
+                    <br><br>
+                    <span class="statEText">intstituion is your <b>health</b>. By having a higher intstitution, you'll be able to endure more attacks.</span>
+                </div>
+            </div>
+
+            <div id="wis" class="stats">
+                <div class="statBox">
+                    <span class="statText" id="wisText">Wis</span>
+                    <div class="shape">
+                        <div class="minus" onclick="decreaseStat('wisStat')">-</div>
+                        <div class="plus" onclick="increaseStat('wisStat')">+</div>
+                    </div>
+                    <span class="stat" id="wisStat">8</span>
+                </div>
+                <div class="statExplained">
+                    <span class="statETitle">wisstitution</span>
+                    <br><br>
+                    <span class="statEText">wisstituion is your <b>health</b>. By having a higher wisstitution, you'll be able to endure more attacks.</span>
+                </div>
+            </div>
+
+            <div id="cha" class="stats">
+                <div class="statBox">
+                    <span class="statText" id="chaText">Cha</span>
+                    <div class="shape">
+                        <div class="minus" onclick="decreaseStat('chaStat')">-</div>
+                        <div class="plus" onclick="increaseStat('chaStat')">+</div>
+                    </div>
+                    <span class="stat" id="chaStat">8</span>
+                </div>
+                <div class="statExplained">
+                    <span class="statETitle">chastitution</span>
+                    <br><br>
+                    <span class="statEText">chastituion is your <b>health</b>. By having a higher chastitution, you'll be able to endure more attacks.</span>
+                </div>
+            </div>
+
+
+
+        </div>
+        <br><br>
+        <br><br>
+        <button id="go_btn" onclick="getStats()">Continue...</button>
+    </div>
+
+    <div id="main">
+        <div id="gameArea">
+        </div>
+
     </div>
 
 </body>
@@ -128,7 +138,9 @@
 <script>
     //startup.style.webkitAnimationPlayState = "paused";
 
-    var statPoint = 
+    var minus = document.getElementById("minus");
+    var errors = document.getElementById("errors");
+    var statPoints = 27;
 
     function startAnim() {
         startup.style.webkitAnimationPlayState = "running";
@@ -136,23 +148,70 @@
     }
 
     function increaseStat(x) {
-        console.log(x);
+        //console.log(x);
         var statInt = parseInt(document.getElementById(x).innerText);
 
-        if (statInt < 20) {
+        if (statInt == 20) {
+            errors.innerText = "Your stat scores may not go above 20!";
+        } else {
+            errors.innerText = "";
+        }
+
+        if (statPoints == 0) {
+            errors.innerText = "You're out of stat points!"
+        }
+
+        if (statInt < 20 && statPoints > 0) {
             document.getElementById(x).innerText = statInt + 1;
+            statPoints--;
+            console.log(statPoints);
         }
     }
 
     function decreaseStat(x) {
-        console.log(x);
+        //console.log(x);
         var statText = document.getElementById(x);
         var statInt = parseInt(document.getElementById(x).innerText);
-        console.log(statInt);
-        if (statInt > 0) {
-            statText.innerText = statInt - 1;
+
+        //console.log(statInt);
+        if (statInt == 8) {
+            errors.innerText = "Your stat scores may not go lower than 8!";
+        } else {
+            errors.innerText = "";
         }
 
+        if (statInt > 8) {
+            statText.innerText = statInt - 1;
+            statPoints++;
+        } 
+
+    }
+
+    var name;
+    var con;
+    var dex;
+    var str;
+    var int;
+    var wis;
+    var cha;
+
+    function getStats() {
+        if (statPoints == 0) {
+            name = document.getElementById("charName").value;
+            con = parseInt(document.getElementById("conStat").innerText);
+            dex = parseInt(document.getElementById("dexStat").innerText);
+            str = parseInt(document.getElementById("strStat").innerText);
+            int = parseInt(document.getElementById("intStat").innerText);
+            wis = parseInt(document.getElementById("wisStat").innerText);
+            cha = parseInt(document.getElementById("chaStat").innerText);
+
+            document.getElementById("startup").style.animation = '1s ease-out 0s 1 slideOutToTop';
+            document.getElementById("startup").style.display = 'none';
+
+            console.log(name, con, dex, str, int, wis, cha);
+        } else {
+            errors.innerText = "You've not spent all of your stat points!";
+        }
     }
 
 </script>

@@ -32,3 +32,7 @@ Character:
 	name
 	inventory
 
+	                    <span id="gearTitle">Character:</span>
+                    <span id="health" class="important">Health: 6</span><br>
+                    <span id="mana" class="">Mana: 19</span>
+                    <img id="charImg" src="charImg.png" />

@@ -3,6 +3,21 @@
     src: url('MSDOS Font.ttf');
 }
 
+@font-face {
+    font-family: RS Plain;
+    src: url('RS Plain.ttf');
+}
+
+@font-face {
+    font-family: RS Bold;
+    src: url('RS Bold.ttf');
+}
+
+@font-face {
+    font-family: RS Quill;
+    src: url('RS Quill.ttf');
+}
+
 @keyframes slideInFromBottom {
     0% {
         transform: translateY(100vh);
@@ -25,34 +40,53 @@
 
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: ;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #EBEBEB;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
 html {
-    overflow:hidden;
 }
 
 body {
     background-color: #000;
     color: white;
     font-family: MSDOS;
-
     padding: 0;
     margin: 0;
-    height: 96vh;
+    height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.Input {
+#charname{
     background-color: black;
     border: 1px dotted white;
     color: white;
     display: block;
+    width:inherit;
+    height:inherit;
 }
 
 #startup {
-    width:75vw;
-    display:;
+
 }
 
 #title {
@@ -60,26 +94,62 @@ body {
     display:block;
 }
 
-#errors {
-    width: 50%;
-    height: 85px;
-    justify-content: center;
-    align-items: center;
-    font-size:2em;
-    color:red;
-    position:absolute;
-    left:32.5%;
+#remainingPointsWrapper {
+    width: 320px;
+    height: 80px;
+    float: right;
+    position: relative;
+    right: 50%;
+    top: -7.5vh;
+    color: #FFD700;
 }
 
-#charname {
+#remainingStat {
+    position:relative;
+    left:-1.3em;
+    float:right;
+}
+
+
+#remainingText {
+    float: left;
+    height: inherit;
+    position: relative;
+    left: -1.5em;
+    margin-top: 1.5em;
+    font-size: 1.25em;
+}
+
+#skillpointsShape {
+    width: 80px;
+    float: right;
+    right: 0;
+    border: 1px solid #FFD700;
+}
+
+
+#charName {
     margin:0;
     padding:0;
-
+    background-color:black;
+    border:1px solid white;
+    color:white;
+    font-family:RS Plain;
+    font-size:1.5em;
 }
 
 #go_btn {
     background-color:black;
     color:white;
+    float:left;
+}
+
+#errors {
+    width: inherit;
+    height: 85px;
+    font-size: 1.5em;
+    color: red;
+    margin-left:7.5%;
 }
 
 #stat_grid {
@@ -97,16 +167,23 @@ body {
 }
 
 .statText {
-    margin-left:35%;
-    position:relative;
-    display:inline;
+    height: 0;
+    width: 0;
+    display: inline;
+    position: relative;
+    left: -0.8em;
+    top: -0.8em;
 }
 
 .stat {
+    height: 0;
+    width: 0;
     font-size: 3em;
-    position:relative;
-    left:-0.5em;
-    top:0.4em;
+    display: inline;
+
+    position: relative;
+    left:-0.2em;
+    top:-0.6em;
 }
 
 .shape {

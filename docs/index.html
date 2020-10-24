@@ -12,40 +12,48 @@
     <!--button id="playBtn" onclick="startAnim()">PLEASE PLAY IN FULLSCREEN & CLICK ME TO CONTINUE.</!--button-->
 
     <div id="startup" style="">
-        <div id="errors"></div>
-
         <span id="title">Welcome to my project!</span>
         <br>
-        <span style="display:block;">What is your name? </span><input class="Input" id="charName" type="text">
+        <span style="display:block;">What is your name? </span><input id="charName" type="text">
+        <br>
+        <div id="remainingPointsWrapper">
+            <span id="remainingText">Remaining Skillpoints: </span>
+            <p class="stat" id="remainingStat">27</p>
+            <div class="shape" id="skillpointsShape"></div>
+
+        </div>
         <br><br>
         <!-- stat grid-->
         <div id="stat_grid">
 
             <div id="con" class="stats">
                 <div class="statBox">
-                    <span class="statText" id="conText">Con</span>
+                    <p class="statText" id="conText">Con</p><br>
+                    <p class="stat" id="conStat">8</p>
+
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('conStat')">-</div>
                         <div class="plus" onclick="increaseStat('conStat')">+</div>
                     </div>
-                    <span class="stat" id="conStat">8</span>
                 </div>
                 <div class="statExplained">
-                    <span class="statETitle">Constitution</span>
-                    <br><br>
-                    <span class="statEText">Constituion is your <b>health</b>. By having a higher constitution, you'll be able to endure more attacks.</span>
+                    <span class="statETitle"><u>Constitution</u></span><br>
+                        <span class="statEText">
+                            Constitution is your <font class="important">Health.</font><br><br>
+                            By having a higher Constitution, you'll be able to endure more attacks; and poison.
+                        </span>
                 </div>
             </div>
 
             <div id="dex" class="stats">
                 <div class="statBox">
-                    <span class="statText" id="dexText">Dex</span>
-                    <span class="stat" id="dexStat">8</span>
+                    <p class="statText" id="dexText">Dex</p><br>
+                    <p class="stat" id="dexStat">8</p>
+
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('dexStat')">-</div>
                         <div class="plus" onclick="increaseStat('dexStat')">+</div>
                     </div>
-
                 </div>
                 <div class="statExplained">
                     <span class="statETitle">dexstitution</span>
@@ -56,12 +64,13 @@
 
             <div id="str" class="stats">
                 <div class="statBox">
-                    <span class="statText" id="strText">Str</span>
+                    <p class="statText" id="strText">Str</p><br>
+                    <p class="stat" id="strStat">8</p>
+
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('strStat')">-</div>
                         <div class="plus" onclick="increaseStat('strStat')">+</div>
                     </div>
-                    <span class="stat" id="strStat">8</span>
                 </div>
                 <div class="statExplained">
                     <span class="statETitle">strstitution</span>
@@ -72,12 +81,13 @@
 
             <div id="int" class="stats">
                 <div class="statBox">
-                    <span class="statText" id="intText">Int</span>
+                    <p class="statText" id="intText">Int</p><br>
+                    <p class="stat" id="intStat">8</p>
+
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('intStat')">-</div>
                         <div class="plus" onclick="increaseStat('intStat')">+</div>
                     </div>
-                    <span class="stat" id="intStat">8</span>
                 </div>
                 <div class="statExplained">
                     <span class="statETitle">intstitution</span>
@@ -88,12 +98,13 @@
 
             <div id="wis" class="stats">
                 <div class="statBox">
-                    <span class="statText" id="wisText">Wis</span>
+                    <p class="statText" id="wisText">Wis</p><br>
+                    <p class="stat" id="wisStat">8</p>
+
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('wisStat')">-</div>
                         <div class="plus" onclick="increaseStat('wisStat')">+</div>
                     </div>
-                    <span class="stat" id="wisStat">8</span>
                 </div>
                 <div class="statExplained">
                     <span class="statETitle">wisstitution</span>
@@ -104,12 +115,14 @@
 
             <div id="cha" class="stats">
                 <div class="statBox">
-                    <span class="statText" id="chaText">Cha</span>
+
+                    <p class="statText" id="chaText">cha</p><br>
+                    <p class="stat" id="chaStat">8</p>
+
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('chaStat')">-</div>
                         <div class="plus" onclick="increaseStat('chaStat')">+</div>
                     </div>
-                    <span class="stat" id="chaStat">8</span>
                 </div>
                 <div class="statExplained">
                     <span class="statETitle">chastitution</span>
@@ -118,18 +131,147 @@
                 </div>
             </div>
 
-
-
         </div>
         <br><br>
         <br><br>
         <button id="go_btn" onclick="getStats()">Continue...</button>
+        <div id="errors"></div>
     </div>
 
     <div id="main">
-        <div id="gameArea">
+        <div id="textArea">
+            <p id="output">
+                
+                As a <font class="special">child</font>, your <font class="important">Father</font> never really paid attention to you.<br>
+                
+
+                <div id="picArea">
+                    
+                </div>
+            </p>
+            
         </div>
 
+        <div id="inputWrap">
+            <input id="input" value="Type here...">
+            <div id="presets">
+
+            </div>
+        </div>
+
+        <div id="fixedArea">
+            <div id="gearArea">
+                <div id="equipment">
+                    <div class="grid-container">
+                        <div class="helm"></div>
+                        <div class="body"></div>
+                        <div class="hp-mana">
+                            <span id="health" class="important">Health: 6</span><br>
+                            <span id="mana" class="">Mana: 19</span>
+                        </div>
+                        <div class="weapon">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)"">
+
+                            </div>
+                        </div>
+                        <div class="boots"></div>
+                        <div class="legs"></div>
+                        <div class="image"><img id="image" src="charImg.png"></div>
+                        <div class="gloves"></div>
+                        <div class="ring"></div>
+                        <div id="gearTitle" class="name">Name</div>
+                    </div>
+                </div>
+                <div id="inventory">
+                    <span id="inventTitle">Inventory: </span>
+                    <div id="inventoryGrid">
+                        <div class="inventorySlot" id="slot1">
+                            <div id="lootWeaponTest" draggable="true" ondragstart="drag(event)">
+                            </div>
+                        </div>
+                        <div class="inventorySlot" id="slot2"></div>
+                        <div class="inventorySlot" id="slot3"></div>
+                        <div class="inventorySlot" id="slot4"></div>
+                        <div class="inventorySlot" id="slot5"></div>
+                        <div class="inventorySlot" id="slot6"></div>
+                        <div class="inventorySlot" id="slot7"></div>
+                        <div class="inventorySlot" id="slot8"></div>
+                        <div class="inventorySlot" id="slot9"></div>
+                        <div class="inventorySlot" id="slot10"></div>
+                        <div class="inventorySlot" id="slot11"></div>
+                        <div class="inventorySlot" id="slot12"></div>
+                        <div class="inventorySlot" id="slot13"></div>
+                        <div class="inventorySlot" id="slot14"></div>
+                        <div class="inventorySlot" id="slot15"></div>
+                        <div class="inventorySlot" id="slot16"></div>
+                        <div class="inventorySlot" id="slot17"></div>
+                        <div class="inventorySlot" id="slot18"></div>
+                        <div class="inventorySlot" id="slot19"></div>
+                        <div class="inventorySlot" id="slot20"></div>
+                        <div class="inventorySlot" id="slot21"></div>
+                        <div class="inventorySlot" id="slot22"></div>
+                        <div class="inventorySlot" id="slot23"></div>
+                        <div class="inventorySlot" id="slot24"></div>
+                        <div class="inventorySlot" id="slot25"></div>
+                        <div class="inventorySlot" id="slot26"></div>
+                        <div class="inventorySlot" id="slot27"></div>
+                        <div class="inventorySlot" id="slot28"></div>
+                        <div class="inventorySlot" id="slot29"></div>
+                        <div class="inventorySlot" id="slot30"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="statArea">
+                <div id="statGrid">
+                    <div class="statGridStat">
+                        <span class="statTitle">Con:</span>
+                        <p class="liveStat" id="conLive">10</p>
+                        <div class="statShape"></div>
+                    </div>
+                    <div class="statGridStat">
+                        <span class="statTitle">Con:</span>
+                        <p class="liveStat" id="dexLive">10</p>
+                        <div class="statShape"></div>
+                    </div>
+                    <div class="statGridStat">
+                        <span class="statTitle">Con:</span>
+                        <p class="liveStat" id="strLive">10</p>
+                        <div class="statShape"></div>
+                    </div>
+                    <div class="statGridStat">
+                        <span class="statTitle">Con:</span>
+                        <p class="liveStat" id="intLive">10</p>
+                        <div class="statShape"></div>
+                    </div>
+                    <div class="statGridStat">
+                        <span class="statTitle">Con:</span>
+                        <p class="liveStat" id="wisLive">10</p>
+                        <div class="statShape"></div>
+                    </div>
+                    <div class="statGridStat">
+                        <span class="statTitle">Cha:</span>
+                        <p class="liveStat" id="chaLive">10</p>
+                        <div class="statShape"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="mapArea">
+                <textarea id="map">
+                    █ █████████████████████████████
+                    █ ████████              ███████
+                    █                       ███████
+                    ██████████              ███████
+                    ████████████████  █████████████
+                    ██            ██  █████████████
+                    ██            ██              █
+                    ██            ██  ██████████  █
+                    █████  █████████  ██████████  █
+                    █████                         █
+                    ███████████████████████████████
+
+                </textarea>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -140,16 +282,35 @@
 
     var minus = document.getElementById("minus");
     var errors = document.getElementById("errors");
+    var skillpoints = document.getElementById("remainingStat");
     var statPoints = 27;
+
+    var objDiv = document.getElementById("textArea");
+    objDiv.scrollTop = objDiv.scrollHeight + '1000px';
 
     function startAnim() {
         startup.style.webkitAnimationPlayState = "running";
         document.getElementById("playBtn").style.display = "none";
     }
 
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
     function increaseStat(x) {
         //console.log(x);
         var statInt = parseInt(document.getElementById(x).innerText);
+        var stat = document.getElementById(x);
 
         if (statInt == 20) {
             errors.innerText = "Your stat scores may not go above 20!";
@@ -162,16 +323,31 @@
         }
 
         if (statInt < 20 && statPoints > 0) {
-            document.getElementById(x).innerText = statInt + 1;
+            stat.innerText = statInt + 1;
             statPoints--;
             console.log(statPoints);
         }
+
+        if (stat.innerText.length == 2) {
+            stat.style.left = "-0.5em";
+        } else {
+            stat.style.left = "-0.2em";
+        }
+
+        skillpoints.innerText = statPoints;
+        if (skillpoints.innerText.length == 2) {
+            skillpoints.style.left = "-1.3em";
+        } else {
+            skillpoints.style.left = "-1em";
+        }
+        
     }
 
     function decreaseStat(x) {
         //console.log(x);
-        var statText = document.getElementById(x);
+        var stat = document.getElementById(x);
         var statInt = parseInt(document.getElementById(x).innerText);
+        var skillpoints = document.getElementById("remainingStat");
 
         //console.log(statInt);
         if (statInt == 8) {
@@ -181,14 +357,27 @@
         }
 
         if (statInt > 8) {
-            statText.innerText = statInt - 1;
+            stat.innerText = statInt - 1;
             statPoints++;
         } 
+
+        if (stat.innerText.length == 2) {
+            stat.style.left = "-0.5em";
+        } else {
+            stat.style.left = "-0.2em";
+        }
+
+        skillpoints.innerText = statPoints;
+        if (skillpoints.innerText.length == 2) {
+            skillpoints.style.left = "-1.3em";
+        } else {
+            skillpoints.style.left = "-1em";
+        }
 
     }
 
     var name;
-    var con;
+    var con = 20;
     var dex;
     var str;
     var int;
@@ -196,7 +385,8 @@
     var cha;
 
     function getStats() {
-        if (statPoints == 0) {
+        name = document.getElementById("charName").value;
+        if (statPoints == 0 && name != "") {
             name = document.getElementById("charName").value;
             con = parseInt(document.getElementById("conStat").innerText);
             dex = parseInt(document.getElementById("dexStat").innerText);
@@ -207,10 +397,46 @@
 
             document.getElementById("startup").style.animation = '1s ease-out 0s 1 slideOutToTop';
             document.getElementById("startup").style.display = 'none';
+            document.getElementById("main").style.display = 'block';
 
             console.log(name, con, dex, str, int, wis, cha);
-        } else {
+            setStats();
+        } else if (statPoints == 27) {
+            document.getElementById("startup").style.display = 'none';
+            document.getElementById("main").style.display = 'block';
+            setStats();
+        } else if (name == "" || name.length > 20) {
+            errors.innerText = "Invalid name! Max length: 20";
+
+        } else if (statPoints == 0) {
             errors.innerText = "You've not spent all of your stat points!";
+        }
+    }
+
+    function setStats() {
+        var liveCon = document.getElementById("conLive");
+        var liveDex = document.getElementById("dexLive");
+        var liveStr = document.getElementById("strLive");
+        var liveInt = document.getElementById("intLive");
+        var liveWis = document.getElementById("wisLive");
+        var liveCha = document.getElementById("chaLive");
+
+        var checkPos = [liveCon, liveDex, liveStr, liveInt, liveWis, liveCha];
+
+        liveCon.innerText = con;
+        liveDex.innerText = dex;
+        liveStr.innerText = str;
+        liveInt.innerText = int;
+        liveWis.innerText = wis;
+        liveCha.innerText = cha;
+
+        document.getElementById("gearTitle").innerText = name;
+
+        for (var i = 0; i < checkPos.length; i++) {
+            if (checkPos[i].innerText.length == 1){
+                checkPos[i].style.left = "1.15em";
+            }
+
         }
     }
 

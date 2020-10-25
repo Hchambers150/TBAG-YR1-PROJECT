@@ -322,12 +322,21 @@
 
 .liveStat {
     position:relative;
-    top:117.5%;
+    top:1.1em;
     left:10.75%;
     font-size:2em;
     display:inline;
 
 }
+-o-, .liveStat {
+    position: relative;
+    top: 1.2em;
+    left: 10.75%;
+    font-size: 2em;
+    display: inline;
+}
+
+
 
 #mapArea {
     position: absolute;

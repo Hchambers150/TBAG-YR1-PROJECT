@@ -5,6 +5,7 @@
     <title>Text Based Adventure Game</title>
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="startup.css" />
+    <link rel="stylesheet" href="contextMenu.css"/>
 
 </head>
 <body>
@@ -30,7 +31,7 @@
                 <div class="statBox">
                     <p class="statText" id="conText">Con</p><br>
                     <p class="stat" id="conStat">8</p>
-
+                    <!--<p class="miniStat" id="conMini">+1</p>-->
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('conStat')">-</div>
                         <div class="plus" onclick="increaseStat('conStat')">+</div>
@@ -38,10 +39,10 @@
                 </div>
                 <div class="statExplained">
                     <span class="statETitle"><u>Constitution</u></span><br>
-                        <span class="statEText">
-                            Constitution is your <font class="important">Health.</font><br><br>
-                            By having a higher Constitution, you'll be able to endure more attacks; and poison.
-                        </span>
+                    <span class="statEText">
+                        Constitution is your <font class="important">Health.</font><br><br>
+                        By having a higher Constitution, you'll be able to <font class="special">endure more</font> <font class="important">attacks;</font> and poison.
+                    </span>
                 </div>
             </div>
 
@@ -56,9 +57,12 @@
                     </div>
                 </div>
                 <div class="statExplained">
-                    <span class="statETitle">dexstitution</span>
-                    <br><br>
-                    <span class="statEText">dexstituion is your <b>health</b>. By having a higher dexstitution, you'll be able to endure more attacks.</span>
+                    <span class="statETitle"><u>Dexterity</u></span>
+                    <br>
+                        <span class="statEText">
+                            Dexterity is your <font class="special">Agility.</font><br><br>
+                            By having a higher Dexterity, you'll have a higher chance of <font class="special">bypassing & disarming</font> <font class="important">traps.</font>
+                        </span>
                 </div>
             </div>
 
@@ -73,9 +77,11 @@
                     </div>
                 </div>
                 <div class="statExplained">
-                    <span class="statETitle">strstitution</span>
-                    <br><br>
-                    <span class="statEText">strstituion is your <b>health</b>. By having a higher strstitution, you'll be able to endure more attacks.</span>
+                    <span class="statETitle"><u>Strength</u></span><br>
+                        <span class="statEText">
+                            Strength is your <font class="important">Attack Damage.</font><br><br>
+                            By having a higher Strength, you'll do <font class="special">more damage</font> <font class="important">through physical attacks.</font>
+                        </span>
                 </div>
             </div>
 
@@ -90,9 +96,11 @@
                     </div>
                 </div>
                 <div class="statExplained">
-                    <span class="statETitle">intstitution</span>
-                    <br><br>
-                    <span class="statEText">intstituion is your <b>health</b>. By having a higher intstitution, you'll be able to endure more attacks.</span>
+                    <span class="statETitle"><u>Intuition</u></span><br>
+                        <span class="statEText">
+                            Intuition is your <font class="mystical">Intelligence.</font><br><br>
+                            By having a higher Intuition, you'll do <font class="special">more damage</font> <font class="mystical">from magic attacks.</font>
+                        </span>
                 </div>
             </div>
 
@@ -107,9 +115,11 @@
                     </div>
                 </div>
                 <div class="statExplained">
-                    <span class="statETitle">wisstitution</span>
-                    <br><br>
-                    <span class="statEText">wisstituion is your <b>health</b>. By having a higher wisstitution, you'll be able to endure more attacks.</span>
+                    <span class="statETitle"><u>Wisdom</u></span><br>
+                        <span class="statEText">
+                            Wisdom is your <font class="special">knowledge.</font><br><br>
+                            By having a higher Wisdom, you'll <font class="special">know more</font> about <font class="mystical">History, Magic, & Monsters.</font>
+                        </span>
                 </div>
             </div>
 
@@ -125,9 +135,11 @@
                     </div>
                 </div>
                 <div class="statExplained">
-                    <span class="statETitle">chastitution</span>
-                    <br><br>
-                    <span class="statEText">chastituion is your <b>health</b>. By having a higher chastitution, you'll be able to endure more attacks.</span>
+                    <span class="statETitle"><u>Charisma</u></span><br>
+                        <span class="statEText">
+                            Charisma is your <font class="special">Charm.</font><br><br>
+                            By having a higher Charisma, you'll <font class="special">make more friends.</font>
+                        </span>
                 </div>
             </div>
 
@@ -141,15 +153,15 @@
     <div id="main">
         <div id="textArea">
             <p id="output">
-                
+
                 As a <font class="special">child</font>, your <font class="important">Father</font> never really paid attention to you.<br>
-                
+
 
                 <div id="picArea">
-                    
+                    <img class="image" src="https://www.pikpng.com/pngl/m/174-1746426_storm-trooper-mask-pixel-art-star-wars-clipart.png" />
                 </div>
             </p>
-            
+
         </div>
 
         <div id="inputWrap">
@@ -163,23 +175,49 @@
             <div id="gearArea">
                 <div id="equipment">
                     <div class="grid-container">
-                        <div class="helm"></div>
-                        <div class="body"></div>
+                        <div class="helm">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                            </div>
+                        </div>
                         <div class="hp-mana">
                             <span id="health" class="important">Health: 6</span><br>
                             <span id="mana" class="">Mana: 19</span>
                         </div>
                         <div class="weapon">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)"">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
 
                             </div>
                         </div>
-                        <div class="boots"></div>
-                        <div class="legs"></div>
+                        <div class="boots">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                            </div>
+                        </div>
+                        <div class="legs">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                            </div>
+                        </div>
                         <div class="image"><img id="image" src="charImg.png"></div>
-                        <div class="gloves"></div>
-                        <div class="ring"></div>
-                        <div id="gearTitle" class="name">Name</div>
+                        <div class="gloves">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                            </div>
+                        </div>
+                        <div class="ring">
+                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                            </div>
+                        </div>
+                        <div class="name">
+                            <span id="gearTitle"></span>
+                        </div>
                     </div>
                 </div>
                 <div id="inventory">
@@ -187,9 +225,10 @@
                     <div id="inventoryGrid">
                         <div class="inventorySlot" id="slot1">
                             <div id="lootWeaponTest" draggable="true" ondragstart="drag(event)">
+
                             </div>
                         </div>
-                        <div class="inventorySlot" id="slot2"></div>
+                        <div class="inventorySlot" id="slot2"><img src="swordTemp.jpg" draggable="true" ondragstart="drag(event)"></div>
                         <div class="inventorySlot" id="slot3"></div>
                         <div class="inventorySlot" id="slot4"></div>
                         <div class="inventorySlot" id="slot5"></div>
@@ -274,10 +313,39 @@
         </div>
     </div>
 
+    <menu id="ctxMenu">
+        <menu title="File">
+            <menu title="Save"></menu>
+            <menu title="Save As"></menu>
+            <menu title="Open"></menu>
+         </menu>
+        <menu title="Edit">
+            <menu title="Cut"></menu>
+            <menu title="Copy"></menu>
+             <menu title="Paste"></menu>
+        </menu>
+    </menu>
+
 </body>
 </html>
 
 <script>
+
+    var notepad = document;
+    notepad.addEventListener("contextmenu",function(event){
+        event.preventDefault();
+        var ctxMenu = document.getElementById("ctxMenu");
+        ctxMenu.style.display = "block";
+        ctxMenu.style.left = (event.pageX - 10)+"px";
+        ctxMenu.style.top = (event.pageY - 10)+"px";
+    },false);
+    notepad.addEventListener("click",function(event){
+        var ctxMenu = document.getElementById("ctxMenu");
+        ctxMenu.style.display = "";
+        ctxMenu.style.left = "";
+        ctxMenu.style.top = "";
+    },false);
+
     //startup.style.webkitAnimationPlayState = "paused";
 
     var minus = document.getElementById("minus");
@@ -301,11 +369,11 @@
         ev.dataTransfer.setData("text", ev.target.id);
     }
 
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
 
     function increaseStat(x) {
         //console.log(x);

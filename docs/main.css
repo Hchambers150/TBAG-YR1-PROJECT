@@ -107,57 +107,55 @@
 
 }
 
-#gearTitle {
-    float: left;
-    position: relative;
-    left:5%;
-    top: 1vh;
-    width: 120px;
-    background-color:;
-}
-
-
 #equipment {
     width: 100%;
     height: 64%;
     border-bottom: 1px dotted white;
-
     display: grid;
-
+    user-select: none;
 }
 
 .grid-container {
     display: grid;
     justify-content: center;
     width: 100%;
+    height:100%;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 20% 20% 20% 20% 20%;
-    gap: 0px 0px;
-    grid-template-areas: "name image hp-mana" "helm image ." "body image weapon" "legs image gloves" "bootsy image ring";
+    grid-gap: 0px 0px;
+    grid-template-areas: "name image hp-mana" "helm image ." "body image weapon" "legs image gloves" "boots image ring";
 }
 
 .helm {
     grid-area: helm;
+    display: flex;
+    justify-content: center;
 }
 
 .body {
     grid-area: body;
+    display: flex;
+    justify-content: center;
+    background-image:url('body.jpg');
+    background-repeat:no-repeat;
+    background-position:center;
 }
 
 .hp-mana {
     grid-area: hp-mana;
-    position:relative;
-    left:3%;
-    top:0.5vh;
+    display: flex;
+    justify-content: center;
 }
 
 #health {
-
+    margin-left:5%;
+    margin-top:5%;
 }
 
 #mana {
-    color:Highlight;
-
+    color: Highlight;
+    margin-left: 5%;
+    margin-top: 5%;
 }
 
 .weapon {
@@ -169,22 +167,29 @@
 #weaponDrop {
     width: 50px;
     height: 50px;
-    background-color: white;
+    border:1px solid white;
+
 }
 
 #lootWeaponTest {
-
-width:100%;
-height:100%;
-background-color:green;
+    width: 100%;
+    height: 100%;
+    background-color: ;
+    background-image: url('swordTemp.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .boots {
-    grid-area: bootsy;
+    grid-area: boots;
+    display: flex;
+    justify-content: center;
 }
 
 .legs {
     grid-area: legs;
+    display: flex;
+    justify-content: center;
 }
 
 .image {
@@ -195,14 +200,27 @@ background-color:green;
 
 .gloves {
     grid-area: gloves;
+    display: flex;
+    justify-content: center;
 }
 
 .ring {
     grid-area: ring;
+    display: flex;
+    justify-content: center;
 }
 
 .name {
     grid-area: name;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+#gearTitle {
+    width:100%;
+    margin-left:5%;
+    margin-right:5%;
 }
 
 #inventory {
@@ -241,8 +259,8 @@ background-color:green;
     position:absolute;
     left:35%;
     top:20px;
-    height:250px;
-    width:150px;
+    height: inherit;
+    width:inherit;
 
 }
 
@@ -336,4 +354,8 @@ background-color:green;
 
 .important {
     color: #cc2114;
+}
+
+.mystical {
+    color: #30bbe6;
 }

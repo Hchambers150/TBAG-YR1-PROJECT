@@ -36,3 +36,26 @@ Character:
                     <span id="health" class="important">Health: 6</span><br>
                     <span id="mana" class="">Mana: 19</span>
                     <img id="charImg" src="charImg.png" />
+
+
+Name | image | HP, MANA
+Helm | image | 
+body | image | weapon
+legs | image | gloves
+boot | image | ring
+
+
+dragging:
+
+timely arrays:
+	inventory array (contains all items in inventory)
+	gear array (contains all worn equipment)
+
+static arrays:
+	weapons array (contains all the available weapons in the game)
+	helmets
+	bodies
+	legs
+	boots
+	gloves
+	rings

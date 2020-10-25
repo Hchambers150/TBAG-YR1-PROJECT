@@ -169,21 +169,26 @@ body {
 .statText {
     height: 0;
     width: 0;
-    display: inline;
+    display: block;
     position: relative;
     left: -0.8em;
     top: -0.8em;
+}
+
+.miniStat {
+    display: block;
+    float:left;
+    position:relative;
 }
 
 .stat {
     height: 0;
     width: 0;
     font-size: 3em;
-    display: inline;
-
+    display: block;
     position: relative;
-    left:-0.2em;
-    top:-0.6em;
+    left: -0.2em;
+    top: -0.6em;
 }
 
 .shape {

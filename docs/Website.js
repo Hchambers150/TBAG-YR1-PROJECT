@@ -17,8 +17,8 @@
 
 //startup.style.webkitAnimationPlayState = "paused";
 
-//var statPoints = 27;
-var statPoints = 0;
+var statPoints = 27;
+//var statPoints = 0;
 var player;
 
 

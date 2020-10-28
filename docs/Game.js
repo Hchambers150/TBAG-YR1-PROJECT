@@ -1,11 +1,11 @@
 ﻿// game - based javascript done here:
 
-var conMod;
-var dexMod;
-var strMod;
-var intMod;
-var wisMod;
-var chaMod;
+
+
+function print(x) {
+    var output = document.getElementById("output");
+    output.innerHTML = output.innerHTML + "<br>" + x;
+}
 
 function getModifiers(con, dex, str, int, wis, cha) {
     var tempArray = [con, dex, str, int, wis, cha];
@@ -30,14 +30,11 @@ function getModifiers(con, dex, str, int, wis, cha) {
         }
            
     }
-
     return (toReturn);
-
-
 }
 
-function equip(x) {
-    // x = event; therefore
+function checkEquipped() {
+    // go through helm, body, legs, boots, weapon, gloves, ring , get all dmg, defence values
 
 }
 
@@ -55,16 +52,43 @@ function addToInv(x) {
         //console.log("yee", player.inventory[i].innerHTML)
         if (player.inventory[i].innerHTML == "") {
 
+            var toPrint = "You put the <font class='special'>" + x.name +"</font> in your inventory.";
+            print(toPrint);
+
             player.inventory[i].innerHTML = x.inventHtml;
             return;
 
         }
 
     }
+}
 
-    //<div id="lootWeaponTest" draggable="true" ondragstart="drag(event)">
+var unInitItems = [
 
-    //</div>
+    ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
+    ["Helmet", "helm", "shittyDaggerBig.png", "leatherCoif.png", 1, 0, "This dagger feels too heavy."]
+
+];
+
+var allItems = [];
+
+function initAllItems() {
+
+    // go through init items
+    // create a new Object for each
+
+    for (var i = 0; i < unInitItems.length; i++) {
+        var x = unInitItems[i];
+
+        allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
+
+    }
+
+}
+
+function giveStartItems() {
+    addToInv(allItems[0]);
+    addToInv(allItems[1]);
 }
 
 class Item {
@@ -97,26 +121,12 @@ class Item {
     }
 
     InventHtml = function (name, invImg) {
-        var total = '<div id="' + name + 'inv" data-type="' + this.type + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+        var total = '<div id="' + name + 'inv" data-type="' + this.type + '" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
 
         return total;
     }
 
 }
-
-var unInitItems = [
-    
-    ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
-    ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."]
-    
-];
-
-//function initItems(x) {
-//    for (var i = 0; i < x.length; i++) {
-//        var toString(initItems[x][0]) 
-//    }
-
-//}
 
 class Player {
 
@@ -131,8 +141,8 @@ class Player {
 
         this.inventory = this.Inventory();
 
-        this.health = baseHealth + (conMod*2);
-        this.mana = baseMana + (intMod*2);
+        this.health = baseHealth + (this.stats.conMod*2);
+        this.mana = baseMana + (this.stats.intMod * 2);
 
     }
 
@@ -145,14 +155,15 @@ class Player {
         this.stats.cha = cha;
 
         var tempArray = getModifiers(con, dex, str, int, wis, cha);
-        conMod = tempArray[0];
-        dexMod = tempArray[1];
-        strMod = tempArray[2];
-        intMod = tempArray[3];
-        wisMod = tempArray[4];
-        chaMod = tempArray[5];
+        this.conMod = tempArray[0];
+        this.dexMod = tempArray[1];
+        this.strMod = tempArray[2];
+        this.intMod = tempArray[3];
+        this.wisMod = tempArray[4];
+        this.chaMod = tempArray[5];
 
-        setStats(con, dex, str, int, wis, cha);
+        setStats(name, con, dex, str, int, wis, cha);
+        
     }
 
     Inventory = function () {
@@ -169,5 +180,6 @@ class Player {
         return inventoryArray;
     }
 }
+
 
 //var player = new Player('test testington', 8, 10, 12, 14, 16, 20);

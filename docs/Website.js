@@ -17,13 +17,10 @@
 
 //startup.style.webkitAnimationPlayState = "paused";
 
-var minus = document.getElementById("minus");
-var errors = document.getElementById("errors");
-var skillpoints = document.getElementById("remainingStat");
-var statPoints = 27;
+//var statPoints = 27;
+var statPoints = 0;
+var player;
 
-//var objDiv = document.getElementById("textArea");
-//objDiv.scrollTop = objDiv.scrollHeight + '1000px';
 
 function startAnim() {
     startup.style.webkitAnimationPlayState = "running";
@@ -82,6 +79,9 @@ function increaseStat(x) {
     var statInt = parseInt(document.getElementById(x).innerText);
     var stat = document.getElementById(x);
 
+    var errors = document.getElementById("errors");
+    var skillpoints = document.getElementById("remainingStat");
+
     if (statInt == 20) {
         errors.innerText = "Your stat scores may not go above 20!";
     } else {
@@ -116,6 +116,8 @@ function increaseStat(x) {
 function decreaseStat(x) {
     var stat = document.getElementById(x);
     var statInt = parseInt(document.getElementById(x).innerText);
+
+    var errors = document.getElementById("errors");
     var skillpoints = document.getElementById("remainingStat");
 
     if (statInt == 8) {
@@ -179,19 +181,16 @@ function getStats() { // revisit; should
         document.getElementById("startup").style.display = 'none';
         document.getElementById("main").style.display = 'block';
 
-        return (name, con, dex, str, int, wis, cha);
+        player = new Player(name, con, dex, str, int, wis, cha);
+        initAllItems();
+        giveStartItems();
 
-    } else if (statPoints == 27) {
+    } else if (statPoints == 27) { // for testing!! delete!!!
         document.getElementById("startup").style.display = 'none';
         document.getElementById("main").style.display = 'block';
 
         player = new Player(name, con, dex, str, int, wis, cha);
-        unInitItems[0] = new Item("Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy.");
-        unInitItems[1] = new Item("Good Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy.");
-        //console.log(unInitItems)
 
-        addToInv(unInitItems[0]);
-        addToInv(unInitItems[1]);
     } else if (name == "" || name.length > 20) {
         errors.innerText = "Invalid name! Max length: 20";
 
@@ -200,7 +199,7 @@ function getStats() { // revisit; should
     }
 }
 
-function setStats(con, dex, str, int, wis, cha) {
+function setStats(name, con, dex, str, int, wis, cha) {
     var liveCon = document.getElementById("conLive");
     var liveDex = document.getElementById("dexLive");
     var liveStr = document.getElementById("strLive");
@@ -223,6 +222,5 @@ function setStats(con, dex, str, int, wis, cha) {
         if (checkPos[i].innerText.length == 1) {
             checkPos[i].style.left = "1.15em";
         }
-
     }
 }

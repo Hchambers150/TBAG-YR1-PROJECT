@@ -30,56 +30,52 @@ function startAnim() {
     document.getElementById("playBtn").style.display = "none";
 }
 
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+
+    var source = ev.currentTarget.getAttribute('data-type');
+    var array = document.getElementsByClassName('drop');
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].getAttribute('data-type') === source) {
+            // allowdrop
+            //console.log("success!", array[i])
+            array[i].setAttribute('allowDrop', true);
+        }
+    }
+}
+
 function checkDrop(ev, el) {
-    console.log(ev, el);
-
-
-
-    var type = el.dataTransfer.getData("text");
-    console.log("test",type);
-
-    ev.preventDefault();
-    //console.log(ev.childNodes)
-
-    //console.log(ev, el);
-    ////console.log("ev:", ev, "el:", el, "childnode:", el.childNodes);
-    //var childNodes = el.childNodes;
-    //console.log(childNodes, childNodes.length);
-
-    //ev.preventDefault(); 
-    //if (el.childNodes.length == 2) {
-    //    console.log("type: ",el.childNodes[1].attributes[1])
-    //    if (el.childNodes[1].attributes[1] == "weapon") {
-    //        allowDrop(ev);
-    //    }
-    //}
-    
-    
-    
+    //console.log(ev, ev.target.childNodes)
+    if (ev.target.childNodes.length == 1) {
+        console.log("hooray!")
+        if (el.getAttribute('allowDrop') == "true") {
+            ev.preventDefault();
+        }
+    }
 }
 
 function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    var toSend = [ev.target.id, ev.target.attributes[1].nodeValue];
-
-    ev.dataTransfer.setData("text", toSend);
-}
-
-function drop(ev) {
-    console.log("TRAGEDY",ev);
-    ev.preventDefault();
-    
     var data = ev.dataTransfer.getData("text");
-    data = data.split(",");
-    console.log(data);
-    ev.target.appendChild(document.getElementById(data[0]));
+    ev.target.appendChild(document.getElementById(data));
 
-    console.log(ev);
+    //console.log(ev);
+}
 
-    //updateInventory();
+function inventDrop(ev) {
+    // check its empty
+    //console.log("HIOIII",ev.target.style.className)
+    if (ev.target.childNodes.length == 0 && ev.target.className == 'inventorySlot') {
+        ev.preventDefault();
+    } else {
+        console.log("Slot is full!");
+    }
+    
+}
+
+function preventDrop(ev) {
+    //NO DROP!!
+    return;
+
 }
 
 function increaseStat(x) {
@@ -99,7 +95,7 @@ function increaseStat(x) {
     if (statInt < 20 && statPoints > 0) {
         stat.innerText = statInt + 1;
         statPoints--;
-        console.log(statPoints);
+        //console.log(statPoints);
     }
 
     if (stat.innerText.length == 2) {
@@ -191,9 +187,11 @@ function getStats() { // revisit; should
 
         player = new Player(name, con, dex, str, int, wis, cha);
         unInitItems[0] = new Item("Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy.");
-        console.log(unInitItems)
+        unInitItems[1] = new Item("Good Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy.");
+        //console.log(unInitItems)
 
         addToInv(unInitItems[0]);
+        addToInv(unInitItems[1]);
     } else if (name == "" || name.length > 20) {
         errors.innerText = "Invalid name! Max length: 20";
 

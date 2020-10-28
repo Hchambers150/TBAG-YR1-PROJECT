@@ -52,7 +52,7 @@ function addToInv(x) {
 
 
     for (var i = 0; i < player.inventory.length; i++) {
-        console.log("yee", player.inventory[i].innerHTML)
+        //console.log("yee", player.inventory[i].innerHTML)
         if (player.inventory[i].innerHTML == "") {
 
             player.inventory[i].innerHTML = x.inventHtml;
@@ -97,7 +97,7 @@ class Item {
     }
 
     InventHtml = function (name, invImg) {
-        var total = '<div id="' + name + 'inv" data_type="' + this.type + '" class="invImg" style="background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)"></div>';
+        var total = '<div id="' + name + 'inv" data-type="' + this.type + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
 
         return total;
     }
@@ -106,6 +106,7 @@ class Item {
 
 var unInitItems = [
     
+    ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
     ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."]
     
 ];

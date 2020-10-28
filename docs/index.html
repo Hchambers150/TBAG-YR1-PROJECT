@@ -195,12 +195,12 @@
                 <div id="equipment">
                     <div class="grid-container">
                         <div class="helm">
-                            <div id="helmDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
+                            <div id="helmDrop" class="drop" data-type="helm" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="body">
-                            <div id="bodyDrop" class="drop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="bodyDrop" class="drop" data-type="body" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
@@ -209,28 +209,28 @@
                             <span id="mana" class="">Mana: 19</span>
                         </div>
                         <div class="weapon">
-                            <div id="weaponDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
+                            <div id="weaponDrop" class="drop" data-type="weapon" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="boots">
-                            <div id="bootsDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
+                            <div id="bootsDrop" class="drop" data-type="boots" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="legs">
-                            <div id="legsDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
+                            <div id="legsDrop" class="drop" data-type="legs" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="image"><img id="image" src="charImg.png"></div>
                         <div class="gloves">
-                            <div id="glovesDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
+                            <div id="glovesDrop" class="drop" data-type="gloves" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="ring">
-                            <div id="ringDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
+                            <div id="ringDrop" class="drop" data-type="ring" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
@@ -242,40 +242,37 @@
                 <div id="inventory">
                     <span id="inventTitle">Inventory: </span>
                     <div id="inventoryGrid">
-                        <div class="inventorySlot" id="slot1" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <div id="lootWeaponTest" draggable="true" ondragstart="drag(event)">
+                        <div class="inventorySlot" id="slot1" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot2" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot3" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot4" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot5" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot6" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot7" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot8" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot9" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot10" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot11" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot12" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot13" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot14" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot15" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot16" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot17" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot18" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot19" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot20" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot21" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot22" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot23" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot24" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot25" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot26" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot27" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot28" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot29" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot30" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
 
-                            </div>
-                        </div>
-                        <div class="inventorySlot" id="slot2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot10" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot11" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot12" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot13" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot14" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot15" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot16" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot17" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot18" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot19" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot20" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot21" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot22" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot23" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot24" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot25" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot26" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot27" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot28" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot29" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        <div class="inventorySlot" id="slot30" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                     </div>
                 </div>
             </div>

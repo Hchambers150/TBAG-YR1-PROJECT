@@ -59,3 +59,65 @@ static arrays:
 	boots
 	gloves
 	rings
+
+
+	Constitution
+
+Constitution is your <font class="important">Health.</font><br>
+By having a higher Constitution, you'll be able to endure more attacks; and poison.
+
+Dexterity is your <font class="important">Agility.</font><br>
+By having a higher Dexterity, you'll have a higher chance of <font class="special">bypassing & disarming</font> <font class="important">traps</font>.
+
+Strength is your <font class="important">Attack Damage.</font><br>
+By having a higher Strength, you'll do <font class="special">more damage.</font>
+
+Intuition is your <font class="mystical">Intelligence.</font><br><br>
+By having a higher Intuition, you'll do <font class="special">more damage</font> <font class="mystical">from magic attacks.</font>
+
+Wisdom is your <font class="specoial">knowledge.</font><br>
+By having a higher Wisdom, you'll <font class="special">know more</font> about <font class="mystical">History, Magic, & Monsters.</font>
+
+Charisma is your <font class="special">Charm.</font><br><br>
+By having a higher Charisma, you'll <font class="special">make more friends.</font>
+
+
+        ████████████████
+      ██                ██
+    ██                    ██
+  ██                        ██
+  ██                        ██
+  ████████████████████████████
+  ██  ████████    ████████  ██
+  ██████████        ██████████
+  ████                    ████
+██  ████      ████      ████  ██
+██    ██    ██    ██    ██    ██
+██      ████        ████      ██
+██                            ██
+  ██                        ██
+    ██    ████████████    ██
+      ████            ████
+
+
+  ██████               ████
+██      ██           ██    ██
+██   ██████████████████  ██
+██                       ██
+  ██                       ██
+    ██    Bitches be       ██
+    ██       trippin       ██
+    ██                     ██
+    ██                     ██
+    ██
+  ██    ████████████████████
+██    ██
+  ████
+
+
+
+literal items:
+- how to link to html div?
+- what do i achieve by doing that?
+- html div format
+

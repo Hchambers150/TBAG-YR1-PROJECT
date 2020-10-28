@@ -171,6 +171,12 @@
 
 }
 
+.drop {
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+}
+
 #lootWeaponTest {
     width: 100%;
     height: 100%;
@@ -362,9 +368,17 @@
 }
 
 .important {
-    color: #cc2114;
+    color: #ff0000;
 }
 
 .mystical {
     color: #30bbe6;
+}
+
+.invImg {
+    width: 100%;
+    height: 100%;
+    background-color:;
+    background-repeat: no-repeat;
+    background-position: center;
 }

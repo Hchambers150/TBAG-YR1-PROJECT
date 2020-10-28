@@ -5,7 +5,10 @@
     <title>Text Based Adventure Game</title>
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="startup.css" />
-    <link rel="stylesheet" href="contextMenu.css"/>
+    <link rel="stylesheet" href="contextMenu.css" />
+    <script src="Website.js"></script>
+    <script src="Game.js"></script>
+
 
 </head>
 <body>
@@ -15,7 +18,7 @@
     <div id="startup" style="">
         <span id="title">Welcome to my project!</span>
         <br>
-        <span style="display:block;">What is your name? </span><input id="charName" type="text">
+        <span style="display:block;">What is your name? </span><input id="charName" type="text" value="Test Testington">
         <br>
         <div id="remainingPointsWrapper">
             <span id="remainingText">Remaining Skillpoints: </span>
@@ -31,7 +34,7 @@
                 <div class="statBox">
                     <p class="statText" id="conText">Con</p><br>
                     <p class="stat" id="conStat">8</p>
-                    <!--<p class="miniStat" id="conMini">+1</p>-->
+                    <p class="miniStat" id="conMini">+1</p>
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('conStat')">-</div>
                         <div class="plus" onclick="increaseStat('conStat')">+</div>
@@ -99,7 +102,8 @@
                     <span class="statETitle"><u>Intuition</u></span><br>
                         <span class="statEText">
                             Intuition is your <font class="mystical">Intelligence.</font><br><br>
-                            By having a higher Intuition, you'll do <font class="special">more damage</font> <font class="mystical">from magic attacks.</font>
+                            By having a higher Intuition, you'll do <font class="special">more damage</font> <font class="mystical">from magic attacks.</font> 
+                            You will also <font class="special">have more</font> <font class="mystical">mana.</font>
                         </span>
                 </div>
             </div>
@@ -138,7 +142,7 @@
                     <span class="statETitle"><u>Charisma</u></span><br>
                         <span class="statEText">
                             Charisma is your <font class="special">Charm.</font><br><br>
-                            By having a higher Charisma, you'll <font class="special">make more friends.</font>
+                            By having a higher Charisma, you'll <font class="special">make more</font> <font class="mystical">friends.</font>
                         </span>
                 </div>
             </div>
@@ -158,7 +162,22 @@
 
 
                 <div id="picArea">
-                    <img class="image" src="https://www.pikpng.com/pngl/m/174-1746426_storm-trooper-mask-pixel-art-star-wars-clipart.png" />
+                    <textarea style="width:inherit;height:30%;">        ████████████████
+      ██                ██
+    ██                    ██
+  ██                        ██
+  ██                        ██
+  ████████████████████████████
+  ██  ████████    ████████  ██
+  ██████████        ██████████
+  ████                    ████
+██  ████      ████      ████  ██
+██    ██    ██    ██    ██    ██
+██      ████        ████      ██
+██                            ██
+  ██                        ██
+    ██    ████████████    ██
+      ████            ████</textarea>
                 </div>
             </p>
 
@@ -176,12 +195,12 @@
                 <div id="equipment">
                     <div class="grid-container">
                         <div class="helm">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="helmDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="body">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="bodyDrop" class="drop" ondrop="drop(event)" ondragover="allowDrop(event)">
 
                             </div>
                         </div>
@@ -190,28 +209,28 @@
                             <span id="mana" class="">Mana: 19</span>
                         </div>
                         <div class="weapon">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="weaponDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="boots">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="bootsDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="legs">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="legsDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="image"><img id="image" src="charImg.png"></div>
                         <div class="gloves">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="glovesDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
                         <div class="ring">
-                            <div id="weaponDrop" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div id="ringDrop" class="drop" ondrop="drop(event)" ondragover="checkDrop(event, this)">
 
                             </div>
                         </div>
@@ -223,40 +242,40 @@
                 <div id="inventory">
                     <span id="inventTitle">Inventory: </span>
                     <div id="inventoryGrid">
-                        <div class="inventorySlot" id="slot1">
+                        <div class="inventorySlot" id="slot1" ondrop="drop(event)" ondragover="allowDrop(event)">
                             <div id="lootWeaponTest" draggable="true" ondragstart="drag(event)">
 
                             </div>
                         </div>
-                        <div class="inventorySlot" id="slot2"><img src="swordTemp.jpg" draggable="true" ondragstart="drag(event)"></div>
-                        <div class="inventorySlot" id="slot3"></div>
-                        <div class="inventorySlot" id="slot4"></div>
-                        <div class="inventorySlot" id="slot5"></div>
-                        <div class="inventorySlot" id="slot6"></div>
-                        <div class="inventorySlot" id="slot7"></div>
-                        <div class="inventorySlot" id="slot8"></div>
-                        <div class="inventorySlot" id="slot9"></div>
-                        <div class="inventorySlot" id="slot10"></div>
-                        <div class="inventorySlot" id="slot11"></div>
-                        <div class="inventorySlot" id="slot12"></div>
-                        <div class="inventorySlot" id="slot13"></div>
-                        <div class="inventorySlot" id="slot14"></div>
-                        <div class="inventorySlot" id="slot15"></div>
-                        <div class="inventorySlot" id="slot16"></div>
-                        <div class="inventorySlot" id="slot17"></div>
-                        <div class="inventorySlot" id="slot18"></div>
-                        <div class="inventorySlot" id="slot19"></div>
-                        <div class="inventorySlot" id="slot20"></div>
-                        <div class="inventorySlot" id="slot21"></div>
-                        <div class="inventorySlot" id="slot22"></div>
-                        <div class="inventorySlot" id="slot23"></div>
-                        <div class="inventorySlot" id="slot24"></div>
-                        <div class="inventorySlot" id="slot25"></div>
-                        <div class="inventorySlot" id="slot26"></div>
-                        <div class="inventorySlot" id="slot27"></div>
-                        <div class="inventorySlot" id="slot28"></div>
-                        <div class="inventorySlot" id="slot29"></div>
-                        <div class="inventorySlot" id="slot30"></div>
+                        <div class="inventorySlot" id="slot2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot10" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot11" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot12" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot13" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot14" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot15" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot16" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot17" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot18" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot19" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot20" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot21" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot22" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot23" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot24" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot25" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot26" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot27" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot28" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot29" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        <div class="inventorySlot" id="slot30" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                     </div>
                 </div>
             </div>
@@ -331,181 +350,6 @@
 
 <script>
 
-    //var notepad = document;
-    //notepad.addEventListener("contextmenu",function(event){
-    //    event.preventDefault();
-    //    var ctxMenu = document.getElementById("ctxMenu");
-    //    ctxMenu.style.display = "block";
-    //    ctxMenu.style.left = (event.pageX - 10)+"px";
-    //    ctxMenu.style.top = (event.pageY - 10)+"px";
-    //},false);
-    //notepad.addEventListener("click",function(event){
-    //    var ctxMenu = document.getElementById("ctxMenu");
-    //    ctxMenu.style.display = "";
-    //    ctxMenu.style.left = "";
-    //    ctxMenu.style.top = "";
-    //},false);
-
-    //startup.style.webkitAnimationPlayState = "paused";
-
-    var minus = document.getElementById("minus");
-    var errors = document.getElementById("errors");
-    var skillpoints = document.getElementById("remainingStat");
-    var statPoints = 27;
-
-    var objDiv = document.getElementById("textArea");
-    objDiv.scrollTop = objDiv.scrollHeight + '1000px';
-
-    function startAnim() {
-        startup.style.webkitAnimationPlayState = "running";
-        document.getElementById("playBtn").style.display = "none";
-    }
-
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-    }
-
-    function increaseStat(x) {
-        //console.log(x);
-        var statInt = parseInt(document.getElementById(x).innerText);
-        var stat = document.getElementById(x);
-
-        if (statInt == 20) {
-            errors.innerText = "Your stat scores may not go above 20!";
-        } else {
-            errors.innerText = "";
-        }
-
-        if (statPoints == 0) {
-            errors.innerText = "You're out of stat points!"
-        }
-
-        if (statInt < 20 && statPoints > 0) {
-            stat.innerText = statInt + 1;
-            statPoints--;
-            console.log(statPoints);
-        }
-
-        if (stat.innerText.length == 2) {
-            stat.style.left = "-0.5em";
-        } else {
-            stat.style.left = "-0.2em";
-        }
-
-        skillpoints.innerText = statPoints;
-        if (skillpoints.innerText.length == 2) {
-            skillpoints.style.left = "-1.3em";
-        } else {
-            skillpoints.style.left = "-1em";
-        }
-        
-    }
-
-    function decreaseStat(x) {
-        //console.log(x);
-        var stat = document.getElementById(x);
-        var statInt = parseInt(document.getElementById(x).innerText);
-        var skillpoints = document.getElementById("remainingStat");
-
-        //console.log(statInt);
-        if (statInt == 8) {
-            errors.innerText = "Your stat scores may not go lower than 8!";
-        } else {
-            errors.innerText = "";
-        }
-
-        if (statInt > 8) {
-            stat.innerText = statInt - 1;
-            statPoints++;
-        } 
-
-        if (stat.innerText.length == 2) {
-            stat.style.left = "-0.5em";
-        } else {
-            stat.style.left = "-0.2em";
-        }
-
-        skillpoints.innerText = statPoints;
-        if (skillpoints.innerText.length == 2) {
-            skillpoints.style.left = "-1.3em";
-        } else {
-            skillpoints.style.left = "-1em";
-        }
-
-    }
-
-    var name;
-    var con = 20;
-    var dex;
-    var str;
-    var int;
-    var wis;
-    var cha;
-
-    function getStats() {
-        name = document.getElementById("charName").value;
-        if (statPoints == 0 && name != "") {
-            name = document.getElementById("charName").value;
-            con = parseInt(document.getElementById("conStat").innerText);
-            dex = parseInt(document.getElementById("dexStat").innerText);
-            str = parseInt(document.getElementById("strStat").innerText);
-            int = parseInt(document.getElementById("intStat").innerText);
-            wis = parseInt(document.getElementById("wisStat").innerText);
-            cha = parseInt(document.getElementById("chaStat").innerText);
-
-            document.getElementById("startup").style.animation = '1s ease-out 0s 1 slideOutToTop';
-            document.getElementById("startup").style.display = 'none';
-            document.getElementById("main").style.display = 'block';
-
-            console.log(name, con, dex, str, int, wis, cha);
-            setStats();
-        } else if (statPoints == 27) {
-            document.getElementById("startup").style.display = 'none';
-            document.getElementById("main").style.display = 'block';
-            setStats();
-        } else if (name == "" || name.length > 20) {
-            errors.innerText = "Invalid name! Max length: 20";
-
-        } else if (statPoints == 0) {
-            errors.innerText = "You've not spent all of your stat points!";
-        }
-    }
-
-    function setStats() {
-        var liveCon = document.getElementById("conLive");
-        var liveDex = document.getElementById("dexLive");
-        var liveStr = document.getElementById("strLive");
-        var liveInt = document.getElementById("intLive");
-        var liveWis = document.getElementById("wisLive");
-        var liveCha = document.getElementById("chaLive");
-
-        var checkPos = [liveCon, liveDex, liveStr, liveInt, liveWis, liveCha];
-
-        liveCon.innerText = con;
-        liveDex.innerText = dex;
-        liveStr.innerText = str;
-        liveInt.innerText = int;
-        liveWis.innerText = wis;
-        liveCha.innerText = cha;
-
-        document.getElementById("gearTitle").innerText = name;
-
-        for (var i = 0; i < checkPos.length; i++) {
-            if (checkPos[i].innerText.length == 1){
-                checkPos[i].style.left = "1.15em";
-            }
-
-        }
-    }
+   
 
 </script>

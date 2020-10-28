@@ -121,3 +121,10 @@ literal items:
 - what do i achieve by doing that?
 - html div format
 
+
+
+things to work towards:
+ - map, rooms, etc
+		store in an array fresh .js file / figure out how to get asp.net and js working?? seems hard
+		room class:
+			constructor(roomID, [connectedRooms | N,E,S,W], [chests / containers], "Description", )

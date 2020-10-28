@@ -66,7 +66,12 @@ function addToInv(x) {
 var unInitItems = [
 
     ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
-    ["Helmet", "helm", "shittyDaggerBig.png", "leatherCoif.png", 1, 0, "This dagger feels too heavy."]
+    ["Helmet", "helm", "shittyDaggerBig.png", "leatherCoif.png", 0, 1, "This leather coif won't offer much protection..."],
+    ["Leather Body", "body", "", "leatherBody.png", 0, 3, "This studded leather body won't offer much protection..."],
+    ["Broad Sword", "weapon", "", "broadSword.png", 3, 0, "This broadsword seems pretty capable!"],
+    ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
+    ["Steel Tipped Boots", "boots", "", "steelTippedBoots.png", 0, 2, "These boots seem to offer a good amount of protection!"],
+    ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."]
 
 ];
 
@@ -87,8 +92,9 @@ function initAllItems() {
 }
 
 function giveStartItems() {
-    addToInv(allItems[0]);
-    addToInv(allItems[1]);
+    for (var i = 0; i < allItems.length; i++) {
+        addToInv(allItems[i]);
+    }
 }
 
 class Item {

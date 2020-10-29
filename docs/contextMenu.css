@@ -1,4 +1,4 @@
-﻿/*#ctxMenu {
+﻿#ctxMenu {
     display: none;
     z-index: 100;
 }
@@ -51,4 +51,4 @@ menu {
 
     menu:not([title]):before {
         content: "\2630";
-    }*/
+    }

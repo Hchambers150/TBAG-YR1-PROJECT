@@ -71,7 +71,9 @@ var unInitItems = [
     ["Broad Sword", "weapon", "", "broadSword.png", 3, 0, "This broadsword seems pretty capable!"],
     ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
     ["Steel Tipped Boots", "boots", "", "steelTippedBoots.png", 0, 2, "These boots seem to offer a good amount of protection!"],
-    ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."]
+    ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."],
+    ["Steel Body", "body", "", "steelBody.png", 0, 4, "This heavy steel body should protect me."],
+    ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."]
 
 ];
 
@@ -127,7 +129,7 @@ class Item {
     }
 
     InventHtml = function (name, invImg) {
-        var total = '<div id="' + name + 'inv" data-type="' + this.type + '" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="'+name+'" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
 
         return total;
     }

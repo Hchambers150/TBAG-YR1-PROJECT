@@ -44,6 +44,7 @@
     position:absolute;
     top:0;
     right:0;
+    background-color:black;
 
 }
 
@@ -78,11 +79,12 @@
     }
 
 #presets {
-    background-color:gray;
+    background-color:black;
     width:14.6vw;
     height:100%;
     position:absolute;
     right:0;
+    border-left:1px solid white;
 
 }
 
@@ -92,7 +94,7 @@
     right: 0;
     width: 29.5vw;
     height: 100vh;
-
+    border-left:1px dotted white;
     display: flex;
     justify-content: center;
 }

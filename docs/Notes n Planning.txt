@@ -121,6 +121,7 @@ literal items:
 - what do i achieve by doing that?
 - html div format
 
+checkEquipped() needs doing.
 
 
 things to work towards:
@@ -128,3 +129,11 @@ things to work towards:
 		store in an array fresh .js file / figure out how to get asp.net and js working?? seems hard
 		room class:
 			constructor(roomID, [connectedRooms | N,E,S,W], [chests / containers], "Description", )
+- conversation mode
+- battle mode
+- puzzle mode (and p5.js games)
+- context menu, commands, presets {would be good to work on all at the same time / make commands first, then presets, then context menu}
+
+
+
+

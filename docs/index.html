@@ -155,21 +155,77 @@
     </div>
 
     <div id="main">
-        <div id="textArea">
-            <p id="output">
-
-                As a <font class="special">child</font>, your <font class="important">Father</font> never really paid attention to you.<br>
-
-
-                <div id="picArea">
-                    <textarea style="width:inherit;height:30%;background-color:black;"></textarea>
+        <div id="battleArea">
+            <div id="monsterWrap">
+                <div id="monsterTitleWrap">
+                    <span id="monsterTitle">Ghostly Ghoul</span>
                 </div>
+
+                <div id="imgWrapper">
+                    <img id="monsterImg" src="https://64.media.tumblr.com/01d0f90c74074e8a45825dea194b659f/tumblr_oklrofjnhU1uj3emso1_1280.gifv"/>
+                </div>
+                <div id="infoArea">
+                    <div id="left">
+                        <span id="monHP">
+                            <font class="important">HP: 420</font>
+                            <br>
+                            <font class="mystical">Mana: 69</font>
+                        </span>
+                    </div>
+                    <div id="right">
+                        <span id="monStatus">
+                            <font class="poisoned">*Poisoned*</font><br>
+                            <font class="cursed">*Cursed*</font>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="playerChoices">
+                <a onclick="attack()"><div class="fightChoice" id="attack">Attack!</div>
+                <div class="fightChoice right" id="attack2">Defend!</div>
+                <div class="fightChoice bottom" id="attack3">Dick Twist!</div>
+                <div class="fightChoice bottom right" id="attack4">Run!</div></a>
+
+            </div>
+
+            <div id="battleOut">
+                <p id="battleOutput">
+                    You hit the <font class="special">Ghostly Ghoul</font> for <font class="important">10hp!</font><br>
+                    The <font class="special">Ghostly Ghoul</font> <font class="mystical">one shots</font> you!
+                </p>
+            </div>
+        </div>
+
+        <div id="readArea">
+            <br>
+            <span id="pageTitle"></span><div id="exit" onclick="exitReading()"><b>X</b></div>
+            <p id="pageText"> <!--MAX LENGTH 34!!!-->
             </p>
+            <div id="nextPage">
+                <span><font style="font-size: 1em;">Next page</font> 🠺</span>
+            </div>
+            <div id="lastPage">🠸 Last page </div>
+        </div>
+
+        <div id="textArea">
+            <div id="locationInfo">
+                <span id="currentArea">Area: Basement </span> | <span id="currentFloor">Floor No. -1</span>
+            </div>
+            <br><br>
+
+                <p id="output">
+                    As a <font class="special">child</font>, your <font class="important">Father</font> never really paid attention to you.<br>
+
+                    <div id="picArea">
+                        <textarea style="width:inherit;height:30%;background-color:black;"></textarea>
+                    </div>
+                </p>
 
         </div>
 
         <div id="inputWrap">
-            <input id="input" value="Type here...">
+            <input type="text" id="input" placeholder="Type here..." onkeydown="checkInput(this)">
             <div id="presets">
 
             </div>
@@ -315,16 +371,12 @@
     </div>
 
     <menu id="ctxMenu">
-        <menu title="File">
-            <menu title="Save"></menu>
-            <menu title="Save As"></menu>
-            <menu title="Open"></menu>
-         </menu>
-        <menu title="Edit">
-            <menu title="Cut"></menu>
-            <menu title="Copy"></menu>
-             <menu title="Paste"></menu>
+        <menu title="CMD">
+            <menu title="Use"></menu>
+            <menu title="Examine"></menu>
+            <menu title="Take"></menu>
         </menu>
+        <menu title="Edit"></menu>
     </menu>
 
 </body>

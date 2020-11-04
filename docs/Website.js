@@ -21,10 +21,17 @@ notepad.addEventListener("click",function(event){
 var statPoints = 0;
 var player;
 
-
 function startAnim() {
     startup.style.webkitAnimationPlayState = "running";
     document.getElementById("playBtn").style.display = "none";
+}
+
+function startGame() { // only called once!!
+    // give Mom's Note, scroll output down, hide first screen, show 2nd screen
+
+    var element = document.getElementById("output");
+    element.scrollTop = element.scrollHeight;
+
 }
 
 function drag(ev) {
@@ -184,6 +191,7 @@ function getStats() { // revisit; should
         player = new Player(name, con, dex, str, int, wis, cha);
         initAllItems();
         giveStartItems();
+        updateScroll();
 
     } else if (statPoints == 27) { // for testing!! delete!!!
         document.getElementById("startup").style.display = 'none';
@@ -223,4 +231,65 @@ function setStats(name, con, dex, str, int, wis, cha) {
             checkPos[i].style.left = "1.15em";
         }
     }
+}
+
+function enterCombat(enemy) {
+    document.getElementById('textArea').style.display = 'none';
+    document.getElementById('inputWrap').style.display = 'none';
+    document.getElementById('battleArea').style.display = 'flex';
+
+    //document.getElementById('monsterTitle').innerText = enemy.name;
+    //document.getElementById('monsterImg').src = enemy.imgSource;
+    //document.getElementById('monHP').innerText = enemy.health;
+
+}
+
+function exitCombat() {
+    document.getElementById('textArea').style.display = 'block';
+    document.getElementById('inputWrap').style.display = 'block';
+    document.getElementById('battleArea').style.display = 'none';
+
+    document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
+}
+
+var currentPage;
+var tempArrayReading;
+
+function enterReading(text) {
+    document.getElementById('textArea').style.display = 'none';
+    document.getElementById('inputWrap').style.display = 'none';
+    document.getElementById('readArea').style.display = 'block';
+    document.getElementById('battleArea').style.display = 'none';
+
+    var title = document.getElementById('pageTitle');
+    var main = document.getElementById('pageText');
+
+    for (var i = 0; i < text.length; i++) {
+        text[i] = text[i].split("|"); // this is very volatile. im tired, so i think ill come back to this tomorrow
+    }
+
+    title.innerText = text[0][0];
+    main.innerHTML = text[0][1];
+    currentPage = 0;
+    tempArrayReading = text;
+}
+
+function nextPage() {
+    if (currentPage < tempArrayReading.length-1) {
+        currentPage = currentPage + 1;
+
+    }
+}
+
+function lastPage() {
+
+
+}
+
+function exitReading() {
+    document.getElementById('textArea').style.display = 'block';
+    document.getElementById('inputWrap').style.display = 'block';
+    document.getElementById('readArea').style.display = 'none';
+
+    document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }

@@ -1,10 +1,68 @@
 ﻿// game - based javascript done here:
 
+var currentRoom;
+var commands = [
 
+    // go
+    ["go", ]
+
+];
+
+function updateScroll() {
+    var element = document.getElementById("output");
+    element.scrollTop = element.scrollHeight;
+}
+
+function checkInput(ele) {
+
+    if (event.key == 'Enter') {
+        //console.log("Wow, this works");
+        //console.log(ele.value);
+        scanInput(ele.value);
+    }
+
+}
+
+function scanInput(str) {
+
+    // split it into words, if word1 == command -> follow command-specific instruction
+    var strArray = str.split(" ");
+    console.log(strArray);
+
+    //
+    for (var i = 0; i < commands[0].length; i++) { }
+
+}
+
+function go(roomID) {
+    for (var i = 0; i < allRooms.length; i++) {
+        // match roomID with room, updateRoom
+        if (allRooms[i].roomID.toLowerCase() == roomID.toLowerCase()) {
+            updateRoom(allRooms[i]);
+            look();
+        }
+    }
+}
+
+function updateRoom(room) {
+    currentRoom = room;
+}
+
+function look() {
+    return currentRoom.description;
+}
+
+
+function battlePrint(x) {
+    var output = document.getElementById("battleOutput");
+    output.innerHTML = output.innerHTML + "<br>" + x;
+    document.getElementById('battleOut').scrollTop = document.getElementById('battleOut').scrollHeight;
+}
 
 function print(x) {
     var output = document.getElementById("output");
     output.innerHTML = output.innerHTML + "<br>" + x;
+    document.getElementById('textArea').scrollTop = document.getElementById('textArea').scrollHeight;
 }
 
 function getModifiers(con, dex, str, int, wis, cha) {
@@ -72,9 +130,11 @@ var unInitItems = [
     ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
     ["Steel Tipped Boots", "boots", "", "steelTippedBoots.png", 0, 2, "These boots seem to offer a good amount of protection!"],
     ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."],
-    ["Steel Body", "body", "", "steelBody.png", 0, 4, "This heavy steel body should protect me."],
-    ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."]
-
+    ["Steel Plateody", "body", "", "steelBody.png", 0, 4, "This heavy steel body should protect me."], // Good Images...
+    ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."],
+    ["Steel Boots", "boots", "", "steelBoots.png", 0, 2, "These heavy steel boots should protect me."],
+    ["Steel Platelegs", "legs", "", "steelLegs.png", 0, 4, "These heavy steel platelegs should protect me."],
+    ["Mom's Note", "readable", "The last thing my Mother left me...", "letter.png", ["Page 1 | Lots of text", "Page 2 | Lots of text", "Page 3 | Lots of text"]]
 ];
 
 var allItems = [];
@@ -86,9 +146,11 @@ function initAllItems() {
 
     for (var i = 0; i < unInitItems.length; i++) {
         var x = unInitItems[i];
-
-        allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
-
+        if (x[1] == "readable") {
+            allItems[i] = new Readable(x[0], x[1], x[2], x[3], x[4]);
+        } else {
+            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
+        }
     }
 
 }
@@ -96,6 +158,20 @@ function initAllItems() {
 function giveStartItems() {
     for (var i = 0; i < allItems.length; i++) {
         addToInv(allItems[i]);
+    }
+}
+
+class Readable {
+    constructor(name, type, description, invImg, readText) {
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.invImg = invImg;
+        this.readText = readText;
+    }
+
+    read = function () {
+        enterReading(this.readText);
     }
 }
 

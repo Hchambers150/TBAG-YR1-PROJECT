@@ -12,7 +12,6 @@
     display: none;
 }
 
-
 #textArea {
 
     position:absolute;
@@ -28,9 +27,31 @@
 
 }
 
+#locationInfo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 56vw;
+    height:1em;
+    background-color: white;
+    font-size: 1.5em;
+    color: black;
+}
+
+#currentArea {
+    margin-left:1%;
+    float:left;
+
+}
+
+#currentFloor {
+    margin-right:1%;
+    /*float:right;*/
+}
+
 #output {
     width: 55vw;
-    height: 97%;
+    height: 84vh;
     margin-top:0;
     margin-left:10px;
     font-size: 1.5em;
@@ -127,8 +148,6 @@
     grid-gap: 0px 0px;
     grid-template-areas: "name image hp-mana" "helm image ." "body image weapon" "legs image gloves" "boots image ring";
 }
-
-
 
 .hp-mana {
     grid-area: hp-mana;
@@ -272,6 +291,7 @@
     margin-left: 6px;
     margin-bottom:;
     border:1px solid white;
+    cursor:move;
 }
 
 #charImg {
@@ -389,6 +409,18 @@
     color: #30bbe6;
 }
 
+.poisoned {
+    color:green;
+}
+
+.stunned {
+    color:yellow;
+}
+
+.cursed {
+    color:rebeccapurple;
+}
+
 .invImg {
     width: 100%;
     height: 100%;
@@ -396,3 +428,218 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+#battleArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70.5vw;
+    height: 100vh;
+    margin-top: 0;
+    overflow-x: hidden;
+    color: white;
+    display: flex;
+    justify-content: center;
+    background-image:;
+    display: none;
+}
+
+#battleOut {
+    width: 22.5%;
+    height: 88%;
+    border: 1px solid white;
+    position: absolute;
+    right: 1%;
+    bottom: 5%;
+    overflow-y: scroll;
+}
+
+#battleOutput {
+    font-size: 1em;
+    margin: 1%;
+}
+
+#monsterWrap {
+    width: 50%;
+    height: 60%;
+    margin-top: 5%;
+    background-color: black;
+    border: 1px solid white;
+    z-index: 1;
+}
+
+#monsterTitleWrap {
+    z-index: 0;
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
+#monsterTitle {
+    margin-left: 0.5%;
+}
+
+#imgWrapper {
+    display: flex;
+    width: 100%;
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+}
+
+#monsterImg {
+    width: 256px;
+    height: 256px;
+    float: left;
+    background-color:;
+}
+
+#infoArea {
+    position: absolute;
+    bottom: 34.4%;
+    width: inherit;
+    height: 5%;
+    border-top: 1px solid white;
+    background-color:;
+    display: flex;
+    justify-content: center;
+}
+
+#monHP {
+    margin-left: 5%;
+    color: red;
+}
+
+#monMana {
+    color: Highlight;
+}
+
+#monStatus {
+    float: right;
+    width: 100%;
+    height: 100%;
+}
+
+#left {
+    float: left;
+    width: 50%;
+    height: 6.5vh;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid white;
+}
+
+#right {
+    float: right;
+    width: 50%;
+    height: 6.5vh;
+}
+
+#playerChoices {
+    width: 50%;
+    height: 20%;
+    position: absolute;
+    bottom: 5%;
+    left: 25%;
+    background-color: black;
+    border: 1px solid white;
+}
+
+.fightChoice {
+    width: 49.9%;
+    height: 49.9%;
+    display: flex;
+    float: left;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    user-select: none;
+}
+
+    .fightChoice:active {
+        cursor: grabbing;
+    }
+
+.bottom {
+    border-top: 1px dotted white;
+}
+
+.right {
+    border-left: 1px dotted white;
+}
+
+a {
+    color: white;
+}
+
+#attack {
+}
+
+#attack2 {
+}
+
+#attack3 {
+}
+
+#attack4 {
+}
+
+#readArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70.5vw;
+    height: 90vh;
+    margin-top: 0;
+    overflow-x: hidden;
+    font-size:1.25em;
+    overflow:scroll;
+    display:none;
+}
+
+#pageTitle {
+    font-size:2em;
+    margin-left:5%;
+    margin-top:5%;
+}
+
+#pageText {
+    margin: 2.5%;
+    margin-top:initial;
+}
+
+#exit {
+    position:absolute;
+    margin-top:1%;
+    margin-right:2%;
+    top:0;
+    right:0;
+    cursor:pointer;
+    user-select:none;
+}
+
+#exit:hover{
+    color:red;
+}
+
+#lastPage {
+    font-size: 3em;
+    float: left;
+    margin-left: 5%;
+    cursor: pointer;
+}
+
+    #lastPage:hover {
+        color:red;
+    }
+
+#nextPage {
+    font-size: 3em;
+    float: right;
+    margin-right: 5%;
+    cursor: pointer;
+}
+
+    #nextPage:hover {
+        color:red;
+    }

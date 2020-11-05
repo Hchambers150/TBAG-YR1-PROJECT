@@ -623,6 +623,7 @@ a {
 }
 
 #lastPage {
+    user-select:none;
     font-size: 3em;
     float: left;
     margin-left: 5%;
@@ -634,6 +635,7 @@ a {
     }
 
 #nextPage {
+    user-select: none;
     font-size: 3em;
     float: right;
     margin-right: 5%;
@@ -642,4 +644,48 @@ a {
 
     #nextPage:hover {
         color:red;
+    }
+
+#customCtx {
+
+    width:auto;
+    height:100px;
+    background-color:black;
+    border:1px solid white;
+    position:absolute;
+    top:0;
+    left:0;
+
+}
+
+#ctxTitleWrap {
+    background-color: white;
+    color: black;
+    width: 100%;
+    height: 1em;
+}
+
+#ctxTitle {
+
+    width:100%;
+    height:10%;
+
+}
+
+.menuItem {
+
+    width:100px;
+    height:1em;
+    margin:5%;
+    cursor:pointer;
+}
+
+    .menuItem:hover {
+        background-color:white;
+        color:black;
+
+    }
+
+    .menuItem:active {
+        cursor: grabbing;
     }

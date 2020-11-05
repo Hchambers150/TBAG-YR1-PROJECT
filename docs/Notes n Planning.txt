@@ -187,3 +187,5 @@ Commands:
 	i.e Door -> Open, Examine
 	i.e ground Sword -> Examine, Take
 	i.e inventory Sword -> Examine, Equip, Drop
+
+	http://xahlee.info/comp/unicode_runic.html

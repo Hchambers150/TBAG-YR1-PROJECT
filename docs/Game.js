@@ -1,12 +1,92 @@
 ﻿// game - based javascript done here:
 
-var currentRoom;
-var commands = [
+var unInitItems = [];
 
-    // go
-    ["go", ]
+function beginGame(name, con, dex, str, int, wis, cha) {
 
-];
+    // give all items
+
+    player = new Player(name, con, dex, str, int, wis, cha);
+    unInitItems = [
+        ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
+        ["Helmet", "helm", "shittyDaggerBig.png", "leatherCoif.png", 0, 1, "This leather coif won't offer much protection..."],
+        ["Leather Body", "body", "", "leatherBody.png", 0, 3, "This studded leather body won't offer much protection..."],
+        ["Broad Sword", "weapon", "", "broadSword.png", 3, 0, "This broadsword seems pretty capable!"],
+        ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
+        ["Steel Tipped Boots", "boots", "", "steelTippedBoots.png", 0, 2, "These boots seem to offer a good amount of protection!"],
+        ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."],
+        ["Steel Platebody", "body", "", "steelBody.png", 0, 4, "This heavy steel body should protect me."], // Good Images...
+        ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."],
+        ["Steel Boots", "boots", "", "steelBoots.png", 0, 2, "These heavy steel boots should protect me."],
+        ["Steel Platelegs", "legs", "", "steelLegs.png", 0, 4, "These heavy steel platelegs should protect me."],
+
+
+
+        // readables
+        ["Mom's Note", "readable", "The last thing my Mother left me...", "swordTemp.jpg", [
+            "Page 1 | " + createMomsNote(),
+            "Page 2 | Lots of text",
+            "Page 3 | Lots of text"
+        ]]
+    ];
+    console.log(createMomsNote())
+
+    initAllItems();
+    giveStartItems();
+    updateScroll();
+}
+
+function createMomsNote() {
+    var momsNote = player.name + `,
+    I don't know how long I've been gone, but if you've found this letter I'm probably far, far away; but there's one thing
+    that I do know - one thing that will never change - I miss you.<br><br>
+    I miss my `;
+
+    if (player.stats.con < 10) {
+        momsNote = momsNote + `frail little boy, whom I nursed back to health all those years ago. You probably don't remember, do you? That whole year you
+        were bed-bound; I would come and read to you every night and you would glare at me. I would describe special, magical places
+        to you and you would glare at me with eyes full of wonder, and excitement. It was horrible for me, sharing sceneries and 
+        feelings with you that you couldn't go out and experience yourself.`;
+    } else if (player.stats.con > 15) {
+
+        momsNote = momsNote + `big bear! When you were very, very young, you would eat and eat and eat. Whatever I gave you, you would gobble it down! And
+you looked so cute, with your big cheeks and soft arms, I could've gobbled you up any day! And once, when you went for an
+adventure and I didn't see you for the entire day, until you came back after dark, covered in a rash from a poison Oak -
+but by the next day, you were fit as a fiddle again, and you went for another adventure.`;
+    }
+
+    momsNote = momsNote + "<br><br>But when you got older,";
+
+    if (player.stats.dex < 10) {
+    } else if (player.stats.dex > 15) {
+    }
+
+    if (player.stats.str < 10) {
+
+    } else if (player.stats.str > 15) {
+
+    }
+
+    if (player.stats.int < 10) {
+
+    } else if (player.stats.str > 15) {
+
+    }
+
+    if (player.stats.wis < 10) {
+    } else if (player.stats.str > 15) {
+
+    }
+
+    if (player.stats.cha < 10) {
+
+    } else if (player.stats.str > 15) {
+
+
+    }
+
+    return momsNote;
+}
 
 function updateScroll() {
     var element = document.getElementById("output");
@@ -19,8 +99,33 @@ function checkInput(ele) {
         //console.log("Wow, this works");
         //console.log(ele.value);
         scanInput(ele.value);
+        ele.value = "";
     }
 
+}
+
+function checkItems(xID) {
+
+    for (var i = 0; i < allItems.length; i++) {
+        console.log(allItems[i].name);
+        if (allItems[i].name.toLowerCase() == xID.toLowerCase()) {
+            console.log("Found itttt haha", allItems[i])
+            return allItems[i];
+        }
+    }
+
+    return false;
+}
+
+function checkReadables(xID) {
+    for (var i = 0; i < allReadables.length; i++) {
+        console.log(allReadables[i].name.toLowerCase(), xID.toLowerCase())
+        if (toString(allReadables[i].name.toLowerCase()) == toString(xID.toLowerCase())) {
+            return allReadables[i];
+        }
+    }
+
+    return false;
 }
 
 function scanInput(str) {
@@ -29,12 +134,108 @@ function scanInput(str) {
     var strArray = str.split(" ");
     console.log(strArray);
 
-    //
-    for (var i = 0; i < commands[0].length; i++) { }
+    switch (strArray[0].toLowerCase()) {
+        case "look":
+            print(currentRoom.description);
+            break;
+
+        case "wait":
+            break;
+
+        case "repeat":
+        case "again":
+            break;
+
+        case "move":
+        case "travel":
+        case "go":
+            break;
+
+        case "enter":
+            break;
+
+        case "exit":
+        case "leave":
+            break;
+
+        case "loot":
+        case "pilfer":
+        case "take":
+            break;
+
+        case "drop":
+            break;
+
+        case "store":
+            break;
+
+        case "equip":
+            break;
+
+        case "use":
+            break;
+
+        case "examine":
+            break;
+
+        case "read":
+            if (strArray.length > 2) {
+                var toCheck = "";
+                for (i = 1; i < strArray.length; i++) {
+                    toCheck = toCheck + " " + strArray[i];
+                    console.log(toCheck);
+                }
+
+                var temp = checkReadables(toCheck);
+                console.log(temp);
+                if (temp != false) {
+                    enterReading(temp.readText);
+                }
+            } else {
+                enterReading(checkReadables(strArray[1]));
+            }
+            
+            break;
+
+        case "pull":
+        case "push":
+        case "flick":
+        case "flip":
+        case "press":
+        case "interact":
+            break;
+
+        case "talk":
+            break;
+
+        case "attack":
+            break;
+
+        case "clear":
+            document.getElementById('output').innerText = " ";
+            break;
+
+        case "help":
+            print(`<pre class="important">
++----------------------------------------------------------------------------------------------+<br>
+| Command | Args                 | Desc                                                        |<br>
+|----------------------------------------------------------------------------------------------|<br>
+| Help    | ----                 | Prints the help menu                                        |<br>
+| Use     | {item1} {item2}      | Uses the <font class="special">FIRST ITEM</font> on the <font class="special">SECOND ITEM</font>                      |<br>
+| Go      | {direction} / {room} | Moves your character into a room in the specified direction |<br>
+ +---------------------------------------------------------------------------------------------+<br>
+           </br></pre>`);
+                
+                break;
+
+        default:
+            print("You do nothing. <font class='important'>[Please make sure your command is correct! Use 'help'!]</font>");
+            break;
+    }
 
 }
 
-function go(roomID) {
+function go(roomID) { // change to DIRECTION
     for (var i = 0; i < allRooms.length; i++) {
         // match roomID with room, updateRoom
         if (allRooms[i].roomID.toLowerCase() == roomID.toLowerCase()) {
@@ -109,11 +310,11 @@ function addToInv(x) {
     for (var i = 0; i < player.inventory.length; i++) {
         //console.log("yee", player.inventory[i].innerHTML)
         if (player.inventory[i].innerHTML == "") {
-
-            var toPrint = "You put the <font class='special'>" + x.name +"</font> in your inventory.";
+            console.log(x);
+            var toPrint = 'You put the <font class="special" title="'+x.name+'" data-type="'+ x.type +'">' + x.name +'</font> in your inventory.';
             print(toPrint);
-
             player.inventory[i].innerHTML = x.inventHtml;
+
             return;
 
         }
@@ -121,23 +322,9 @@ function addToInv(x) {
     }
 }
 
-var unInitItems = [
-
-    ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
-    ["Helmet", "helm", "shittyDaggerBig.png", "leatherCoif.png", 0, 1, "This leather coif won't offer much protection..."],
-    ["Leather Body", "body", "", "leatherBody.png", 0, 3, "This studded leather body won't offer much protection..."],
-    ["Broad Sword", "weapon", "", "broadSword.png", 3, 0, "This broadsword seems pretty capable!"],
-    ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
-    ["Steel Tipped Boots", "boots", "", "steelTippedBoots.png", 0, 2, "These boots seem to offer a good amount of protection!"],
-    ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."],
-    ["Steel Plateody", "body", "", "steelBody.png", 0, 4, "This heavy steel body should protect me."], // Good Images...
-    ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."],
-    ["Steel Boots", "boots", "", "steelBoots.png", 0, 2, "These heavy steel boots should protect me."],
-    ["Steel Platelegs", "legs", "", "steelLegs.png", 0, 4, "These heavy steel platelegs should protect me."],
-    ["Mom's Note", "readable", "The last thing my Mother left me...", "letter.png", ["Page 1 | Lots of text", "Page 2 | Lots of text", "Page 3 | Lots of text"]]
-];
 
 var allItems = [];
+var allReadables = [];
 
 function initAllItems() {
 
@@ -147,7 +334,7 @@ function initAllItems() {
     for (var i = 0; i < unInitItems.length; i++) {
         var x = unInitItems[i];
         if (x[1] == "readable") {
-            allItems[i] = new Readable(x[0], x[1], x[2], x[3], x[4]);
+            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
         } else {
             allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
         }
@@ -160,110 +347,5 @@ function giveStartItems() {
         addToInv(allItems[i]);
     }
 }
-
-class Readable {
-    constructor(name, type, description, invImg, readText) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.invImg = invImg;
-        this.readText = readText;
-    }
-
-    read = function () {
-        enterReading(this.readText);
-    }
-}
-
-class Item {
-
-    // HOW WILL THIS WORK??
-    // ondrop event will use these Objects to equip() and unequip()
-    // to do that, some code needs to be stored here to identify THE LITERAL OBJECT
-
-    constructor(name, type, bigImg, invImg, physicalDmg, magicDmg, description) {
-        this.name = name;
-        this.type = type;
-
-        this.pDmg = physicalDmg;
-        this.mDmg = magicDmg;
-        this.description = description;
-        this.bigImg = bigImg;
-        this.invImg = invImg;
-
-        this.imageOutHtml = this.ImageOutHtml(name,bigImg);
-        this.inventHtml = this.InventHtml(name, invImg);
-
-
-    }
-
-    ImageOutHtml = function (name, bigImg) {
-        var total = '<img src="'+bigImg+'" title="'+name+'/>';
-
-        return total;
-
-    }
-
-    InventHtml = function (name, invImg) {
-        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="'+name+'" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg +'\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
-
-        return total;
-    }
-
-}
-
-class Player {
-
-    constructor(name, con, dex, str, int, wis, cha) {
-
-        var baseMana = 10;
-        var baseHealth = 15;
-
-        this.name = name;
-
-        this.stats(con, dex, str, int, wis, cha);
-
-        this.inventory = this.Inventory();
-
-        this.health = baseHealth + (this.stats.conMod*2);
-        this.mana = baseMana + (this.stats.intMod * 2);
-
-    }
-
-    stats = function (con, dex, str, int, wis, cha) {
-        this.stats.con = con;
-        this.stats.dex = dex;
-        this.stats.str = str;
-        this.stats.int = int;
-        this.stats.wis = wis;
-        this.stats.cha = cha;
-
-        var tempArray = getModifiers(con, dex, str, int, wis, cha);
-        this.conMod = tempArray[0];
-        this.dexMod = tempArray[1];
-        this.strMod = tempArray[2];
-        this.intMod = tempArray[3];
-        this.wisMod = tempArray[4];
-        this.chaMod = tempArray[5];
-
-        setStats(name, con, dex, str, int, wis, cha);
-        
-    }
-
-    Inventory = function () {
-        var inventoryArray = [];
-
-        for (var i = 0; i < 30; i++) {
-            // link inventory [i] to inventory element
-            var tempName = 'slot' + (i + 1);
-            
-            inventoryArray[i] = document.getElementById(tempName);
-
-        }
-
-        return inventoryArray;
-    }
-}
-
 
 //var player = new Player('test testington', 8, 10, 12, 14, 16, 20);

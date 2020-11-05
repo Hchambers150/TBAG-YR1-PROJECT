@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="startup.css" />
     <link rel="stylesheet" href="contextMenu.css" />
+    <script src="Classes.js"></script>
     <script src="Website.js"></script>
     <script src="Game.js"></script>
 
@@ -202,10 +203,10 @@
             <span id="pageTitle"></span><div id="exit" onclick="exitReading()"><b>X</b></div>
             <p id="pageText"> <!--MAX LENGTH 34!!!-->
             </p>
-            <div id="nextPage">
+            <div id="nextPage" onclick="nextPage()">
                 <span><font style="font-size: 1em;">Next page</font> 🠺</span>
             </div>
-            <div id="lastPage">🠸 Last page </div>
+            <div id="lastPage" onclick="lastPage()">🠸 Last page </div>
         </div>
 
         <div id="textArea">
@@ -283,36 +284,36 @@
                 <div id="inventory">
                     <span id="inventTitle">Inventory: </span>
                     <div id="inventoryGrid">
-                        <div class="inventorySlot" id="slot1" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot2" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot3" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot4" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot5" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot6" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot7" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot8" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot9" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot10" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot11" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot12" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot13" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot14" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot15" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot16" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot17" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot18" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot19" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot20" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot21" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot22" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot23" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot24" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot25" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot26" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot27" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot28" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot29" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
-                        <div class="inventorySlot" id="slot30" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot1" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot2" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot3" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot4" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot5" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot6" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot7" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot8" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot9" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot10" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot11" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot12" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot13" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot14" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot15" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot16" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot17" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot18" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot19" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot20" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot21" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot22" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot23" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot24" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot25" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot26" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot27" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot28" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot29" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
+                        <div class="inventorySlot" id="slot30" oncontextmenu="test(event)" ondrop="allowDrop(event)" ondragover="inventDrop(event)"></div>
 
                     </div>
                 </div>
@@ -367,6 +368,19 @@
 
                 </textarea>
             </div>
+        </div>
+    </div>
+
+    <div id="customCtx">
+        <div id="ctxTitleWrap"><span id="ctxTitle">Title here!</span></div>
+        
+        <div id="menuWrap">
+            <span onclick="" class="menuItem" id="optionOne">Examine</span><br>
+            <span class="menuItem" id="optionOne">Use</span><br>
+            <span class="menuItem" id="optionOne">Take</span><br>
+            <span class="menuItem" id="optionOne">Open</span><br>
+            <span class="menuItem" id="optionOne">Speak to</span><br>
+
         </div>
     </div>
 

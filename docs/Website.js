@@ -1,24 +1,152 @@
 ﻿// website - based javascript done here:
 
-var notepad = document;
-notepad.addEventListener("contextmenu",function(event){
+
+
+var currentRoom;
+var player;
+
+document.addEventListener("contextmenu", function (event) {
     event.preventDefault();
-    var ctxMenu = document.getElementById("ctxMenu");
-    ctxMenu.style.display = "block";
-    ctxMenu.style.left = (event.pageX - 10)+"px";
-    ctxMenu.style.top = (event.pageY - 10)+"px";
-},false);
-notepad.addEventListener("click",function(event){
-    var ctxMenu = document.getElementById("ctxMenu");
-    ctxMenu.style.display = "";
-    ctxMenu.style.left = "";
-    ctxMenu.style.top = "";
-},false);
+    var x = document.getElementById("customCtx");
+
+    console.log(event.path[0])
+    test(event);
+
+    x.style.display = "block";
+    x.style.left = (event.pageX - 10) + "px";
+    x.style.top = (event.pageY - 10) + "px";
+
+   
+
+}, false);
+
+document.addEventListener("click", function (event) {
+    var x = document.getElementById("customCtx");
+    x.style.display = "none";
+    x.style.left = "";
+    x.style.top = "";
+
+}, false);
+
+function test(ev) {
+    var m = document.getElementById('customCtx');
+    var c = document.getElementById('menuWrap');
+    var t = document.getElementById('ctxTitle')
+    var o = checkItems(ev.path[0].title);
+    console.log("mamamamama",o)
+    if (o == false) {
+        var o = checkMonsters(ev.path[0].title);
+        console.log("test")
+    }
+
+    console.log("bitch ass",o)
+    switch (ev.path[0].getAttribute('data-type')) {
+        case "enemy":
+            // enterCombat();
+            break;
+        case "helm":
+
+            t.innerText = o.name;
+
+            c.innerHTML = `
+                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="" class="menuItem">Inspect</span><br>
+                <span onclick="" class="menuItem">Drop</span><br>
+            `;
+
+            m.style.height = "4em";
+            break;
+
+        case "body":
+            t.innerText = o.name;
+
+            c.innerHTML = `
+                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="" class="menuItem">Inspect</span><br>
+                <span onclick="" class="menuItem">Drop</span><br>
+            `;
+
+            m.style.height = "4em";
+            break;
+
+        case "legs":
+            t.innerText = o.name;
+
+            c.innerHTML = `
+                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="" class="menuItem">Inspect</span><br>
+                <span onclick="" class="menuItem">Drop</span><br>
+            `;
+
+            m.style.height = "4em";
+            break;
+
+        case "boots": // examine, inspect, drop,
+
+            t.innerText = o.name;
+
+            c.innerHTML = `
+                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="" class="menuItem">Inspect</span><br>
+                <span onclick="" class="menuItem">Drop</span><br>
+            `;
+
+            m.style.height = "4em";
+            break;
+
+        case "weapon":
+            t.innerText = o.name;
+
+            c.innerHTML = `
+                <span onclick="print('`+ o.description +`')" class="menuItem">Examine</span><br>
+                <span onclick="" class="menuItem">Inspect</span><br>
+                <span onclick="" class="menuItem">Drop</span><br>
+            `;
+
+            m.style.height = "4em";
+            break;
+
+        case "readable":
+            t.innerText = o.name;
+            console.log(o.readText);
+
+            //convert o.readText to array
+
+            var temp = "";
+            for (var i = 0; i < o.readText.length; i++) {
+                if (i != o.readText.length-1) {
+                    temp = temp + "`" + o.readText[i] + "`" + ',';
+                } else {
+                    temp = temp + "`" + o.readText[i] + "`";
+                }
+                
+            }
+
+            console.log(o.description, temp)
+
+            c.innerHTML = `
+                <span onclick="print('`+o.description+`')" class="menuItem">Examine</span><br>
+                <span onclick="enterReading([`+temp+`])" class="menuItem">Read</span><br>
+                <span onclick="" class="menuItem">Drop</span><br>
+            `;
+
+            m.style.height = "4em";
+            break;
+
+        default:
+            console.log("something!!", ev.path[0].getAttribute('data-type'));
+            t.innerHTML = "<font class='important'>Error!</font>"
+            c.innerHTML = " ";
+            break;
+         
+    }
+
+}
 
 //startup.style.webkitAnimationPlayState = "paused";
 
 //var statPoints = 27;
-var statPoints = 0;
+var statPoints = 27;
 var player;
 
 function startAnim() {
@@ -160,7 +288,6 @@ var str;
 var int;
 var wis;
 var cha;
-var player;
 
 function checkButton() {
  // check to make sure everything is O.K
@@ -188,16 +315,13 @@ function getStats() { // revisit; should
         document.getElementById("startup").style.display = 'none';
         document.getElementById("main").style.display = 'block';
 
-        player = new Player(name, con, dex, str, int, wis, cha);
-        initAllItems();
-        giveStartItems();
-        updateScroll();
+        beginGame(name, con, dex, str, int, wis, cha);
 
     } else if (statPoints == 27) { // for testing!! delete!!!
         document.getElementById("startup").style.display = 'none';
         document.getElementById("main").style.display = 'block';
 
-        player = new Player(name, con, dex, str, int, wis, cha);
+        beginGame(name, con, dex, str, int, wis, cha);
 
     } else if (name == "" || name.length > 20) {
         errors.innerText = "Invalid name! Max length: 20";
@@ -255,7 +379,7 @@ function exitCombat() {
 var currentPage;
 var tempArrayReading;
 
-function enterReading(text) {
+function enterReading(text) { // probably change to pass in OBJECT
     document.getElementById('textArea').style.display = 'none';
     document.getElementById('inputWrap').style.display = 'none';
     document.getElementById('readArea').style.display = 'block';
@@ -267,23 +391,33 @@ function enterReading(text) {
     for (var i = 0; i < text.length; i++) {
         text[i] = text[i].split("|"); // this is very volatile. im tired, so i think ill come back to this tomorrow
     }
-
+    console.log(text)
     title.innerText = text[0][0];
     main.innerHTML = text[0][1];
     currentPage = 0;
     tempArrayReading = text;
 }
 
+function updatePage(x) {
+    var title = document.getElementById('pageTitle');
+    var main = document.getElementById('pageText');
+
+    title.innerText = tempArrayReading[x][0];
+    main.innerHTML = tempArrayReading[x][1];
+}
+
 function nextPage() {
     if (currentPage < tempArrayReading.length-1) {
         currentPage = currentPage + 1;
-
+        updatePage(currentPage);
     }
 }
 
 function lastPage() {
-
-
+    if (currentPage > 0) {
+        currentPage = currentPage - 1;
+        updatePage(currentPage);
+    }
 }
 
 function exitReading() {

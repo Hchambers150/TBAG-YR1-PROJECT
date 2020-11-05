@@ -23,7 +23,7 @@ function beginGame(name, con, dex, str, int, wis, cha) {
 
 
         // readables
-        ["Mom's Note", "readable", "The last thing my Mother left me...", "swordTemp.jpg", [
+        ["Mom's Note", "readable", "The last thing my Mother left me...", "scroll.png", [
             "Page 1 | " + createMomsNote(),
             "Page 2 | Lots of text",
             "Page 3 | Lots of text"

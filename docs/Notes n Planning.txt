@@ -165,7 +165,7 @@ Commands:
             Name | Args | What it does | Other names
  - look | -- | Outputs the description of the current room | --
  - wait | -- | May trigger something | --
-  - again | -- | Does the last command again | repeat,
+ - again | -- | Does the last command again | repeat,
 
  - go | {direction} | Moves the character into a room in the specified direction | move, travel, 
  - enter | {building} | moves the character into a specified building | --

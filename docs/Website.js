@@ -16,7 +16,7 @@ document.addEventListener("contextmenu", function (event) {
     x.style.left = (event.pageX - 10) + "px";
     x.style.top = (event.pageY - 10) + "px";
 
-   
+
 
 }, false);
 
@@ -33,13 +33,13 @@ function test(ev) {
     var c = document.getElementById('menuWrap');
     var t = document.getElementById('ctxTitle')
     var o = checkItems(ev.path[0].title);
-    console.log("mamamamama",o)
+    console.log("mamamamama", o)
     if (o == false) {
         var o = checkMonsters(ev.path[0].title);
         console.log("test")
     }
 
-    console.log("bitch ass",o)
+    console.log("bitch ass", o)
     switch (ev.path[0].getAttribute('data-type')) {
         case "enemy":
             // enterCombat();
@@ -49,7 +49,7 @@ function test(ev) {
             t.innerText = o.name;
 
             c.innerHTML = `
-                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="" class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
@@ -61,7 +61,7 @@ function test(ev) {
             t.innerText = o.name;
 
             c.innerHTML = `
-                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="" class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
@@ -73,7 +73,7 @@ function test(ev) {
             t.innerText = o.name;
 
             c.innerHTML = `
-                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="" class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
@@ -86,7 +86,7 @@ function test(ev) {
             t.innerText = o.name;
 
             c.innerHTML = `
-                <span onclick="" class="menuItem">Examine</span><br>
+                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="" class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
@@ -98,7 +98,7 @@ function test(ev) {
             t.innerText = o.name;
 
             c.innerHTML = `
-                <span onclick="print('`+ o.description +`')" class="menuItem">Examine</span><br>
+                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="" class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
@@ -114,19 +114,19 @@ function test(ev) {
 
             var temp = "";
             for (var i = 0; i < o.readText.length; i++) {
-                if (i != o.readText.length-1) {
+                if (i != o.readText.length - 1) {
                     temp = temp + "`" + o.readText[i] + "`" + ',';
                 } else {
                     temp = temp + "`" + o.readText[i] + "`";
                 }
-                
+
             }
 
             console.log(o.description, temp)
 
             c.innerHTML = `
-                <span onclick="print('`+o.description+`')" class="menuItem">Examine</span><br>
-                <span onclick="enterReading([`+temp+`])" class="menuItem">Read</span><br>
+                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
+                <span onclick="enterReading([`+ temp + `])" class="menuItem">Read</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
 
@@ -138,7 +138,7 @@ function test(ev) {
             t.innerHTML = "<font class='important'>Error!</font>"
             c.innerHTML = " ";
             break;
-         
+
     }
 
 }
@@ -148,11 +148,6 @@ function test(ev) {
 //var statPoints = 27;
 var statPoints = 27;
 var player;
-
-function startAnim() {
-    startup.style.webkitAnimationPlayState = "running";
-    document.getElementById("playBtn").style.display = "none";
-}
 
 function startGame() { // only called once!!
     // give Mom's Note, scroll output down, hide first screen, show 2nd screen
@@ -201,12 +196,6 @@ function inventDrop(ev) {
     } else {
         console.log("Slot is full!");
     }
-    
-}
-
-function preventDrop(ev) {
-    //NO DROP!!
-    return;
 
 }
 
@@ -289,17 +278,6 @@ var int;
 var wis;
 var cha;
 
-function checkButton() {
- // check to make sure everything is O.K
- // then, start game;
-    // player = new Player(getStats());
-    // initItems();
-    // initMonsters(); } How to handle monsters that can be a monster or an npc?
-    // initNPCs();     } OR npcs are types of monsters? - good idea
-
-}
-
-
 function getStats() { // revisit; should
     name = document.getElementById("charName").value;
     if (statPoints == 0 && name != "") {
@@ -363,7 +341,7 @@ function enterCombat(enemy) {
     document.getElementById('battleArea').style.display = 'flex';
 
     //document.getElementById('monsterTitle').innerText = enemy.name;
-    //document.getElementById('monsterImg').src = enemy.imgSource;
+    //document.getElementById('monsterImg').src = enemy.img;
     //document.getElementById('monHP').innerText = enemy.health;
 
 }
@@ -372,6 +350,26 @@ function exitCombat() {
     document.getElementById('textArea').style.display = 'block';
     document.getElementById('inputWrap').style.display = 'block';
     document.getElementById('battleArea').style.display = 'none';
+
+    document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
+}
+
+function enterConvo(NPC) {
+    document.getElementById('textArea').style.display = 'none';
+    document.getElementById('inputWrap').style.display = 'none';
+    document.getElementById('talkArea').style.display = 'flex';
+
+    //document.getElementById('NPCTitle').innerText = NPC.name;
+    //document.getElementById('NPCImg').src = NPC.img;
+
+    // 
+    // NPC.speak();
+}
+
+function exitConvo() {
+    document.getElementById('textArea').style.display = 'block';
+    document.getElementById('inputWrap').style.display = 'block';
+    document.getElementById('talkArea').style.display = 'none';
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
@@ -407,7 +405,7 @@ function updatePage(x) {
 }
 
 function nextPage() {
-    if (currentPage < tempArrayReading.length-1) {
+    if (currentPage < tempArrayReading.length - 1) {
         currentPage = currentPage + 1;
         updatePage(currentPage);
     }
@@ -427,3 +425,34 @@ function exitReading() {
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
+
+var conversationArray = { // null == deadend, false == exit tree, true == enterCombat()
+
+    gnome1: {
+
+        whoAreYou: ["Who am I? I've lived on these grounds for years! It's only until now that I've been hidden.",
+            ["I've never seen you!", null, "Honest, I was here."],
+            ["Ask for a quest", this.quest]
+        ],
+
+        quest: ["Ah, a quest is what you're after? This'll open up a whole new chapter!",
+            ["Thanks, bye!", false],
+        ],
+
+        sayHello: ["Hello, yourself", [
+            ["Say  goodbye", false],
+            ["Who are you?", this.whoAreYou]
+        ]],
+
+        default: [null, [
+            ["Say hello.", "this.sayHello"],
+            ["Ask for a quest", "this.quest"],
+            ["Attack", true]
+        ]]
+    }
+
+};
+
+
+//console.log(conversationArray.gnome1.default[1]);
+var gnome1 = new NPC("Gnome", "physical", 15, 2, 1, "gnome.png", [], conversationArray.gnome1);

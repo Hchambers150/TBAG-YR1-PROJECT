@@ -156,45 +156,84 @@
     </div>
 
     <div id="main">
+        <div id="talkArea">
+            <div id="talkWrapper">
+                <div id="NPCWrap">
+                    <div id="titleWrap">
+                        <span id="NPCTitle">Ghastly Ghoulington</span>
+                    </div>
+
+                    <div id="NPCImgWrap">
+                        <img id="NPCImg" src="https://64.media.tumblr.com/01d0f90c74074e8a45825dea194b659f/tumblr_oklrofjnhU1uj3emso1_1280.gifv"/>
+                    </div>
+
+                    <div id="NPCSpeech">
+                        <p id="NPCOut"></p>
+                    </div>
+                </div>
+
+                <div id="choicesWrap">
+                    <div id="choiceOne" class="convoChoice">
+                        <span id="NPCChoice">Choice One</span>
+                    </div>
+                    <div id="" class="convoChoice right">
+                        <span id="NPCChoice" onclick="">Choice Two</span>
+                    </div>
+                    <div id="" class="convoChoice bottom">
+                        <span id="NPCChoice">Choice Three</span>
+                    </div>
+                    <div id="" class="convoChoice bottom right">
+                        <span id="NPCChoice">Exit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="battleArea">
-            <div id="monsterWrap">
-                <div id="monsterTitleWrap">
-                    <span id="monsterTitle">Ghostly Ghoul</span>
-                </div>
-
-                <div id="imgWrapper">
-                    <img id="monsterImg" src="https://64.media.tumblr.com/01d0f90c74074e8a45825dea194b659f/tumblr_oklrofjnhU1uj3emso1_1280.gifv"/>
-                </div>
-                <div id="infoArea">
-                    <div id="left">
-                        <span id="monHP">
-                            <font class="important">HP: 420</font>
-                            <br>
-                            <font class="mystical">Mana: 69</font>
-                        </span>
+            <div id="bigWrap">
+                <div id="monsterWrap">
+                    <div id="monsterTitleWrap">
+                        <span id="monsterTitle">Ghostly Ghoul</span>
                     </div>
-                    <div id="right">
-                        <span id="monStatus">
-                            <font class="poisoned">*Poisoned*</font><br>
-                            <font class="cursed">*Cursed*</font>
-                        </span>
+
+                    <div id="imgWrapper">
+                        <img id="monsterImg" src="https://64.media.tumblr.com/01d0f90c74074e8a45825dea194b659f/tumblr_oklrofjnhU1uj3emso1_1280.gifv" />
+                    </div>
+                    <div id="infoArea">
+                        <div id="left">
+                            <span id="monHP">
+                                <font class="important">HP: 420</font>
+                                <br>
+                                <font class="mystical">Mana: 69</font>
+                            </span>
+                        </div>
+                        <div id="right">
+                            <span id="monStatus">
+                                <font class="poisoned">*Poisoned*</font><br>
+                                <font class="cursed">*Cursed*</font>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="playerChoices">
-                <a onclick="attack()"><div class="fightChoice" id="attack">Attack!</div>
-                <div class="fightChoice right" id="attack2">Defend!</div>
-                <div class="fightChoice bottom" id="attack3">Dick Twist!</div>
-                <div class="fightChoice bottom right" id="attack4">Run!</div></a>
+                <div id="battleOut">
+                    <p id="battleOutput">
+                        You hit the <font class="special">Ghostly Ghoul</font> for <font class="important">10hp!</font><br>
+                        The <font class="special">Ghostly Ghoul</font> <font class="mystical">one shots</font> you!
+                    </p>
+                </div>
 
-            </div>
+                <div id="playerChoices">
+                    <a onclick="attack()"> <!--DO THIS!! IN TERMS of adding CMDs-->
+                        <div class="fightChoice" id="attack">Attack!</div>
+                        <div class="fightChoice right" id="attack2">Defend!</div>
+                        <div class="fightChoice bottom" id="attack3">Dick Twist!</div>
+                        <div class="fightChoice bottom right" id="attack4">Run!</div>
+                    </a>
 
-            <div id="battleOut">
-                <p id="battleOutput">
-                    You hit the <font class="special">Ghostly Ghoul</font> for <font class="important">10hp!</font><br>
-                    The <font class="special">Ghostly Ghoul</font> <font class="mystical">one shots</font> you!
-                </p>
+                </div>
+
+
             </div>
         </div>
 

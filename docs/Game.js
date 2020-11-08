@@ -58,7 +58,9 @@ but by the next day, you were fit as a fiddle again, and you went for another ad
     momsNote = momsNote + "<br><br>But when you got older,";
 
     if (player.stats.dex < 10) {
+
     } else if (player.stats.dex > 15) {
+
     }
 
     if (player.stats.str < 10) {
@@ -74,6 +76,7 @@ but by the next day, you were fit as a fiddle again, and you went for another ad
     }
 
     if (player.stats.wis < 10) {
+
     } else if (player.stats.str > 15) {
 
     }
@@ -81,7 +84,6 @@ but by the next day, you were fit as a fiddle again, and you went for another ad
     if (player.stats.cha < 10) {
 
     } else if (player.stats.str > 15) {
-
 
     }
 

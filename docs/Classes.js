@@ -125,11 +125,119 @@ class Player {
 }
 
 class Monster {
-    constructor(name, dmgType, hp, dmg, level) {
+    constructor(name, dmgType, hp, dmg, level, img, lootArray) {
         this.name = name;
         this.dmgType = dmgType;
         this.hp = hp;
         this.dmg = dmg;
         this.level = level;
+        this.img = img;
+        this.containsLoot = this.getLoot(lootArray);
     }
+
+    getLoot = function (x) {
+
+        return; // return an array of DEFINITE ITEMS
+
+    }
+
+    enterCombat = function () { // do this here or globally?
+        document.getElementById('textArea').style.display = 'none';
+        document.getElementById('inputWrap').style.display = 'none';
+        document.getElementById('battleArea').style.display = 'flex';
+
+        //document.getElementById('monsterTitle').innerText = this.name;
+        //document.getElementById('monsterImg').src = this.imgSource;
+        //document.getElementById('monHP').innerText = this.health;
+    }
+
+    attack = function() {
+        // calculate damage done | dmgType, dmg, level
+
+        // deplete players hp
+
+        // print damage done
+
+    }
+
+    checkDeath = function () {
+        // check if this.hp <= 0
+        // remove / delete this
+    }
+
+}
+
+class NPC extends Monster {
+
+    constructor(name, dmgType, hp, dmg, level, img, lootArray, speechArray) {
+
+        super(name, dmgType, hp, dmg, level, img, lootArray);
+
+        this.speechArray = speechArray; // should be one of these weird bad boys https://gamedev.stackexchange.com/questions/40519/how-do-dialog-trees-work
+        this.conversation = this.Conversation(speechArray);
+        this.currentOptions;
+    }
+
+    deadEnd = function () {
+       // how to handle this?
+    }
+
+    getCurrentOptions = function () {
+        // how to handle this? so the user can revert to a point in which there are available / unexplored replies
+    }
+
+    speak = function () {
+        // initiate Speak Mode -> load speech paths
+
+
+        // wait for User
+
+        // 
+
+    }
+
+    nextSpeak = function (x) {
+        // goes down the correct speech path, loads the correct options
+
+    }
+
+    Conversation = function (x) {
+
+        var xI = Object.keys(x);
+        //console.log("xI",xI)
+
+        // start at default, explore tree, initiate values
+        var startPoint = x.default;
+        //console.log(startPoint)
+
+        for (var i = 0; i < xI.length; i++) {
+
+            //console.log("bitches", x[xI[i]]) // miracle code - or what is it doing?
+            var temp = x[xI[i]];
+
+            console.log("jee", temp, xI[i])
+
+            for (var j = 0; j < temp.length; j++) {
+                console.log("___", i, j, x[xI[i]][j], temp[j]);
+
+                if (temp[j] != null) {
+                    if (temp[j].length > 2) {
+                        console.log("theres a deadend here")
+
+                    } else if (temp[j][1] == "false") {
+                        console.log("theres an exit here")
+
+                    } else if (temp[j][1] == true) {
+                        console.log("a fight starts here")
+
+                    }
+                }
+
+            }
+
+        }
+        return x;
+
+    }
+
 }

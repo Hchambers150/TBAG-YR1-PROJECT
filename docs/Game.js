@@ -8,8 +8,8 @@ function beginGame(name, con, dex, str, int, wis, cha) {
 
     player = new Player(name, con, dex, str, int, wis, cha);
     unInitItems = [
-        ["Shitty Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
-        ["Helmet", "helm", "shittyDaggerBig.png", "leatherCoif.png", 0, 1, "This leather coif won't offer much protection..."],
+        ["Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
+        ["Helmet", "helm", "", "leatherCoif.png", 0, 1, "This leather coif won't offer much protection..."],
         ["Leather Body", "body", "", "leatherBody.png", 0, 3, "This studded leather body won't offer much protection..."],
         ["Broad Sword", "weapon", "", "broadSword.png", 3, 0, "This broadsword seems pretty capable!"],
         ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
@@ -19,8 +19,6 @@ function beginGame(name, con, dex, str, int, wis, cha) {
         ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."],
         ["Steel Boots", "boots", "", "steelBoots.png", 0, 2, "These heavy steel boots should protect me."],
         ["Steel Platelegs", "legs", "", "steelLegs.png", 0, 4, "These heavy steel platelegs should protect me."],
-
-
 
         // readables
         ["Mom's Note", "readable", "The last thing my Mother left me...", "scroll.png", [

@@ -350,7 +350,7 @@ function getStats() { // revisit; should
     } else if (name == "" || name.length > 20) {
         errors.innerText = "Invalid name! Max length: 20";
 
-    } else if (statPoints == 0) {
+    } else if (statPoints != 0) {
         errors.innerText = "You've not spent all of your stat points!";
     }
 }

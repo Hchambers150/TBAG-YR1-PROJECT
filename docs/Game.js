@@ -40,12 +40,12 @@ function createMomsNote() {
     that I do know - one thing that will never change - I miss you.<br><br>
     `;
 
-    if (player.stats.con < 10) {
+    if (player.stats.con <= 10) {
         momsNote = momsNote + `I miss my frail little boy, whom I nursed back to health all those years ago. You probably don't remember, do you? That whole year you
         were bed-bound; I would come and read to you every night and you would glare at me. I would describe special, magical places
         to you and you would glare at me with eyes full of wonder, and excitement. It was horrible for me, sharing sceneries and 
         feelings with you that you couldn't go out and experience yourself.`;
-    } else if (player.stats.con > 15) {
+    } else if (player.stats.con >= 15) {
 
         momsNote = momsNote + `I miss my big bear! When you were very, very young, you would eat and eat and eat. Whatever I gave you, you would wolf it down! And
 you looked so cute, with your big cheeks and soft arms, I could've gobbled you up any day! And once, when you went for an

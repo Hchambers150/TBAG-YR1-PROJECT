@@ -64,7 +64,7 @@ class Item {
     }
 
     InventHtml = function (name, invImg) {
-        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
 
         return total;
     }

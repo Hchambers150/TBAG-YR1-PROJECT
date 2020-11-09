@@ -35,7 +35,6 @@
                 <div class="statBox">
                     <p class="statText" id="conText">Con</p><br>
                     <p class="stat" id="conStat">8</p>
-                    <p class="miniStat" id="conMini">+1</p>
                     <div class="shape">
                         <div class="minus" onclick="decreaseStat('conStat')">-</div>
                         <div class="plus" onclick="increaseStat('conStat')">+</div>
@@ -240,6 +239,8 @@
         <div id="readArea">
             <br>
             <span id="pageTitle"></span><div id="exit" onclick="exitReading()"><b>X</b></div>
+            <br>
+            <br>
             <p id="pageText"> <!--MAX LENGTH 34!!!-->
             </p>
             <div id="nextPage" onclick="nextPage()">
@@ -272,6 +273,23 @@
         </div>
 
         <div id="fixedArea">
+
+            <div id="settings">
+                <p id="colorSwitch" onclick="toggleSettings()">	&#9881;</p>
+            </div>
+
+            <div id="settingsMenu">
+                <div id="textWrapper">
+                    <span id="settingsTitle""><u>Settings</u></span><br><br>
+                    <span onclick="changeColors()">Toggle Dark Mode / Light Mode</span><br><br>
+                    <span>Music Volume</span><br>
+                    <span>Sound Volume</span><br><br>
+                    <span>Save Game...</span><br><br>
+                    <span>Load Game...</span><br>
+                    <input type="text" id="loadInput" placeholder="Paste save code here.">
+                </div>
+            </div>
+
             <div id="gearArea">
                 <div id="equipment">
                     <div class="grid-container">

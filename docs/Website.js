@@ -16,8 +16,6 @@ document.addEventListener("contextmenu", function (event) {
     x.style.left = (event.pageX - 10) + "px";
     x.style.top = (event.pageY - 10) + "px";
 
-
-
 }, false);
 
 document.addEventListener("click", function (event) {
@@ -33,13 +31,12 @@ function test(ev) {
     var c = document.getElementById('menuWrap');
     var t = document.getElementById('ctxTitle')
     var o = checkItems(ev.path[0].title);
-    console.log("mamamamama", o)
+
     if (o == false) {
-        var o = checkMonsters(ev.path[0].title);
+        //var o = checkMonsters(ev.path[0].title);
         console.log("test")
     }
 
-    console.log("bitch ass", o)
     switch (ev.path[0].getAttribute('data-type')) {
         case "enemy":
             // enterCombat();
@@ -108,7 +105,6 @@ function test(ev) {
 
         case "readable":
             t.innerText = o.name;
-            console.log(o.readText);
 
             //convert o.readText to array
 
@@ -122,8 +118,6 @@ function test(ev) {
 
             }
 
-            console.log(o.description, temp)
-
             c.innerHTML = `
                 <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="enterReading([`+ temp + `])" class="menuItem">Read</span><br>
@@ -134,7 +128,6 @@ function test(ev) {
             break;
 
         default:
-            console.log("something!!", ev.path[0].getAttribute('data-type'));
             t.innerHTML = "<font class='important'>Error!</font>"
             c.innerHTML = " ";
             break;
@@ -148,6 +141,65 @@ function test(ev) {
 //var statPoints = 27;
 var statPoints = 27;
 var player;
+var currentColor = "dark";
+
+function toggleSettings() {
+    var settings = document.getElementById('settingsMenu');
+    console.log(settings.style);
+    if (settings.style.display == "flex") {
+        settings.style.display = "";
+    } else if (settings.style.display == "") {
+        settings.style.display = "flex";
+    }
+
+}
+
+function changeColors() {
+
+
+    if (currentColor == "dark") { // turn to LIGHT
+        currentColor = "light";
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = 'black';
+        document.getElementById('locationInfo').style.backgroundColor ='black';
+        document.getElementById('locationInfo').style.color = 'white';
+        document.getElementById('input').style.backgroundColor = 'white';
+        document.getElementById('presets').style.backgroundColor = 'white';
+        document.getElementById('presets').style.color = 'black';
+        document.getElementById('presets').style.color = 'black';
+        //document.getElementsByClassName('drop').style.border = '1px solid black';
+        //document.getElementsByClassName('invImage').style.backgroundColor = 'white';
+
+        document.getElementById('battleArea').style.backgroundColor = 'white';
+        document.getElementById('battleArea').style.color = 'white';
+        document.getElementById('monsterTitle').style.color = 'white';
+        document.getElementById('monsterTitleWrap').style.backgroundColor = 'black';
+        document.getElementById('battleArea').style.borders = '1px solid black';
+        document.getElementById('monsterWrap').style.backgroundColor = 'white';
+        
+
+    } else if (currentColor == "light") { // turn to DARK
+        //document.div.style.backgroundColor = 'red';
+        currentColor = "dark";
+        document.body.style.backgroundColor = 'black';
+        document.body.style.color = 'white';
+        document.getElementById('locationInfo').style.backgroundColor = 'white';
+        document.getElementById('locationInfo').style.color = 'black';
+        document.getElementById('input').style.backgroundColor = 'black';
+        document.getElementById('presets').style.backgroundColor = 'black';
+        document.getElementById('presets').style.color = 'white';
+        //document.getElementByClassName('drop').style.border = '1px solid white';
+        //document.getElementByClassName('inventorySlot').style.border = '1px solid white';
+        //document.getElementsByClassName('invImage').style.backgroundColor = 'black';
+        document.getElementById('battleArea').style.backgroundColor = 'black';
+        document.getElementById('battleArea').style.color = 'black';
+        document.getElementById('monsterTitle').style.color = 'black';
+        document.getElementById('monsterTitleWrap').style.backgroundColor = 'white';
+        document.getElementById('battleArea').style.borders = '1px solid white';
+        document.getElementById('monsterWrap').style.backgroundColor = 'black';
+    }
+
+}
 
 function startGame() { // only called once!!
     // give Mom's Note, scroll output down, hide first screen, show 2nd screen
@@ -165,16 +217,13 @@ function drag(ev) {
     for (var i = 0; i < array.length; i++) {
         if (array[i].getAttribute('data-type') === source) {
             // allowdrop
-            //console.log("success!", array[i])
             array[i].setAttribute('allowDrop', true);
         }
     }
 }
 
 function checkDrop(ev, el) {
-    //console.log(ev, ev.target.childNodes)
     if (ev.target.childNodes.length == 1) {
-        console.log("hooray!")
         if (el.getAttribute('allowDrop') == "true") {
             ev.preventDefault();
         }
@@ -184,13 +233,10 @@ function checkDrop(ev, el) {
 function allowDrop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-
-    //console.log(ev);
 }
 
 function inventDrop(ev) {
     // check its empty
-    //console.log("HIOIII",ev.target.style.className)
     if (ev.target.childNodes.length == 0 && ev.target.className == 'inventorySlot') {
         ev.preventDefault();
     } else {
@@ -219,7 +265,6 @@ function increaseStat(x) {
     if (statInt < 20 && statPoints > 0) {
         stat.innerText = statInt + 1;
         statPoints--;
-        //console.log(statPoints);
     }
 
     if (stat.innerText.length == 2) {
@@ -280,14 +325,15 @@ var cha;
 
 function getStats() { // revisit; should
     name = document.getElementById("charName").value;
+    con = parseInt(document.getElementById("conStat").innerText);
+    dex = parseInt(document.getElementById("dexStat").innerText);
+    str = parseInt(document.getElementById("strStat").innerText);
+    int = parseInt(document.getElementById("intStat").innerText);
+    wis = parseInt(document.getElementById("wisStat").innerText);
+    cha = parseInt(document.getElementById("chaStat").innerText);
+
     if (statPoints == 0 && name != "") {
-        name = document.getElementById("charName").value;
-        con = parseInt(document.getElementById("conStat").innerText);
-        dex = parseInt(document.getElementById("dexStat").innerText);
-        str = parseInt(document.getElementById("strStat").innerText);
-        int = parseInt(document.getElementById("intStat").innerText);
-        wis = parseInt(document.getElementById("wisStat").innerText);
-        cha = parseInt(document.getElementById("chaStat").innerText);
+        
 
         document.getElementById("startup").style.animation = '1s ease-out 0s 1 slideOutToTop';
         document.getElementById("startup").style.display = 'none';
@@ -389,7 +435,6 @@ function enterReading(text) { // probably change to pass in OBJECT
     for (var i = 0; i < text.length; i++) {
         text[i] = text[i].split("|"); // this is very volatile. im tired, so i think ill come back to this tomorrow
     }
-    console.log(text)
     title.innerText = text[0][0];
     main.innerHTML = text[0][1];
     currentPage = 0;
@@ -453,6 +498,4 @@ var conversationArray = { // null == deadend, false == exit tree, true == enterC
 
 };
 
-
-//console.log(conversationArray.gnome1.default[1]);
 var gnome1 = new NPC("Gnome", "physical", 15, 2, 1, "gnome.png", [], conversationArray.gnome1);

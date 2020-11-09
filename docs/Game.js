@@ -38,27 +38,27 @@ function createMomsNote() {
     var momsNote = player.name + `,
     I don't know how long I've been gone, but if you've found this letter I'm probably far, far away; but there's one thing
     that I do know - one thing that will never change - I miss you.<br><br>
-    I miss my `;
+    `;
 
     if (player.stats.con < 10) {
-        momsNote = momsNote + `frail little boy, whom I nursed back to health all those years ago. You probably don't remember, do you? That whole year you
+        momsNote = momsNote + `I miss my frail little boy, whom I nursed back to health all those years ago. You probably don't remember, do you? That whole year you
         were bed-bound; I would come and read to you every night and you would glare at me. I would describe special, magical places
         to you and you would glare at me with eyes full of wonder, and excitement. It was horrible for me, sharing sceneries and 
         feelings with you that you couldn't go out and experience yourself.`;
     } else if (player.stats.con > 15) {
 
-        momsNote = momsNote + `big bear! When you were very, very young, you would eat and eat and eat. Whatever I gave you, you would gobble it down! And
+        momsNote = momsNote + `I miss my big bear! When you were very, very young, you would eat and eat and eat. Whatever I gave you, you would wolf it down! And
 you looked so cute, with your big cheeks and soft arms, I could've gobbled you up any day! And once, when you went for an
 adventure and I didn't see you for the entire day, until you came back after dark, covered in a rash from a poison Oak -
 but by the next day, you were fit as a fiddle again, and you went for another adventure.`;
     }
 
-    momsNote = momsNote + "<br><br>But when you got older,";
+    
 
     if (player.stats.dex < 10) {
-
+        //momsNote = momsNote + "<br><br>But when you got older, ";
     } else if (player.stats.dex > 15) {
-
+        //momsNote = momsNote + "<br><br>But when you got older,";
     }
 
     if (player.stats.str < 10) {
@@ -96,8 +96,6 @@ function updateScroll() {
 function checkInput(ele) {
 
     if (event.key == 'Enter') {
-        //console.log("Wow, this works");
-        //console.log(ele.value);
         scanInput(ele.value);
         ele.value = "";
     }
@@ -107,9 +105,7 @@ function checkInput(ele) {
 function checkItems(xID) {
 
     for (var i = 0; i < allItems.length; i++) {
-        console.log(allItems[i].name);
         if (allItems[i].name.toLowerCase() == xID.toLowerCase()) {
-            console.log("Found itttt haha", allItems[i])
             return allItems[i];
         }
     }
@@ -119,7 +115,6 @@ function checkItems(xID) {
 
 function checkReadables(xID) {
     for (var i = 0; i < allReadables.length; i++) {
-        console.log(allReadables[i].name.toLowerCase(), xID.toLowerCase())
         if (toString(allReadables[i].name.toLowerCase()) == toString(xID.toLowerCase())) {
             return allReadables[i];
         }
@@ -132,7 +127,6 @@ function scanInput(str) {
 
     // split it into words, if word1 == command -> follow command-specific instruction
     var strArray = str.split(" ");
-    console.log(strArray);
 
     switch (strArray[0].toLowerCase()) {
         case "look":
@@ -183,11 +177,9 @@ function scanInput(str) {
                 var toCheck = "";
                 for (i = 1; i < strArray.length; i++) {
                     toCheck = toCheck + " " + strArray[i];
-                    console.log(toCheck);
                 }
 
                 var temp = checkReadables(toCheck);
-                console.log(temp);
                 if (temp != false) {
                     enterReading(temp.readText);
                 }
@@ -308,9 +300,7 @@ function addToInv(x) {
 
 
     for (var i = 0; i < player.inventory.length; i++) {
-        //console.log("yee", player.inventory[i].innerHTML)
         if (player.inventory[i].innerHTML == "") {
-            console.log(x);
             var toPrint = 'You put the <font class="special" title="'+x.name+'" data-type="'+ x.type +'">' + x.name +'</font> in your inventory.';
             print(toPrint);
             player.inventory[i].innerHTML = x.inventHtml;

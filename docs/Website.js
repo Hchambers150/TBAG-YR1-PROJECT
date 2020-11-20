@@ -30,7 +30,7 @@ function test(ev) {
     var m = document.getElementById('customCtx');
     var c = document.getElementById('menuWrap');
     var t = document.getElementById('ctxTitle')
-    var o = checkItems(ev.path[0].title);
+    
 
     if (o == false) {
         //var o = checkMonsters(ev.path[0].title);
@@ -42,7 +42,7 @@ function test(ev) {
             // enterCombat();
             break;
         case "helm":
-
+            var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             c.innerHTML = `
@@ -55,6 +55,7 @@ function test(ev) {
             break;
 
         case "body":
+            var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             c.innerHTML = `
@@ -67,6 +68,7 @@ function test(ev) {
             break;
 
         case "legs":
+            var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             c.innerHTML = `
@@ -79,7 +81,7 @@ function test(ev) {
             break;
 
         case "boots": // examine, inspect, drop,
-
+            var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             c.innerHTML = `
@@ -92,6 +94,7 @@ function test(ev) {
             break;
 
         case "weapon":
+            var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             c.innerHTML = `
@@ -104,6 +107,7 @@ function test(ev) {
             break;
 
         case "readable":
+            var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             //convert o.readText to array
@@ -125,6 +129,17 @@ function test(ev) {
             `;
 
             m.style.height = "4em";
+            break;
+
+        case "NPC":
+            var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
+            console.log(m)
+            t.innerText = ev.path[0].innerText;
+            c.innerHTML = `
+                <span onclick="print('`+ m.description + `')" class="menuItem">Examine</span><br>
+                <span onclick="enterConvo('`+ m.id + `')" class="menuItem">Speak to</span><br>
+                <span onclick="enterCombat('`+ m.id + `')" class="menuItem">Attack</span><br>
+            `;
             break;
 
         default:
@@ -400,16 +415,30 @@ function exitCombat() {
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
 
-function enterConvo(NPC) {
-    document.getElementById('textArea').style.display = 'none';
-    document.getElementById('inputWrap').style.display = 'none';
-    document.getElementById('talkArea').style.display = 'flex';
+function enterConvo(NPCID) {
 
-    //document.getElementById('NPCTitle').innerText = NPC.name;
-    //document.getElementById('NPCImg').src = NPC.img;
+    for (var i = 0; i < player.currentRoom.monsters.length; i++) {
+        console.log()
+        if (NPCID == player.currentRoom.monsters[i].id) {
+            document.getElementById('textArea').style.display = 'none';
+            document.getElementById('inputWrap').style.display = 'none';
+            document.getElementById('talkArea').style.display = 'flex';
 
-    // 
-    // NPC.speak();
+            // set options and defaultText
+
+            //document.getElementById('NPCTitle').innerText = NPC.name;
+            //document.getElementById('NPCImg').src = NPC.img;
+
+            // 
+            // NPC.speak();
+
+        } else {
+            console.log("Enemy not found");
+            print("Enemy not found");
+        }
+    }
+
+    
 }
 
 function exitConvo() {
@@ -470,32 +499,3 @@ function exitReading() {
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
-
-var conversationArray = { // null == deadend, false == exit tree, true == enterCombat()
-
-    gnome1: {
-
-        whoAreYou: ["Who am I? I've lived on these grounds for years! It's only until now that I've been hidden.",
-            ["I've never seen you!", null, "Honest, I was here."],
-            ["Ask for a quest", this.quest]
-        ],
-
-        quest: ["Ah, a quest is what you're after? This'll open up a whole new chapter!",
-            ["Thanks, bye!", false],
-        ],
-
-        sayHello: ["Hello, yourself", [
-            ["Say  goodbye", false],
-            ["Who are you?", this.whoAreYou]
-        ]],
-
-        default: [null, [
-            ["Say hello.", "this.sayHello"],
-            ["Ask for a quest", "this.quest"],
-            ["Attack", true]
-        ]]
-    }
-
-};
-
-var gnome1 = new NPC("Gnome", "physical", 15, 2, 1, "gnome.png", [], conversationArray.gnome1);

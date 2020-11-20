@@ -1,13 +1,51 @@
 ﻿class Room {
-    constructor() {
-        this.roomID = roomID;
-        this.description = description;
+    constructor(roomClass) {
+        this.roomID = roomClass.roomID;
+        this.description = roomClass.description;
 
-        this.connectedRooms = connectedRooms; // array
-
-        this.contains = contains; // array
+        this.connectedRooms = roomClass.connectedRooms; // array [N, E, S, W] {roomAsObject}
+        this.containers = roomClass.containers; // array [containerAsObject]
+        this.monsters = roomClass.monsters; //array [monsterAsObject]
+        this.special = roomClass.special;
+        this.eventNum = 0; // increases as player events occur - special things may happen at certain events
     }
 
+    checkEvents = function () {
+        console.log("Nice 1")
+        var temp = Object.keys(this.special);
+        if (this.special != null) {
+            //console.log("ree",this.special[temp[0]])
+            for (var i = 0; i < temp.length; i++) {
+                console.log(temp[i])
+                var currentNode = this.special[temp[i]];
+
+                if (currentNode.eventNum == this.eventNum) {
+                    switch (currentNode.command) {
+                        case "spawn":
+                            // find monster in allMonsters, add it to this.monsters;
+                            // init monsters
+
+                            for (var i = 0; i < currentNode.amount; i++) {
+                                for (var j = 0; j < currentNode.monsters.length; j++) {
+
+                                    // init monster with string as object name
+                                    print("a <font class='special' data-type='NPC' data-NPC='gnome1'>creature</font> runs out from under a desk!")
+                                    var gnome1 = new NPC(allMonsters.gnome1);
+                                    this.monsters.push(gnome1);
+
+                                }
+                            }
+
+                            break;
+                        case "print":
+                            break;
+                        case "despawn":
+                            break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 class Readable {
@@ -79,14 +117,12 @@ class Player {
         var baseHealth = 15;
 
         this.name = name;
-
         this.stats(con, dex, str, int, wis, cha);
-
         this.inventory = this.Inventory();
-
         this.health = baseHealth + (this.stats.conMod * 2);
         this.mana = baseMana + (this.stats.intMod * 2);
 
+        this.currentRoom = new Room(allRooms.basement);
     }
 
     stats = function (con, dex, str, int, wis, cha) {
@@ -125,16 +161,45 @@ class Player {
 }
 
 class Monster {
-    constructor(name, dmgType, hp, dmg, level, img, lootArray) {
-        this.name = name;
-        this.dmgType = dmgType;
-        this.hp = hp;
-        this.dmg = dmg;
-        this.level = level;
-        this.img = img;
-        this.containsLoot = this.getLoot(lootArray);
+    constructor(monster) {
+        this.id = monster.id;
+        this.description = monster.description;
+        this.name = monster.name;
+        this.level = monster.level;
+        this.img = monster.img;
+        this.containsLoot = this.getLoot(monster.lootArray);
+
+        this.weapon = monster.weapon;
+
+        this.hp = monster.hp;
+        this.dmg = monster.dmg;
+        this.effectiveHP = monster.hp;
+        this.effectiveDmg = monster.dmg;
+        this.inflictions = [];
     }
 
+    checkInflictions = function () {
+        for (var i = 0; i < this.inflictions.length; i++) {
+            switch (this.inflictions[i]) {
+                case "stunned":
+                    // cannot perform any actions
+                    break;
+                case "cursed":
+                    // cannot perform magic attacks
+                    break;
+                case "bound":
+                    // cannot perform physical actions
+                    break;
+                case "weak":
+                    // damage is reduced
+                    break;
+                case "poisoned":
+                    // health reduced per turn
+                    break;
+            }
+        }
+    }
+    
     getLoot = function (x) {
 
         return; // return an array of DEFINITE ITEMS
@@ -167,15 +232,32 @@ class Monster {
 
 }
 
+function getConvoPiece(ID, convoClass) {
+    var temp = Object.keys(convoClass);
+    console.log("bitch boy", ID, convoClass, temp, temp[1])
+
+    for (var i = 0; i < temp.length; i++) {
+        if (temp[i] == ID) {
+            // we got him
+            console.log(convoClass[temp[i]])
+            return convoClass[temp[i]];
+        }
+    }
+
+    console.log("ERROR! CONVO CLASS NOT FOUND!");
+
+}
+
 class NPC extends Monster {
 
-    constructor(name, dmgType, hp, dmg, level, img, lootArray, speechArray) {
+    constructor(monster) {
 
-        super(name, dmgType, hp, dmg, level, img, lootArray);
+        super(monster);
 
-        this.speechArray = speechArray; // should be one of these weird bad boys https://gamedev.stackexchange.com/questions/40519/how-do-dialog-trees-work
-        this.conversation = this.Conversation(speechArray);
-        this.currentOptions;
+        //this.speechArray = speechClass; // should be one of these weird bad boys https://gamedev.stackexchange.com/questions/40519/how-do-dialog-trees-work
+        this.conversation = this.Conversation(monster.conversationClass);
+        this.conversation = monster.conversationClass;
+        this.currentNode;
     }
 
     deadEnd = function () {
@@ -187,57 +269,20 @@ class NPC extends Monster {
     }
 
     speak = function () {
-        // initiate Speak Mode -> load speech paths
-
-
-        // wait for User
-
-        // 
-
+        this.currentNode = this.conversation.default;
+        enterConvo(this);
     }
 
     nextSpeak = function (x) {
-        // goes down the correct speech path, loads the correct options
+        // x = 
 
     }
 
     Conversation = function (x) {
 
-        var xI = Object.keys(x);
-        //console.log("xI",xI)
+        
 
-        // start at default, explore tree, initiate values
-        var startPoint = x.default;
-        //console.log(startPoint)
 
-        for (var i = 0; i < xI.length; i++) {
-
-            //console.log("bitches", x[xI[i]]) // miracle code - or what is it doing?
-            var temp = x[xI[i]];
-
-            console.log("jee", temp, xI[i])
-
-            for (var j = 0; j < temp.length; j++) {
-                console.log("___", i, j, x[xI[i]][j], temp[j]);
-
-                if (temp[j] != null) {
-                    if (temp[j].length > 2) {
-                        console.log("theres a deadend here")
-
-                    } else if (temp[j][1] == "false") {
-                        console.log("theres an exit here")
-
-                    } else if (temp[j][1] == true) {
-                        console.log("a fight starts here")
-
-                    }
-                }
-
-            }
-
-        }
         return x;
-
     }
-
 }

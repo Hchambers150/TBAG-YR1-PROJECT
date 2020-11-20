@@ -1,25 +1,12 @@
 ﻿// game - based javascript done here:
 
-var unInitItems = [];
 
 function beginGame(name, con, dex, str, int, wis, cha) {
 
     // give all items
 
     player = new Player(name, con, dex, str, int, wis, cha);
-    unInitItems = [
-        ["Dagger", "weapon", "shittyDaggerBig.png", "shittyDaggerInv.png", 1, 0, "This dagger feels too heavy."],
-        ["Helmet", "helm", "", "leatherCoif.png", 0, 1, "This leather coif won't offer much protection..."],
-        ["Leather Body", "body", "", "leatherBody.png", 0, 3, "This studded leather body won't offer much protection..."],
-        ["Broad Sword", "weapon", "", "broadSword.png", 3, 0, "This broadsword seems pretty capable!"],
-        ["Rat Bane", "weapon", "", "ratBane.png", 2, 0, "Seems like the perfect size for killing rats..."],
-        ["Steel Tipped Boots", "boots", "", "steelTippedBoots.png", 0, 2, "These boots seem to offer a good amount of protection!"],
-        ["Glasses", "helm", "", "glasses.png", 0, 0, "I can't see what these could be useful for..."],
-        ["Steel Platebody", "body", "", "steelBody.png", 0, 4, "This heavy steel body should protect me."], // Good Images...
-        ["Steel Fullhelm", "helm", "", "steelHelm.png", 0, 2, "This heavy steel fullhelm should protect me."],
-        ["Steel Boots", "boots", "", "steelBoots.png", 0, 2, "These heavy steel boots should protect me."],
-        ["Steel Platelegs", "legs", "", "steelLegs.png", 0, 4, "These heavy steel platelegs should protect me."],
-
+    var temp = [
         // readables
         ["Mom's Note", "readable", "The last thing my Mother left me...", "scroll.png", [
             "Page 1 | " + createMomsNote(),
@@ -29,7 +16,7 @@ function beginGame(name, con, dex, str, int, wis, cha) {
     ];
     console.log(createMomsNote())
 
-    initAllItems();
+    initAllItems(temp);
     giveStartItems();
     updateScroll();
 }
@@ -98,6 +85,7 @@ function checkInput(ele) {
     if (event.key == 'Enter') {
         scanInput(ele.value);
         ele.value = "";
+        player.currentRoom.checkEvents();
     }
 
 }
@@ -123,6 +111,20 @@ function checkReadables(xID) {
     return false;
 }
 
+function checkMonsters(xID) {
+    console.log(xID)
+    var temp = player.currentRoom.monsters;
+    for (var i = 0; i < temp.length; i++) {
+        console.log(temp[i].id)
+        if (xID.toLowerCase() == temp[i].id.toLowerCase()) {
+            console.log("yee!")
+            return player.currentRoom.monsters[i];
+        }
+    }
+}
+
+var last;
+
 function scanInput(str) {
 
     // split it into words, if word1 == command -> follow command-specific instruction
@@ -130,14 +132,18 @@ function scanInput(str) {
 
     switch (strArray[0].toLowerCase()) {
         case "look":
-            print(currentRoom.description);
+            print(player.currentRoom.description);
+            player.currentRoom.eventNum++;
             break;
 
         case "wait":
+            print("You do nothing.")
+            player.currentRoom.eventNum++;
             break;
 
         case "repeat":
         case "again":
+            scanInput(last);
             break;
 
         case "move":
@@ -155,12 +161,18 @@ function scanInput(str) {
         case "loot":
         case "pilfer":
         case "take":
+        case "open":
+            // check if container or door
+
+            player.currentRoom.eventNum++;
             break;
 
         case "drop":
+            player.currentRoom.eventNum++;
             break;
 
         case "store":
+            player.currentRoom.eventNum++;
             break;
 
         case "equip":
@@ -170,6 +182,7 @@ function scanInput(str) {
             break;
 
         case "examine":
+            player.currentRoom.eventNum++;
             break;
 
         case "read":
@@ -195,12 +208,15 @@ function scanInput(str) {
         case "flip":
         case "press":
         case "interact":
+            player.currentRoom.eventNum++;
             break;
 
         case "talk":
+            player.currentRoom.eventNum++;
             break;
 
         case "attack":
+            player.currentRoom.eventNum++;
             break;
 
         case "clear":
@@ -225,6 +241,8 @@ function scanInput(str) {
             break;
     }
 
+    last = str;
+
 }
 
 function go(roomID) { // change to DIRECTION
@@ -240,11 +258,6 @@ function go(roomID) { // change to DIRECTION
 function updateRoom(room) {
     currentRoom = room;
 }
-
-function look() {
-    return currentRoom.description;
-}
-
 
 function battlePrint(x) {
     var output = document.getElementById("battleOutput");
@@ -291,13 +304,6 @@ function checkEquipped() {
 
 
 function addToInv(x) {
-    // x = object / array has:
-    //     img, name, 
-
-    // first, scan inventory for a free space
-    // then, 
-    // lastly, print "you equip" objectname
-
 
     for (var i = 0; i < player.inventory.length; i++) {
         if (player.inventory[i].innerHTML == "") {
@@ -306,9 +312,7 @@ function addToInv(x) {
             player.inventory[i].innerHTML = x.inventHtml;
 
             return;
-
         }
-
     }
 }
 
@@ -316,13 +320,22 @@ function addToInv(x) {
 var allItems = [];
 var allReadables = [];
 
-function initAllItems() {
+function initAllItems(k) {
 
     // go through init items
     // create a new Object for each
-
+    console.log(k)
     for (var i = 0; i < unInitItems.length; i++) {
         var x = unInitItems[i];
+        if (x[1] == "readable") {
+            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
+        } else {
+            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
+        }
+    }
+
+    for (var i = 0; i < k.length; i++) {
+        var x = k[i];
         if (x[1] == "readable") {
             allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
         } else {

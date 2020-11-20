@@ -456,15 +456,15 @@ function enterConvo(NPCID, startNode, convo) {
 }
 
 function nextConvo(ev) {
-    console.log(ev.path[0].getAttribute('data-nextnode'))
-    var temp = document.getElementById('NPCTitle').getAttribute('data-id');
-    for (var i = 0; i < player.currentRoom.monsters.length; i++) {
-        if (player.currentRoom.monsters[i] == temp) {
-            for (var i = 0; i < Object.keys(player.currentRoom.monsters[i].convo).length) {
-                // idek what to do here -- find the nextnode node... please... too tired time 404
-            }
-        }
-    }
+    //console.log(ev.path[0].getAttribute('data-nextnode'))
+    //var temp = document.getElementById('NPCTitle').getAttribute('data-id');
+    //for (var i = 0; i < player.currentRoom.monsters.length; i++) {
+    //    if (player.currentRoom.monsters[i] == temp) {
+    //        for (var i = 0; i < Object.keys(player.currentRoom.monsters[i].convo).length) {
+    //            // idek what to do here -- find the nextnode node... please... too tired time 404
+    //        }
+    //    }
+    //}
 }
 
 function exitConvo() {

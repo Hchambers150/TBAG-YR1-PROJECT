@@ -134,10 +134,10 @@ function test(ev) {
         case "NPC":
             var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
             console.log(m)
-            t.innerText = ev.path[0].innerText;
+            t.innerText = m.name;
             c.innerHTML = `
                 <span onclick="print('`+ m.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="enterConvo('`+ m.id + `')" class="menuItem">Speak to</span><br>
+                <span onclick="checkMonsters('`+ m.id + `').speak()" class="menuItem">Speak to</span><br>
                 <span onclick="enterCombat('`+ m.id + `')" class="menuItem">Attack</span><br>
             `;
             break;
@@ -415,7 +415,7 @@ function exitCombat() {
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
 
-function enterConvo(NPCID) {
+function enterConvo(NPCID, startNode, convo) {
 
     for (var i = 0; i < player.currentRoom.monsters.length; i++) {
         console.log()
@@ -426,10 +426,24 @@ function enterConvo(NPCID) {
 
             // set options and defaultText
 
-            //document.getElementById('NPCTitle').innerText = NPC.name;
-            //document.getElementById('NPCImg').src = NPC.img;
+            var choiceOne = document.getElementById('choiceOne');
+            var choiceTwo = document.getElementById('choiceTwo');
+            var choiceThree = document.getElementById('choiceThree');
 
-            // 
+            document.getElementById('NPCTitle').innerText = player.currentRoom.monsters[i].name;
+            document.getElementById('NPCTitle').setAttribute('data-id', player.currentRoom.monsters[i].id);
+            document.getElementById('NPCImg').src = player.currentRoom.monsters[i].img;
+            document.getElementById('NPCSpeech').innerText = startNode.openText;
+
+            choiceOne.innerText = startNode.options.optionOne.text;
+            choiceOne.setAttribute('data-nextNode', startNode.options.optionOne.nextNode); //ID only!
+
+            choiceTwo.innerText = startNode.options.optionTwo.text;
+            choiceTwo.setAttribute('data-nextNode', startNode.options.optionTwo.nextNode);
+
+            choiceThree.innerText = startNode.options.optionThree.text;
+            choiceThree.setAttribute('data-nextNode', startNode.options.optionThree.nextNode);
+
             // NPC.speak();
 
         } else {
@@ -439,6 +453,18 @@ function enterConvo(NPCID) {
     }
 
     
+}
+
+function nextConvo(ev) {
+    console.log(ev.path[0].getAttribute('data-nextnode'))
+    var temp = document.getElementById('NPCTitle').getAttribute('data-id');
+    for (var i = 0; i < player.currentRoom.monsters.length; i++) {
+        if (player.currentRoom.monsters[i] == temp) {
+            for (var i = 0; i < Object.keys(player.currentRoom.monsters[i].convo).length) {
+                // idek what to do here -- find the nextnode node... please... too tired time 404
+            }
+        }
+    }
 }
 
 function exitConvo() {

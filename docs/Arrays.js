@@ -115,7 +115,7 @@ var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
     gnome1: {
         id: "gnome1", name: "Gnome", weapon: "dagger", description: "Looks like he's seen some shit...",
         hp: 15, dmg: 2, level: 1,
-        img: "gnome.png", lootarray: [], conversationClass: conversationArray2.gnome1
+        img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg", lootarray: [], conversationClass: conversationArray2.gnome1
     }
 
 }

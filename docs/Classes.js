@@ -270,7 +270,7 @@ class NPC extends Monster {
 
     speak = function () {
         this.currentNode = this.conversation.default;
-        enterConvo(this);
+        enterConvo(this.id, this.currentNode, this.conversation);
     }
 
     nextSpeak = function (x) {

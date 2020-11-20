@@ -122,6 +122,9 @@ class Player {
         this.health = baseHealth + (this.stats.conMod * 2);
         this.mana = baseMana + (this.stats.intMod * 2);
 
+        this.isInConversation = false;
+        this.isInCombat = false;
+
         this.currentRoom = new Room(allRooms.basement);
     }
 
@@ -270,11 +273,20 @@ class NPC extends Monster {
 
     speak = function () {
         this.currentNode = this.conversation.default;
-        enterConvo(this.id, this.currentNode, this.conversation);
+        enterConvo(this, this.currentNode);
     }
 
-    nextSpeak = function (x) {
-        // x = 
+    getNextNode = function(nextNode) {
+        for (var i = 0; i < Object.keys(this.conversation).length; i++) {
+            console.log("ree3", Object.keys(this.conversation)[i], nextNode);
+            
+            if (nextNode == Object.keys(this.conversation)[i]) {
+                var temp = this.conversation[Object.keys(this.conversation)[i]];
+                console.log("bitch", temp);
+                this.currentNode = temp;
+                enterConvo(this, this.currentNode);
+            }
+        }
 
     }
 

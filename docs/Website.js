@@ -30,7 +30,7 @@ function test(ev) {
     var m = document.getElementById('customCtx');
     var c = document.getElementById('menuWrap');
     var t = document.getElementById('ctxTitle')
-    
+
 
     if (o == false) {
         //var o = checkMonsters(ev.path[0].title);
@@ -132,23 +132,32 @@ function test(ev) {
             break;
 
         case "NPC":
-            var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
-            console.log(m)
-            t.innerText = m.name;
-            c.innerHTML = `
+            if (player.isInConversation == false) {
+                var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
+                console.log(m)
+                t.innerText = m.name;
+                c.innerHTML = `
                 <span onclick="print('`+ m.description + `')" class="menuItem">Examine</span><br>
                 <span onclick="checkMonsters('`+ m.id + `').speak()" class="menuItem">Speak to</span><br>
                 <span onclick="enterCombat('`+ m.id + `')" class="menuItem">Attack</span><br>
             `;
+            } else {
+                var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
+                console.log(m)
+                t.innerText = m.name;
+                c.innerHTML = `
+                <span onclick="print('`+ m.description + `')" class="menuItem">Examine</span><br>
+                <span onclick="enterCombat('`+ m.id + `')" class="menuItem">Attack</span><br>
+            `;
+            }
+            
             break;
 
         default:
             t.innerHTML = "<font class='important'>Error!</font>"
             c.innerHTML = " ";
             break;
-
     }
-
 }
 
 //startup.style.webkitAnimationPlayState = "paused";
@@ -176,7 +185,7 @@ function changeColors() {
         currentColor = "light";
         document.body.style.backgroundColor = 'white';
         document.body.style.color = 'black';
-        document.getElementById('locationInfo').style.backgroundColor ='black';
+        document.getElementById('locationInfo').style.backgroundColor = 'black';
         document.getElementById('locationInfo').style.color = 'white';
         document.getElementById('input').style.backgroundColor = 'white';
         document.getElementById('presets').style.backgroundColor = 'white';
@@ -191,7 +200,7 @@ function changeColors() {
         document.getElementById('monsterTitleWrap').style.backgroundColor = 'black';
         document.getElementById('battleArea').style.borders = '1px solid black';
         document.getElementById('monsterWrap').style.backgroundColor = 'white';
-        
+
 
     } else if (currentColor == "light") { // turn to DARK
         //document.div.style.backgroundColor = 'red';
@@ -348,7 +357,7 @@ function getStats() { // revisit; should
     cha = parseInt(document.getElementById("chaStat").innerText);
 
     if (statPoints == 0 && name != "") {
-        
+
 
         document.getElementById("startup").style.animation = '1s ease-out 0s 1 slideOutToTop';
         document.getElementById("startup").style.display = 'none';
@@ -397,6 +406,7 @@ function setStats(name, con, dex, str, int, wis, cha) {
 }
 
 function enterCombat(enemy) {
+    exitConvo();
     document.getElementById('textArea').style.display = 'none';
     document.getElementById('inputWrap').style.display = 'none';
     document.getElementById('battleArea').style.display = 'flex';
@@ -415,56 +425,45 @@ function exitCombat() {
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
 
-function enterConvo(NPCID, startNode, convo) {
+function enterConvo(NPC, x) {
 
-    for (var i = 0; i < player.currentRoom.monsters.length; i++) {
-        console.log()
-        if (NPCID == player.currentRoom.monsters[i].id) {
-            document.getElementById('textArea').style.display = 'none';
-            document.getElementById('inputWrap').style.display = 'none';
-            document.getElementById('talkArea').style.display = 'flex';
+    document.getElementById('textArea').style.display = 'none';
+    document.getElementById('inputWrap').style.display = 'none';
+    document.getElementById('talkArea').style.display = 'flex';
 
-            // set options and defaultText
+    var choiceOne = document.getElementById('choiceOne');
+    var choiceTwo = document.getElementById('choiceTwo');
+    var choiceThree = document.getElementById('choiceThree');
+    var all = [choiceOne, choiceTwo, choiceThree];
+    console.log(NPC, x);
 
-            var choiceOne = document.getElementById('choiceOne');
-            var choiceTwo = document.getElementById('choiceTwo');
-            var choiceThree = document.getElementById('choiceThree');
+    document.getElementById('NPCTitle').innerText = NPC.id;
+    document.getElementById('NPCTitle').setAttribute('data-id', NPC.id);
+    document.getElementById('NPCImg').src = NPC.img;
+    document.getElementById('NPCImg').setAttribute('data-type', 'NPC');
+    document.getElementById('NPCImg').setAttribute('data-npc', NPC.id);
+    document.getElementById('NPCSpeech').innerHTML = x.openText;
 
-            document.getElementById('NPCTitle').innerText = player.currentRoom.monsters[i].name;
-            document.getElementById('NPCTitle').setAttribute('data-id', player.currentRoom.monsters[i].id);
-            document.getElementById('NPCImg').src = player.currentRoom.monsters[i].img;
-            document.getElementById('NPCSpeech').innerText = startNode.openText;
+    player.isInConversation = true;
 
-            choiceOne.innerText = startNode.options.optionOne.text;
-            choiceOne.setAttribute('data-nextNode', startNode.options.optionOne.nextNode); //ID only!
-
-            choiceTwo.innerText = startNode.options.optionTwo.text;
-            choiceTwo.setAttribute('data-nextNode', startNode.options.optionTwo.nextNode);
-
-            choiceThree.innerText = startNode.options.optionThree.text;
-            choiceThree.setAttribute('data-nextNode', startNode.options.optionThree.nextNode);
-
-            // NPC.speak();
-
-        } else {
-            console.log("Enemy not found");
-            print("Enemy not found");
+    for (var i = 0; i < all.length; i++) {
+        if (x.options[Object.keys(x.options)[i]] != null) {
+            var temp = x.options[Object.keys(x.options)[i]];
+            all[i].innerText = temp.text;
+            all[i].setAttribute('data-nextNode', temp.nextNode);
         }
     }
 
-    
 }
 
 function nextConvo(ev) {
-    //console.log(ev.path[0].getAttribute('data-nextnode'))
-    //var temp = document.getElementById('NPCTitle').getAttribute('data-id');
-    //for (var i = 0; i < player.currentRoom.monsters.length; i++) {
-    //    if (player.currentRoom.monsters[i] == temp) {
-    //        for (var i = 0; i < Object.keys(player.currentRoom.monsters[i].convo).length) {
-    //            // idek what to do here -- find the nextnode node... please... too tired time 404
-    //        }
-    //    }
-    //}
+    var npcID = document.getElementById("NPCTitle").getAttribute('data-id');
+    var x = checkMonsters(npcID);
+    var next = ev.path[0].getAttribute('data-nextNode');
+    console.log("big", next, x)
+    var temp = x.getNextNode(next);
+    console.log("ree", temp);
+
 }
 
 function exitConvo() {
@@ -473,6 +472,7 @@ function exitConvo() {
     document.getElementById('talkArea').style.display = 'none';
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
+    player.isInConversation = false;
 }
 
 var currentPage;

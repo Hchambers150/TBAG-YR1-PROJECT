@@ -748,13 +748,13 @@ a {
 }
 
 .convoChoice {
-    width: 49.9%;
-    height: 49.8%;
+    width:48%;
+    height:48%;
     display: flex;
     justify-content: center;
     align-items:center;
     margin: 0;
-    float: left;
+    float:left;
     cursor:pointer;
     user-select:none;
 }
@@ -779,6 +779,7 @@ a {
     overflow-y: scroll;
     display: flex;
     justify-content: center;
+    align-items:center;
 }
 
 #NPCTitle {

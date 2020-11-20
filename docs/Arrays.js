@@ -78,16 +78,36 @@ var conversationArray2 = {
 
             options: {
                 optionOne: {
-                    text:"We have to go and help her!", nextNode: "wifeTell2"
+                    text: "We have to go and help her!", nextNode: "wifeTell2"
                 },
                 optionTwo: {
-                    text:"She's probably dead...", nextNode: "runGnome"
+                    text: "She's probably dead...", nextNode: "runGnome"
                 }
             }
         },
 
         halt: {
+            id: "halt", topicID: null, conditions: null,
+            opentext: '"Halt!"',
 
+            options: {
+                optionOne: {
+                    text: "There's no point in writing this.", nextNode: null
+                },
+                optionTwo: {
+                    text: "Go back.", nextNode: "default"
+                },
+                optionThree: null
+            }
+        },
+
+        speciesTell: {
+            id: "speciesTell", topicID: "null", conditions: null,
+            openText: `"You can't tell what I am? I'm obviously a <font class='mystical'>&nbspgnome</font>!"`, options: {
+                optionOne: null, optionTwo: null, optionThree: {
+                    text: "--", nextNode: null
+                }
+            }
         },
 
         default: {
@@ -123,13 +143,13 @@ var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
 var allRooms = {
 
     basement: {
-        roomID: "basement", description: "Dusty room tee hee",
+        roomID: "basement", description: "room",
         connectedRooms: ["room1", null, null, null],
         containers: [],
         monsters: [],
         special: {
             1: {
-                eventNum: 3, command: "spawn", amount: "1", monsters: [allMonsters.gnome1],
+                eventNum: 1, command: "spawn", amount: "1", monsters: [allMonsters.gnome1],
                 spawnText: "A small creature comes crawling out from underneath one of the worktables."
             },
             2: {

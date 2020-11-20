@@ -117,7 +117,7 @@ function checkMonsters(xID) {
     for (var i = 0; i < temp.length; i++) {
         console.log(temp[i].id)
         if (xID.toLowerCase() == temp[i].id.toLowerCase()) {
-            console.log("yee!")
+            console.log("yee!", player.currentRoom.monsters[i])
             return player.currentRoom.monsters[i];
         }
     }

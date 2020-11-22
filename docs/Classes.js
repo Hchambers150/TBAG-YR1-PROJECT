@@ -117,7 +117,8 @@ class Player {
         var baseHealth = 15;
 
         this.name = name;
-        this.stats(con, dex, str, int, wis, cha);
+        this.stats = {};
+        this.Stats(con, dex, str, int, wis, cha);
         this.inventory = this.Inventory();
         this.health = baseHealth + (this.stats.conMod * 2);
         this.mana = baseMana + (this.stats.intMod * 2);
@@ -128,7 +129,7 @@ class Player {
         this.currentRoom = new Room(allRooms.basement);
     }
 
-    stats = function (con, dex, str, int, wis, cha) {
+    Stats = function (con, dex, str, int, wis, cha) {
         this.stats.con = con;
         this.stats.dex = dex;
         this.stats.str = str;
@@ -282,9 +283,25 @@ class NPC extends Monster {
             
             if (nextNode == Object.keys(this.conversation)[i]) {
                 var temp = this.conversation[Object.keys(this.conversation)[i]];
-                console.log("bitch", temp);
-                this.currentNode = temp;
-                enterConvo(this, this.currentNode);
+                if (temp.conditions == null) {
+                    //console.log("bitch", temp);
+                    this.currentNode = temp;
+                    enterConvo(this, this.currentNode);
+                } else {
+                    // -> conditions, calculate req, check req; set openText to pass or fail openText
+                    var t = reqMeaning(temp.conditions.req);
+                    if (t) {
+                        console.log(temp.conditions);
+                        enterConvo(this, temp.conditions.pass);
+                    } else {
+                        console.log(temp.conditions);
+                        enterConvo(this, temp.conditions.fail);
+                    }
+
+                    //console.log("bitch", temp);
+                    //this.currentNode = temp;
+                    //enterConvo(this, this.currentNode);
+                }
             }
         }
 

@@ -410,6 +410,10 @@
     color:green;
 }
 
+.convo {
+    color: #ff7700;
+}
+
 .stunned {
     color:yellow;
 }
@@ -779,7 +783,7 @@ a {
     overflow-y: scroll;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
 }
 
 #NPCTitle {
@@ -802,6 +806,7 @@ a {
     margin-left:1%;
     margin-right:1%;
     margin-top:0.5em;
+    height:auto;
 }
 
 #settings {

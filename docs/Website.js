@@ -9,7 +9,7 @@ document.addEventListener("contextmenu", function (event) {
     event.preventDefault();
     var x = document.getElementById("customCtx");
 
-    console.log(event.path[0])
+    //console.log(event.path[0])
     test(event);
 
     x.style.display = "block";
@@ -34,7 +34,7 @@ function test(ev) {
 
     if (o == false) {
         //var o = checkMonsters(ev.path[0].title);
-        console.log("test")
+        //console.log("test")
     }
 
     switch (ev.path[0].getAttribute('data-type')) {
@@ -134,7 +134,7 @@ function test(ev) {
         case "NPC":
             if (player.isInConversation == false) {
                 var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
-                console.log(m)
+                //console.log(m)
                 t.innerText = m.name;
                 c.innerHTML = `
                 <span onclick="print('`+ m.description + `')" class="menuItem">Examine</span><br>
@@ -143,7 +143,7 @@ function test(ev) {
             `;
             } else {
                 var m = checkMonsters(ev.path[0].getAttribute('data-npc'));
-                console.log(m)
+                //console.log(m)
                 t.innerText = m.name;
                 c.innerHTML = `
                 <span onclick="print('`+ m.description + `')" class="menuItem">Examine</span><br>
@@ -169,7 +169,7 @@ var currentColor = "dark";
 
 function toggleSettings() {
     var settings = document.getElementById('settingsMenu');
-    console.log(settings.style);
+    //console.log(settings.style);
     if (settings.style.display == "flex") {
         settings.style.display = "";
     } else if (settings.style.display == "") {
@@ -357,8 +357,6 @@ function getStats() { // revisit; should
     cha = parseInt(document.getElementById("chaStat").innerText);
 
     if (statPoints == 0 && name != "") {
-
-
         document.getElementById("startup").style.animation = '1s ease-out 0s 1 slideOutToTop';
         document.getElementById("startup").style.display = 'none';
         document.getElementById("main").style.display = 'block';
@@ -425,6 +423,43 @@ function exitCombat() {
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
 
+function calcMin(stat, min) {
+    if (checkStats(stat) >= min) {
+        console.log(checkStats(stat),true);
+        return true;
+    } else {
+        console.log(false);
+        return false;
+    }
+}
+
+function calcMax(stat, max) {
+    if (checkStats(stat) <= max) {
+        console.log(true);
+        return true;
+    } else {
+        console.log(false);
+        return false;
+    }
+}
+
+function reqMeaning(x) {
+    x = x.split(" ");
+    switch (x[0]) {
+        case "min":
+            console.log(x)
+            var result = calcMin(x[2], x[1]);
+            console.log("IAKJFGSKJAHFKJSA", result);
+            return result;
+            break;
+        case "max":
+            var result = calcMax(x[2], x[1]);
+            console.log("IAKJFGSKJAHFKJSA", result);
+            return result;
+            break;
+    }
+}
+
 function enterConvo(NPC, x) {
 
     document.getElementById('textArea').style.display = 'none';
@@ -442,28 +477,26 @@ function enterConvo(NPC, x) {
     document.getElementById('NPCImg').src = NPC.img;
     document.getElementById('NPCImg').setAttribute('data-type', 'NPC');
     document.getElementById('NPCImg').setAttribute('data-npc', NPC.id);
-    document.getElementById('NPCSpeech').innerHTML = x.openText;
+    document.getElementById('NPCOut').innerHTML = x.openText;
 
     player.isInConversation = true;
 
     for (var i = 0; i < all.length; i++) {
-        if (x.options[Object.keys(x.options)[i]] != null) {
-            var temp = x.options[Object.keys(x.options)[i]];
-            all[i].innerText = temp.text;
-            all[i].setAttribute('data-nextNode', temp.nextNode);
+            console.log(x);
+            if (x.options[Object.keys(x.options)[i]] != null) {
+                var temp = x.options[Object.keys(x.options)[i]];
+                all[i].innerHTML = temp.text;
+                all[i].setAttribute('data-nextNode', temp.nextNode);
         }
-    }
-
+    } 
 }
+
 
 function nextConvo(ev) {
     var npcID = document.getElementById("NPCTitle").getAttribute('data-id');
     var x = checkMonsters(npcID);
     var next = ev.path[0].getAttribute('data-nextNode');
-    console.log("big", next, x)
     var temp = x.getNextNode(next);
-    console.log("ree", temp);
-
 }
 
 function exitConvo() {

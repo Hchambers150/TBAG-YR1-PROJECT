@@ -14,118 +14,350 @@
 
 ];
 
-var conversationArray = { // null == deadend, false == exit tree, true == enterCombat()
+var currentQuests = [];
 
-    gnome1: {
+var quests = {
+    follow_the_gnome: {
+        npcID: "gnome1"
+    },
 
-        whoAreYou: ["Who am I? I've lived on these grounds for years! It's only until now that I've been hidden.", [
-            ["I've never seen you!", null, "Honest, I was here."],
-            ["Ask for a quest", "quest"]
-        ]],
-
-        quest: ["Ah, a quest is what you're after? This'll open up a whole new chapter!", [
-            ["Thanks, bye!", false],
-        ]],
-
-        sayHello: ["Hello, yourself", [
-            ["Say  goodbye", false],
-            ["Who are you?", "whoAreYou"]
-        ]],
-
-        default: [null, [
-            ["Say hello.", "sayHello"],
-            ["Ask for a quest", "quest"],
-            ["Attack", true]
-        ]]
+    find_the_wife: {
+        npcID: "gnomeWife"
     }
 
-};
+}
 
 var conversationArray2 = {
 
     gnome1: {
-
-        grabGnome: { // ID, topicID, conditions, openText
-            id: "grabGnome", topicID: null, conditions: {
-                requirement: "min 10 strength", pass: ["The creature stops flailing.", "bound = true"], fail: ["The creature jumps from your grasp.", null]
-            }, openText: null, options: {
-                1: {},
-                2: {},
-                3: {},
-            }
-        },
-
-        runGnome: {
-            id: "runGnome", topicID: null, conditions: null,
-            openText: "The creature starts freaking out and running around the room, knocking things over, and trying to find a way to escape.", options: {
-                grabGnome: {
-                    text: "Grab the creature.", nextNode: "grabGnome"
+        default: { // id, topicID, conditions, openText, options{optionOne{text, nextnode}}
+            id: "default", topicID: null, conditions: null,
+            openText: `The humanoid creature didn't seem to notice you, and has turned his back and squatted down to check his backpack. <br><br>
+            His scabbard appears to hold a <font class='special' data-type='pWep'>dagger</font>. 
+            From a distance, you can hear him muttering <font class="convo"> "Where is it, oh, where could it be?"</font>`,
+            options: {
+                optionOne: {
+                    text: "Grab the gnome", nextNode: "held"
                 },
-                letGo: {
-                    text: "Leave him alone.", nextNode: null
+                optionTwo: {
+                    text: '<font class="convo">"Halt!"</font>', nextNode: "startled"
+                },
+                optionThree: {
+                    text: "Ignore the creature.", nextNode: "exit"
                 }
             }
         },
 
-        wifeTell2: {
-            id: "wifeTell2", topicID: null, conditions: null,
-            openText: ""
-        },
-
-        wifeTell: {
-            id: "wifeTell", topicID: "quest", conditions: null,
-            openText: "In that case... I had to leave my wife back there. Just a few rooms back - I didn't want to leave her, it's just... She insisted.",
-
-            options: {
-                optionOne: {
-                    text: "We have to go and help her!", nextNode: "wifeTell2"
-                },
-                optionTwo: {
-                    text: "She's probably dead...", nextNode: "runGnome"
+        held: {
+            id: null, topicID: null, cBool: true, conditions: {
+                req: "min 9 dex",
+                pass: {
+                    id: "held", topicID: null, conditions: null,
+                    openText: "You rush the creature from behind and grapple him - his small size makes it very easy for you.", options: {
+                        optionOne: {
+                            text: '<font class="convo">"Who are you?"</font>', nextNode: "geraldGnutter"
+                        },
+                        optionTwo: {
+                            text: '<font class="convo">"What are you doing here?"</font>', nextNode: "theTunnel"
+                        },
+                        optionThree: {
+                            text: "Attack the creature.", nextNode: "fight -- stunned"
+                        }
+                    }
+                }, fail: {
+                    id: "held", topicID: null, conditions: null,
+                    openText: "You rush the creature from behind and grapple him - his small size makes it very easy for you.", options: {
+                        optionOne: {
+                            text: '<font class="convo">"Who are you?"</font>', nextNode: "geraldGnutter"
+                        },
+                        optionTwo: {
+                            text: '<font class="convo">"What are you doing here?"</font>', nextNode: "theTunnel"
+                        },
+                        optionThree: {
+                            text: "Attack the creature.", nextNode: "fight -- stunned"
+                        }
+                    }
                 }
-            }
+            },
+            openText: null, options: null
         },
 
-        halt: {
-            id: "halt", topicID: null, conditions: null,
-            opentext: '"Halt!"',
+        geraldGnutter: {
+            id: "geraldGnutter", topicID: null, conditions: null,
+            openText: `<font class="convo">"Me? I'm Gerald G. Gnutter, a fine upstanding Gnome citizen. I am - I was a soldier, back in Gnottingham… Well, that was a long time ago."</font> `,
 
             options: {
                 optionOne: {
-                    text: "There's no point in writing this.", nextNode: null
+                    text: "--", nextNode: null
                 },
-                optionTwo: {
-                    text: "Go back.", nextNode: "default"
-                },
-                optionThree: null
-            }
-        },
-
-        speciesTell: {
-            id: "speciesTell", topicID: "null", conditions: null,
-            openText: `"You can't tell what I am? I'm obviously a <font class='mystical'>&nbspgnome</font>!"`, options: {
-                optionOne: null, optionTwo: null, optionThree: {
+                optionTwo: null,
+                optionThree: {
                     text: "--", nextNode: null
                 }
             }
         },
 
-        default: {
-            id: "default", topicID: "greeting", conditions: null,
-            openText: "The creature appears to be very afraid.",
+        theTunnel: {
+            id: "theTunnel", topicID: null, conditions: null,
+            openText: `<font class="convo">"Well, up until recently, I've been travelling with my wife, through the tunnel… After Gnottingham was purged… I don't even want to think about it."</font>`,
 
             options: {
                 optionOne: {
-                    text: "Halt!", nextNode: "halt"
+                    text: '<font class="convo">"Where is your wife?"</font>', nextNode: "wife"
                 },
                 optionTwo: {
-                    text: "Who are you?", nextNode: "wifeTell"
+                    text: `<font class="convo">"What happened?"</font>`, nextNode: "preGnottingham"
                 },
                 optionThree: {
-                    text: "What are you?", nextNode: "speciesTell"
+                    text: '<font class="convo">"The tunnel?"</font>', nextNode: "theTunnel2"
                 }
             }
         },
+
+        theTunnel2: {
+            id: null, topicID: null, cBool: true, conditions: {
+                req: "min 15 cha",
+                pass: {
+                    id: "theTunnel2", topicID: null, conditions: null,
+                    openText: `<font class="convo">"I've spent the last 20 years mapping out that dungeon
+                    - there's all sorts in there; dragons and cities for them to prey on, deserts, woodland - mountains, even! It's
+                    not like the stories of old, there is no sky, no stars... But, I finally came across this passage!
+                    This tunnel, leading to this door, which lead to this room! And from the sounds of it, I was right! I'm finally... Finally free!"</font>`, options: {
+                        optionOne: null,
+                        optionTwo: null,
+                        optionThree: {
+                            text: "--", nextNode: null
+                        }
+                    }
+                }, fail: {
+                    id: "theTunnel2", topicID: null, conditions: null,
+                    openText: `<font class="convo">"I've spent the last 20 years gathering that information! I'm not just going to tell you!"</font>`, options: {
+                        optionOne: null,
+                        optionTwo: null,
+                        optionThree: {
+                            text: "--", nextNode: null
+                        }
+                    }
+                }
+            },
+            openText: null, options: null
+        },
+
+        wife: {
+            id: "wife", topicID: null, conditions: null,
+            openText: `<font class="convo">"I had to leave her a few rooms back… We were attacked, and, well, 
+            she told me to keep going - and I didn’t have time to think, you see, and… I probably don't have enough time to go back…"</font>`,
+
+            options: {
+                optionOne: {
+                    text: `<font class="convo">"We need to go now!"</font>`, nextNode: "followGnome"
+                },
+                optionTwo: null,
+                optionThree: {
+                    text: `<font class="convo">"You're right, she's probably dead."</font>`, nextNode: "wifeLeave"
+                }
+            }
+        },
+
+        wifeLeave: {
+            id: ` `,
+            topicID: "quest", quest: "find_the_wife", conditions: null,
+            openText: `The gnome suddenly looks visibly drained and drops to his knees. 
+            He casts a quick glance around the room, looks at you, picks up his backpack, and heads to the stairway.<br><br>
+            As he turns to leave, a small slip of paper falls from his backpack. Before you have the chance to call out to him, he is out of sight.`,
+
+            options: {
+                optionOne: {
+                    text: "--", nextNode: null
+                },
+                optionTwo: {
+                    text: "--", nextNode: null
+                },
+                optionThree: {
+                    text: "--", nextNode: null
+                }
+            }
+        },
+
+        followGnome: {
+            id: "", topicID: "quest", quest: "follow_the_gnome", conditions: null,
+            openText: `<font class="convo">"Ok, if you think so... Follow me, she was just a few rooms back!"<br><br>
+                        The gnome disappears into the wall he came from.</font>`,
+
+            options: {
+                optionOne: {
+                    text: "--", nextNode: null
+                },
+                optionTwo: {
+                    text: "--", nextNode: null
+                },
+                optionThree: {
+                    text: "--", nextNode: null
+                }
+            }
+        },
+
+        preGnottingham: {
+            id: "preGnottingham", topicID: null, conditions: null,
+            openText: `<font class="convo">"Are you sure you want to know? It's a long story."</font>`,
+
+            options: {
+                optionOne: null,
+                optionTwo: {
+                    text: '<font class="convo">"Yes, I want to know."</font>', nextNode: "gnottingham"
+                },
+                optionThree: {
+                    text: "--", nextNode: null
+                }
+            }
+        },
+
+        gnottingham: {
+            id: "gnottingham", topicID: null, conditions: null,
+            openText: `The gnome continued; <font class="convo">"we had been working hard - and I mean very hard - to meet the yearly Quota. 
+            We wanted to Grand Reward, so we toiled on the Fields; the City Mages would use their crop growing magic,
+            and almost all the food we had went towards fulfilling the Quota…"</font>`,
+
+            options: {
+                optionOne: null,
+                optionTwo: {
+                    text: '<font class="convo">"The Quota?"</font>', nextNode: "quota"
+                },
+                optionThree: {
+                    text: '<font class="convo">"What happened next?"</font>', nextNode: "gnottingham2"
+                }
+            }
+        },
+
+        quota: {
+            id: "quota", topicID: null, conditions: null,
+            openText: `<font class="convo">"You don't know what the Quota is? Does that mean to say you also don’t know of the Grand Rewards or the Janak? 
+            Could that mean His Power doesn’t reach here… Is it that I'm out?"</font>`,
+
+            options: {
+                optionOne: null,
+                optionTwo: {
+                    text: `<font class="convo">"You're not making any sense..."</font>`, nextNode: "nonsense"
+                },
+                optionThree: {
+                    text: "--", nextNode: null
+                }
+            }
+        },
+
+        nonsense: {
+            id: "nonsense", topicID: null, conditions: null,
+            openText: `<font class="convo">"Oh..."</font>`,
+
+            options: {
+                optionOne: null,
+                optionTwo: null,
+                optionThree: null
+            }
+        },
+
+        gnottingham2: {
+            id: "gnottingham2", topicID: null, conditions: null,
+            openText: `<font class="convo">"Well, we kept churning out food, of course; almost all of it was funnelled to the Nurseries. 
+            The Meatplants ended up taking all the nutrients from the soil, though, and they dried up.
+            The gnomes in the Nurseries… weren't getting enough, shall we say, and they started… Well, they started…"</font>`,
+
+            options: {
+                optionOne: null,
+                optionTwo: null,
+                optionThree: {
+                    text: '"Started what?"', nextNode: "gnottinghamFeeding"
+                }
+            }
+        },
+
+        gnottinghamFeeding: {
+            id: null, topicID: null, cBool: true, conditions: {
+                req: "min 12 cha",
+                pass: {
+                    id: "gnottinghamFeeding", topicID: null, conditions: null,
+                    openText: `<font class="convo">"Well, the Expectants… They started with the Clergy - the gnomes in charge of organising and splitting rations -
+                    then, after they were finished with, the Expectants turned on each other… The earlier Expectants were more nimble than the later ones,
+                    and they managed to gnaw through them in just a few days… Luckily, my wife was able to get out before it all started, and thank the Cielestials I had stocked up at home.</font>"`, options: {
+                        optionOne: null,
+                        optionTwo: {
+                            text: '--', nextNode: null
+                        },
+                        optionThree: {
+                            text: "--", nextNode: null
+                        }
+                    }
+                }, fail: {
+                    id: "gnottinghamFeeding", topicID: null, conditions: null,
+                    openText: `<font class="convo">"I can't even bring myself to say it..."</font>`, options: {
+                        optionOne: null,
+                        optionTwo: {
+                            text: '--', nextNode: null
+                        },
+                        optionThree: {
+                            text: "--", nextNode: null
+                        }
+                    }
+                }
+            },
+            openText: null, options: null
+        },
+
+        startled: {
+            id: "startled", topicID: null, conditions: null,
+            openText: `	The creature turns with a start - as you get a better look at him, you notice his small stature and large eyes and ears.<br><br>
+                        <font class="convo">"Wha - I didn't see you there…" the creature mumbles, "say, have you seen a photo around here?"</font>`,
+            options: {
+                optionOne: {
+                    text: '<font class="convo">"Yes."</font>', nextNode: "picture"
+                },
+                optionTwo: {
+                    text: '<font class="convo">"No."</font>', nextNode: "wife"
+                },
+                optionThree: null
+            }
+        },
+
+        picture: {
+            id: null, topicID: null, cBool: true, conditions: {
+            req: "has picture1",
+            pass: {
+                id: "picture", topicID: null, conditions: null,
+                openText: `<font class="convo">"Ah! You found it - I don't know how I managed to lose this!"</font>`, options: {
+                    optionOne: {
+                        text: '', nextNode: ""
+                    },
+                    optionTwo: {
+                        text: '', nextNode: ""
+                    },
+                    optionThree: {
+                        text: "", nextNode: ""
+                    }
+                }
+            }, fail: {
+                id: "picture", topicID: null, conditions: null,
+                openText: `""`, options: {
+                    optionOne: {
+                        text: '', nextNode: ""
+                    },
+                    optionTwo: {
+                        text: '', nextNode: ""
+                    },
+                    optionThree: {
+                        text: "", nextNode: ""
+                    }
+                }
+            }
+        },
+        openText: null, options: null
+    },
+        
+    },
+
+    gnomeWife: {
+        default: {
+
+        }
     }
 
 }
@@ -137,6 +369,11 @@ var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
         hp: 15, dmg: 2, level: 1,
         img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg", lootarray: [], conversationClass: conversationArray2.gnome1
     }
+
+}
+
+var allContainers = {
+    
 
 }
 

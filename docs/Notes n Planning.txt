@@ -189,3 +189,113 @@ Commands:
 	i.e inventory Sword -> Examine, Equip, Drop
 
 	http://xahlee.info/comp/unicode_runic.html
+
+	>> fix shit -> trying to convert items to {}
+
+
+- make all items objects, add them to an array
+
+var unInitItemsArray = {
+
+    momsNote: {
+        id: "momsNote", name: "Mom's Note", type: "readable", img: "scroll.png", description: "The last thing my Mother left me...",
+        pages: {
+            pageOne: {
+                title: "Page One", content: ""
+            },
+            pageTwo: {
+                title: "Page Two", content: ""
+            }
+        }
+    },
+
+    dagger: {
+        id: "dagger1", name: "Dagger", type: "pWep", img: "shittDaggerInv.png",
+        attacks: {
+            slash: ["slash", 3, 5],
+            stab: ["stab", 2, 5],
+            throw: ["ranged", 0]
+        },
+        description: "This dagger feels too heavy."
+    },
+
+    wand: {
+        id: "wand1", name:"Wand", type: "mWep", img: "wand.png", attacks: {
+            lightningBolt: {
+                id: "Lightning Bolt", type: "spell", dmgType: "magic", dmgRange: [1, 7], special: ["stun", 0.1],
+                description: "A bolt of lightning that has a chance to stun enemies."
+            },
+            fireBolt: {
+                id: "Fire Bolt", type: "spell", dmgType: "magic", dmgRange: [2, 6], special: ["burn", 0.3],
+                description: "A bolt of fire that has a chance to burn enemies."
+            },
+            wandBash: {
+                id: "Wand Bash", type: "attack", dmgType: "physical", dmgRange: [1, 3],
+                description: "I suppose there are other uses for this..."
+            }
+        },
+        description: "This crudely crafted wand hasn't seen much action."
+    },
+
+    leatherHelmet: {
+        id: "leatherHelmet", name: "Leather Helmet", type: "armour", armourType: "helm", img: "leatherCoif.png", def: 1,
+        description: "This leather coif won't offer much protection."
+    },
+
+    healthPot: {
+        id: "healthPotion", name: "Health Potion", type: "heal", img: "healthPot.png", heal: 5,
+        description: "Looks like it will heal some health."
+    }
+}
+
+default: {
+            id: "", topicID: "", conditions: null,
+            openText: ``,
+
+            options: {
+                optionOne: {
+                    text: ``, nextNode: ""
+                },
+                optionTwo: {
+                    text: ``, nextNode: ""
+                },
+                optionThree: {
+                    text: ``, nextNode: ""
+                }
+            }
+        },
+
+
+held: {
+            id: null, topicID: null, cBool: true, conditions: {
+                req: "",
+                pass: {
+                    id: "", topicID: null, conditions: null,
+                    openText: ``, options: {
+                        optionOne: {
+                            text: ``, nextNode: ""
+                        },
+                        optionTwo: {
+                            text: ``, nextNode: ""
+                        },
+                        optionThree: {
+                            text: ``, nextNode: ""
+                        }
+                    }
+                }, fail: {
+                    id: "", topicID: null, conditions: null,
+                    openText: ``, options: {
+                        optionOne: {
+                            text: ``, nextNode: ""
+                        },
+                        optionTwo: {
+                            text: ``, nextNode: ""
+                        },
+                        optionThree: {
+                            text: ``, nextNode: ""
+                        }
+                    }
+                }
+            },
+            openText: null, options: null
+        },

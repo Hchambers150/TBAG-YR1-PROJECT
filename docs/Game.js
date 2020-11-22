@@ -14,7 +14,7 @@ function beginGame(name, con, dex, str, int, wis, cha) {
             "Page 3 | Lots of text"
         ]]
     ];
-    console.log(createMomsNote())
+    //console.log(createMomsNote())
 
     initAllItems(temp);
     giveStartItems();
@@ -75,6 +75,18 @@ but by the next day, you were fit as a fiddle again, and you went for another ad
     return momsNote;
 }
 
+
+function checkStats(stat) {
+    console.log(player.stats);
+    var temp = Object.keys(player.stats);
+    for (var i = 0; i < temp.length; i++) {
+        if (temp[i] == stat) {
+            console.log("ree", temp[i], player.stats[temp[i]])
+            return player.stats[temp[i]];
+        }
+    }
+}
+
 function updateScroll() {
     var element = document.getElementById("output");
     element.scrollTop = element.scrollHeight;
@@ -112,12 +124,12 @@ function checkReadables(xID) {
 }
 
 function checkMonsters(xID) {
-    console.log(xID)
+    //console.log(xID)
     var temp = player.currentRoom.monsters;
     for (var i = 0; i < temp.length; i++) {
-        console.log(temp[i].id)
+        //console.log(temp[i].id)
         if (xID.toLowerCase() == temp[i].id.toLowerCase()) {
-            console.log("yee!", player.currentRoom.monsters[i])
+            //console.log("yee!", player.currentRoom.monsters[i])
             return player.currentRoom.monsters[i];
         }
     }
@@ -324,7 +336,7 @@ function initAllItems(k) {
 
     // go through init items
     // create a new Object for each
-    console.log(k)
+    //console.log(k)
     for (var i = 0; i < unInitItems.length; i++) {
         var x = unInitItems[i];
         if (x[1] == "readable") {

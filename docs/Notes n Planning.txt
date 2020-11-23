@@ -299,3 +299,19 @@ held: {
             },
             openText: null, options: null
         },
+
+
+infliction types:
+
+- bleed:
+	- posion:
+
+- stun:
+	
+- cursed:
+	
+
+item {
+        id: "", name: "", type: "", img: "", 
+        description: ""
+    },

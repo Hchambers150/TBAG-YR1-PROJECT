@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Text Based Adventure Game</title>
+    <link rel="shortcut icon" type="image/x-icon" href="tbag.png" />
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="startup.css" />
 
@@ -226,7 +227,13 @@
 
                 <div id="playerChoices">
                     <a onclick="attack()"> <!--DO THIS!! IN TERMS of adding CMDs-->
-                        <div class="fightChoice" id="attack">Attack!</div>
+                        <div class="fightChoice" id="attack">
+                            <span id="attackTitle">Attack!</span>
+                            <div class="attackBox" id="attackOne" onclick="doAttack(event)"></div>
+                            <div class="attackBox right" id="attackTwo" onclick="doAttack(event)"></div>
+                            <div class="attackBox right" id="attackThree" onclick="doAttack(event)"></div>
+
+                        </div>
                         <div class="fightChoice right" id="attack2">Defend!</div>
                         <div class="fightChoice bottom" id="attack3">Dick Twist!</div>
                         <div class="fightChoice bottom right" id="attack4">Run!</div>

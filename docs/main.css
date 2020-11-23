@@ -581,6 +581,36 @@ a {
 #attack {
 }
 
+#attackTitle {
+    width:50%;
+    position:absolute;
+    top:0;
+    background-color:white;
+    color:black;
+    display:flex;
+    justify-content:center;
+}
+
+.attackBox {
+    position: relative;
+    top: 0.5em;
+    width: 33%;
+    height: 4.5em;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+/*#attackOne {
+    border-right:1px dotted white;
+
+}
+#attackTwo {
+    border-right: 1px dotted white;
+}*/
+
+
 #attack2 {
 }
 

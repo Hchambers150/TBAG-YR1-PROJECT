@@ -1,4 +1,6 @@
-﻿class Room {
+﻿var allRoomsArray = [];
+
+class Room {
     constructor(roomClass) {
         this.roomID = roomClass.roomID;
         this.description = roomClass.description;
@@ -8,6 +10,7 @@
         this.monsters = roomClass.monsters; //array [monsterAsObject]
         this.special = roomClass.special;
         this.eventNum = 0; // increases as player events occur - special things may happen at certain events
+        //allRoomsArray[]
     }
 
     checkEvents = function () {
@@ -48,66 +51,186 @@
     }
 }
 
-class Readable {
-    constructor(name, type, description, invImg, readText) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.invImg = invImg;
-        this.readText = readText;
+//class Readable {
+//    constructor(name, type, description, invImg, readText) {
+//        this.name = name;
+//        this.type = type;
+//        this.description = description;
+//        this.invImg = invImg;
 
-        this.inventHtml = this.InventHtml(name, invImg);
-    }
+//    }
 
-    InventHtml = function (name, invImg) {
-        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+//    InventHtml = function (name, invImg) {
+//        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
 
-        return total;
-    }
+//        return total;
+//    }
 
-    read = function () {
-        enterReading(this.readText);
-    }
-}
+//    read = function () {
+//        enterReading(this.readText);
+//    }
+//}
 
 class Item {
 
-    // HOW WILL THIS WORK??
-    // ondrop event will use these Objects to equip() and unequip()
-    // to do that, some code needs to be stored here to identify THE LITERAL OBJECT
-
-    constructor(name, type, bigImg, invImg, physicalDmg, magicDmg, description) {
-        this.name = name;
-        this.type = type;
-
-        this.pDmg = physicalDmg;
-        this.mDmg = magicDmg;
-        this.description = description;
-        this.bigImg = bigImg;
-        this.invImg = invImg;
-
+    constructor(item) {
+        //console.log("hiya",item)
+        this.id = item.id;
+        this.name = item.name;
+        this.invImg = item.img;
+        this.type = item.type;
+        this.description = item.description;
         this.isInInventory = false;
+        this.imgOutHtml = this.ImageOutHtml(this.name, this.invImg);
+        this.inventHtml = this.InventHtml(this.name, this.invImg);
 
-        this.imageOutHtml = this.ImageOutHtml(name, bigImg);
-        this.inventHtml = this.InventHtml(name, invImg);
-
-
+        //addToInv(this);
     }
 
     ImageOutHtml = function (name, bigImg) {
         var total = '<img src="' + bigImg + '" title="' + name + '/>';
-
         return total;
-
     }
 
     InventHtml = function (name, invImg) {
+        //console.log("tigger toy")
         var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
-
         return total;
     }
 
 }
+
+class Armour extends Item {
+    constructor(item) {
+        super(item);
+        this.defence = item.def;
+        this.type = item.type;
+        this.armourType = item.armourType;
+        //this.inventHtml = "";
+        this.inventHtml = this.armourInventHtml(this.id, this.name, this.armourType, this.invImg);
+        //addToInv(this);
+    }
+
+    armourInventHtml = function (id, name, type, invImg) {
+        console.log("bigger boy", this.armourType)
+        var total = '<div id="' + id + 'Item" data-type="' + type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+        return total;
+    }
+}
+
+class Weapon extends Item {
+    constructor(item) {
+        super(item);
+        console.log(item.attacks);
+        this.Attacks(item.attacks);
+        this.inventHtml = "";
+        this.inventHtml = this.weaponInventHtml(this.id, this.name, this.invImg);
+    }
+
+    weaponInventHtml = function (id, name, invImg) {
+        console.log("bigger boy")
+        var total = '<div id="' + id + 'Item" data-type="weapon" title="' + name + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+        return total;
+    }
+
+    Attacks = function (attacks) {
+        console.log(attacks);
+        this.attackOne = new Attack(attacks.attackOne);
+        this.attackTwo = new Attack(attacks.attackTwo);
+        this.attackThree = new Attack(attacks.attackThree);
+    }
+}
+
+var allAttacks = [];
+
+class Attack {
+    constructor(attack) {
+        this.id = attack.name;
+        this.name = attack.name;
+        this.type = attack.type;
+        this.dmgType = attack.dmgType;
+        this.dmgRangeMin = attack.dmgRange[0];
+        this.dmgRangeMax = attack.dmgRange[1];
+        this.description = attack.description;
+        if (attack.special != null) {
+            this.special = this.Special(attack.special);
+        } else {
+            this.special = null;
+        }
+        
+        allAttacks[allAttacks.length] = this;
+    }
+
+    Special = function (x) {
+        // special attacks
+        switch (x.id) {
+            case "stun":
+                break;
+            case "burn":
+                break;
+            case "poison":
+                break;
+            case "curse":
+                break;
+        }
+            
+    }
+
+}
+
+class Readable extends Item {
+    constructor(item) {
+        super(item);
+        this.readText = item.pages;
+
+        //this.inventHtml = this.InventHtml(this.name, this.img);
+    }
+
+    read = function () {
+        enterReading(this.pages.default);
+    }
+}
+
+//class Item {
+
+//    // HOW WILL THIS WORK??
+//    // ondrop event will use these Objects to equip() and unequip()
+//    // to do that, some code needs to be stored here to identify THE LITERAL OBJECT
+
+//    constructor(name, type, bigImg, invImg, physicalDmg, magicDmg, description) {
+//        this.name = name;
+//        this.type = type;
+
+//        this.pDmg = physicalDmg;
+//        this.mDmg = magicDmg;
+//        this.description = description;
+//        this.bigImg = bigImg;
+//        this.invImg = invImg;
+
+//        this.isInInventory = false;
+
+//        this.imageOutHtml = this.ImageOutHtml(name, bigImg);
+//        this.inventHtml = this.InventHtml(name, invImg);
+
+
+//    }
+
+    //ImageOutHtml = function (name, bigImg) {
+    //    var total = '<img src="' + bigImg + '" title="' + name + '/>';
+
+    //    return total;
+
+    //}
+
+    //InventHtml = function (name, invImg) {
+    //    var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
+
+    //    return total;
+    //}
+
+//}
+
+
 
 class Player {
 
@@ -173,13 +296,24 @@ class Monster {
         this.img = monster.img;
         this.containsLoot = this.getLoot(monster.lootArray);
 
-        this.weapon = monster.weapon;
+        this.weapon = new Weapon(monster.weapon);
 
         this.hp = monster.hp;
         this.dmg = monster.dmg;
         this.effectiveHP = monster.hp;
         this.effectiveDmg = monster.dmg;
-        this.inflictions = [];
+        this.inflictions = {};
+        this.turn;
+    }
+
+    calcTurn = function () {
+        if (this.turn != null) {
+            // does turn
+            //for()
+
+        } else {
+            // does nothing
+        }
     }
 
     checkInflictions = function () {
@@ -187,9 +321,11 @@ class Monster {
             switch (this.inflictions[i]) {
                 case "stunned":
                     // cannot perform any actions
+                    this.turn = null;
                     break;
                 case "cursed":
                     // cannot perform magic attacks
+                    this.calcTurn();
                     break;
                 case "bound":
                     // cannot perform physical actions
@@ -251,6 +387,8 @@ function getConvoPiece(ID, convoClass) {
     console.log("ERROR! CONVO CLASS NOT FOUND!");
 
 }
+
+
 
 class NPC extends Monster {
 

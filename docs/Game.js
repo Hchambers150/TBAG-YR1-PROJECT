@@ -16,8 +16,9 @@ function beginGame(name, con, dex, str, int, wis, cha) {
     ];
     //console.log(createMomsNote())
 
-    initAllItems(temp);
-    giveStartItems();
+    initItems();
+    //initAllItems(temp);
+    //giveStartItems();
     updateScroll();
 }
 
@@ -220,6 +221,7 @@ function scanInput(str) {
         case "flip":
         case "press":
         case "interact":
+            //doButton(strArray[1]);
             player.currentRoom.eventNum++;
             break;
 
@@ -315,52 +317,70 @@ function checkEquipped() {
 }
 
 
-function addToInv(x) {
-
+function addToInv(item) {
+    console.log(item);
     for (var i = 0; i < player.inventory.length; i++) {
         if (player.inventory[i].innerHTML == "") {
-            var toPrint = 'You put the <font class="special" title="'+x.name+'" data-type="'+ x.type +'">' + x.name +'</font> in your inventory.';
+
+            var toPrint = 'You put the <font class="special" title="' + item.name + '" data-type="' + item.type + '">' + item.name + '</font> in your inventory.';
             print(toPrint);
-            player.inventory[i].innerHTML = x.inventHtml;
+            player.inventory[i].innerHTML = item.inventHtml;
 
             return;
         }
     }
+
+    var toPrint = 'You put the <font class="special" title="' + item.name + '" data-type="' + item.type + '">' + item.name + '</font> in your inventory.';
+    print(toPrint);
+    player.inventory[player.inventory.length].innerHTML = item.inventHtml;
 }
 
+//function addToInv(x) {
 
-var allItems = [];
-var allReadables = [];
+//    for (var i = 0; i < player.inventory.length; i++) {
+//        if (player.inventory[i].innerHTML == "") {
+            
+//            print(toPrint);
+//            player.inventory[i].innerHTML = x.inventHtml;
 
-function initAllItems(k) {
+//            return;
+//        }
+//    }
+//}
 
-    // go through init items
-    // create a new Object for each
-    //console.log(k)
-    for (var i = 0; i < unInitItems.length; i++) {
-        var x = unInitItems[i];
-        if (x[1] == "readable") {
-            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
-        } else {
-            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
-        }
-    }
 
-    for (var i = 0; i < k.length; i++) {
-        var x = k[i];
-        if (x[1] == "readable") {
-            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
-        } else {
-            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
-        }
-    }
+//var allItems = [];
+//var allReadables = [];
 
-}
+//function initAllItems(k) {
 
-function giveStartItems() {
-    for (var i = 0; i < allItems.length; i++) {
-        addToInv(allItems[i]);
-    }
-}
+//    // go through init items
+//    // create a new Object for each
+//    //console.log(k)
+//    for (var i = 0; i < unInitItems.length; i++) {
+//        var x = unInitItems[i];
+//        if (x[1] == "readable") {
+//            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
+//        } else {
+//            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
+//        }
+//    }
+
+//    for (var i = 0; i < k.length; i++) {
+//        var x = k[i];
+//        if (x[1] == "readable") {
+//            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
+//        } else {
+//            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
+//        }
+//    }
+
+//}
+
+//function giveStartItems() {
+//    for (var i = 0; i < allItems.length; i++) {
+//        addToInv(allItems[i]);
+//    }
+//}
 
 //var player = new Player('test testington', 8, 10, 12, 14, 16, 20);

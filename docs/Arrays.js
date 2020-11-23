@@ -14,6 +14,128 @@
 
 ];
 
+var unInitItemsArray = {
+
+    momsNote: {
+        id: "momsNote", name: "Mom's Note", type: "readable", img: "scroll.png", description: "The last thing my Mother left me...",
+        pages: {
+            default: {
+                title: "Page One", content: ""
+            },
+            pageTwo: {
+                title: "Page Two", content: ""
+            }
+        }
+    },
+
+    gnomeDagger1: {
+        id: "dagger1", name: "Dagger", type: "pWep", img: "shittyDaggerInv.png",
+        attacks: {
+            attackOne: {
+                name: "Slash", type: "slash", dmgType: "physical", dmgRange: [1, 5], special: null,
+                description: "A bolt of lightning that has a chance to stun enemies."
+            },
+            attackTwo: {
+                name: "Stab", type: "stab", dmgType: "physical", dmgRange: [2, 6], special: { id: "bleed", maxDmg: 2, chance: 30, turns: 3 },
+                description: "A bolt of fire that has a chance to burn enemies."
+            },
+            attackThree: {
+                name: "Throw", type: "range", dmgType: "physical", dmgRange: [1, 3], special: { id: "disarmPlayer", chance: 5, turns: 2 },
+                description: "I suppose there are other uses for this..."
+            }
+
+        },
+        description: "This dagger feels too heavy."
+    },
+
+    dagger: {
+        id: "dagger1", name: "Gnome Dagger", type: "pWep", img: "shittyDaggerInv.png",
+        attacks: {
+            attackOne: {
+                name: "Slash", type: "slash", dmgType: "physical", dmgRange: [1, 5], special: null,
+                description: "A bolt of lightning that has a chance to stun enemies."
+            },
+            attackTwo: {
+                name: "Stab", type: "stab", dmgType: "physical", dmgRange: [2, 6], special: { id: "bleed", maxDmg: 2, chance: 30, turns: 3 },
+                description: "A bolt of fire that has a chance to burn enemies."
+            },
+            attackThree: {
+                name: "Throw", type: "range", dmgType: "physical", dmgRange: [1, 3], special: { id: "disarmPlayer", chance: 5, turns: 2 },
+                description: "I suppose there are other uses for this..."
+            }
+
+        },
+        description: "This dagger feels too heavy."
+    },
+
+    wand: {
+        id: "wand1", name: "Wand", type: "mWep", img: "wand.png",
+        attacks: {
+            attackOne: {
+                name: "Lightning Bolt", type: "spell", dmgType: "magic", dmgRange: [1, 7], special: { id: "stun", turns: 1 },
+                description: "A bolt of lightning that has a chance to stun enemies."
+            },
+            attackTwo: {
+                name: "Fire Bolt", type: "spell", dmgType: "magic", dmgRange: [2, 6], special: { id: "burn", maxDmg: 3, turns: 3 },
+                description: "A bolt of fire that has a chance to burn enemies."
+            },
+            attackThree: {
+                name: "Wand Bash", type: "stab", dmgType: "physical", dmgRange: [1, 3], special: null,
+                description: "I suppose there are other uses for this..."
+            }
+        },
+        description: "This crudely crafted wand hasnt seen much action."
+    },
+
+    leatherHelmet: {
+        id: "leatherHelmet", name: "Leather Helmet",
+        type: "armour", armourType: "helm", img: "leatherCoif.png", def: 1,
+        description: "This leather coif wont offer much protection."
+    },
+
+    leatherBody: {
+        id: "leatherBody", name: "Leather Body", type: "armour", armourType: "body", img: "", 
+        description: "Body"
+    },
+
+    healthPot: {
+        id: "healthPotion", name: "Health Potion", type: "heal", img: "healthPot.png", heal: 5,
+        description: "Looks like it will heal some health."
+    }
+}
+
+var allItems = [];
+
+function initItems() {
+    var temp = Object.keys(unInitItemsArray);
+    console.log(temp)
+    for (var i = 0; i < temp.length; i++) {
+        var t = unInitItemsArray[temp[i]]
+        console.log(t)
+
+        switch (t.type) {
+            case "armour":
+                i.type = i.armourType;
+                allItems[allItems.length] = new Armour(t);
+                addToInv(allItems[allItems.length - 1])
+                break;
+            case "heal":
+                break;
+            case "readable":
+                allItems[allItems.length] = new Readable(t);
+                addToInv(allItems[allItems.length - 1])
+                break;
+            case "pWep":
+            case "mWep":
+                allItems[allItems.length] = new Weapon(t);
+                addToInv(allItems[allItems.length-1])
+                break;
+        }
+    }
+
+}
+
+
 var currentQuests = [];
 
 var quests = {
@@ -180,7 +302,7 @@ var conversationArray2 = {
         },
 
         followGnome: {
-            id: "", topicID: "quest", quest: "follow_the_gnome", conditions: null,
+            id: "followGnome", topicID: "quest", quest: "follow_the_gnome", conditions: null,
             openText: `<font class="convo">"Ok, if you think so... Follow me, she was just a few rooms back!"<br><br>
                         The gnome disappears into the wall he came from.</font>`,
 
@@ -336,15 +458,15 @@ var conversationArray2 = {
                 }
             }, fail: {
                 id: "picture", topicID: null, conditions: null,
-                openText: `""`, options: {
+                openText: `<font class="convo">"You don't have it though, do you? How could you possibly have it? That functionality isn't even in this game!"</font>`, options: {
                     optionOne: {
-                        text: '', nextNode: ""
+                        text: '<font class="convo">"Who are you?"</font>', nextNode: "geraldGnutter"
                     },
                     optionTwo: {
-                        text: '', nextNode: ""
+                        text: '<font class="convo">"What are you doing here?"</font>', nextNode: "theTunnel"
                     },
                     optionThree: {
-                        text: "", nextNode: ""
+                        text: "Attack the creature.", nextNode: "fight -- stunned"
                     }
                 }
             }
@@ -365,9 +487,17 @@ var conversationArray2 = {
 var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
 
     gnome1: {
-        id: "gnome1", name: "Gnome", weapon: "dagger", description: "Looks like he's seen some shit...",
-        hp: 15, dmg: 2, level: 1,
-        img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg", lootarray: [], conversationClass: conversationArray2.gnome1
+        id: "gnome1", name: "Gnome", weapon: unInitItemsArray.gnomeDagger1, description: "Looks like he's seen some shit...",
+        hp: 15, mana: 0, dmg: 2, level: 1,
+        img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg",
+        lootArray: ["1 wifeImg", "5 coins"], conversationClass: conversationArray2.gnome1
+    },
+
+    gnomeWife: {
+        id: "gnomewife", name: "Gnome", weapon: "fists", description: "An unassuming gnome.",
+        hp: 5, dmg: 1, level: 1,
+        img: "gnomeWife.png",
+        lootArray: ["1 goldRing", "10 coins", "1 gnomeEar"]
     }
 
 }
@@ -401,6 +531,7 @@ var allRooms = {
     }
 
 }
+
 
 
 //var gnome1 = new NPC(allMonsters.gnome1);

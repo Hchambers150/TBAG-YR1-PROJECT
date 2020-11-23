@@ -1,7 +1,5 @@
 ﻿// website - based javascript done here:
 
-
-
 var currentRoom;
 var player;
 
@@ -42,34 +40,15 @@ function test(ev) {
             // enterCombat();
             break;
         case "helm":
-            var o = checkItems(ev.path[0].title);
-            t.innerText = o.name;
-
-            c.innerHTML = `
-                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="" class="menuItem">Inspect</span><br>
-                <span onclick="" class="menuItem">Drop</span><br>
-            `;
-
-            m.style.height = "4em";
-            break;
-
         case "body":
-            var o = checkItems(ev.path[0].title);
-            t.innerText = o.name;
-
-            c.innerHTML = `
-                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="" class="menuItem">Inspect</span><br>
-                <span onclick="" class="menuItem">Drop</span><br>
-            `;
-
-            m.style.height = "4em";
-            break;
-
         case "legs":
+        case "boots":
+        case "gloves":
+        case "ring":
+        case "armour":
             var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
+            console.log("BBBBBBBBBBBBBB",o, o.description)
 
             c.innerHTML = `
                 <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
@@ -80,25 +59,14 @@ function test(ev) {
             m.style.height = "4em";
             break;
 
-        case "boots": // examine, inspect, drop,
-            var o = checkItems(ev.path[0].title);
-            t.innerText = o.name;
-
-            c.innerHTML = `
-                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="" class="menuItem">Inspect</span><br>
-                <span onclick="" class="menuItem">Drop</span><br>
-            `;
-
-            m.style.height = "4em";
-            break;
-
+        case "mWep":
+        case "pWep":
         case "weapon":
             var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
 
             c.innerHTML = `
-                <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
+                <span onclick='print("`+ o.description + `")' class="menuItem">Examine</span><br>
                 <span onclick="" class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
@@ -403,26 +371,6 @@ function setStats(name, con, dex, str, int, wis, cha) {
     }
 }
 
-function enterCombat(enemy) {
-    exitConvo();
-    document.getElementById('textArea').style.display = 'none';
-    document.getElementById('inputWrap').style.display = 'none';
-    document.getElementById('battleArea').style.display = 'flex';
-
-    //document.getElementById('monsterTitle').innerText = enemy.name;
-    //document.getElementById('monsterImg').src = enemy.img;
-    //document.getElementById('monHP').innerText = enemy.health;
-
-}
-
-function exitCombat() {
-    document.getElementById('textArea').style.display = 'block';
-    document.getElementById('inputWrap').style.display = 'block';
-    document.getElementById('battleArea').style.display = 'none';
-
-    document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
-}
-
 function calcMin(stat, min) {
     if (checkStats(stat) >= min) {
         console.log(checkStats(stat),true);
@@ -555,6 +503,33 @@ function exitReading() {
     document.getElementById('textArea').style.display = 'block';
     document.getElementById('inputWrap').style.display = 'block';
     document.getElementById('readArea').style.display = 'none';
+
+    document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
+}
+
+function enterCombat(enemyID) {
+    exitConvo();
+    document.getElementById('textArea').style.display = 'none';
+    document.getElementById('inputWrap').style.display = 'none';
+    document.getElementById('battleArea').style.display = 'flex';
+
+    var enemy = checkMonsters(enemyID)
+    enemy.inflictions = ["stunned"];
+
+
+    document.getElementById('monsterTitle').innerText = enemy.name;
+    document.getElementById('monsterImg').src = enemy.img;
+    document.getElementById('monHP').innerHTML = "Health: " + enemy.hp + "<br> Mana: " + enemy.mana;
+
+    enemy.checkInflictions();
+
+}
+
+
+function exitCombat() {
+    document.getElementById('textArea').style.display = 'block';
+    document.getElementById('inputWrap').style.display = 'block';
+    document.getElementById('battleArea').style.display = 'none';
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }

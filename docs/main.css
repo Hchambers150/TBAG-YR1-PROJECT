@@ -26,6 +26,151 @@
     overflow-x:hidden;
 }
 
+#iaWrap {
+    position:absolute;
+    /*background-color:red;*/
+    top:0;
+    left:0;
+    width:57.5vw;
+    height:90%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    display:none;
+}
+
+#inspectArea {
+    width:48vw;
+    height:60%;
+    background-color:black;
+    border:5px solid white;
+}
+
+#iaTitleWrap {
+    width:100%;
+    height:1.5em;
+    background-color:white;
+    color:black;
+    top:0;
+}
+
+#iaTitle {
+    font-size:1.25em;
+    margin-left:5px;
+}
+
+#iaClose {
+    float:right;
+    margin-right:5px;
+    font-size:1.5em;
+    cursor:grab;
+    user-select:none;
+}
+
+#grid-container {
+    /*background-color: yellow;*/
+    height: 95.5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas: "def-atk . attack-one" "item-description imgArea attack-two" ". . attack-three";
+}
+
+#item-description {
+    grid-area: item-description;
+    overflow-y: scroll;
+
+}
+
+#itemDesc {
+    margin-top:;
+    margin-left:5px;
+    font-size:0.75em;
+}
+
+#imgArea {
+    grid-area: imgArea;
+}
+
+.gridBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#inspectIMG {
+    width:128px;
+    height:128px;
+}
+
+.iaAttackBox {
+    width: 95%;
+    height: 90%;
+    background-color: black;
+    border: 1px solid white;
+    position:relative;
+
+}
+
+.attack-info {
+    overflow-y: scroll;
+    height: 110px;
+    width:100%;
+    float:left;
+    margin-left: 0px;
+    font-size: 0.75em;
+    border-top:1px dotted white;
+}
+
+.abTitle {
+    display:block;
+    text-align:center;
+    height:1em;
+    background-color:white;
+    color:black;
+
+}
+
+.iaDMG {
+
+    margin-top:5px;
+    float: left;
+}
+
+.iaSpecial {
+    margin-top: 5px;
+    float: right;
+    /*border-left:1px dotted white;*/
+}
+
+#attack-one {
+    grid-area: attack-one;
+}
+
+#attack-two {
+    grid-area: attack-two;
+}
+
+#attack-three {
+    grid-area: attack-three;
+}
+
+#def-atk {
+    grid-area: def-atk;
+}
+
+#dmgtype {
+    grid-area: dmgtype;
+}
+
+#iaBWrap {
+    background-color:green;
+    height:95%;
+    margin-top:0;
+    display:flex;
+}
+
 #locationInfo {
     position: fixed;
     top: 0;
@@ -373,8 +518,6 @@
     display: inline;
 }
 
-
-
 #mapArea {
     position: absolute;
     bottom: 0;
@@ -522,6 +665,7 @@
 }
 
 #monStatus {
+    color:white;
     float: right;
     width: 100%;
     height: 100%;
@@ -596,10 +740,11 @@ a {
     top: 0.5em;
     width: 33%;
     height: 4.5em;
-    background-color: red;
+    /*background-color: red;*/
     display: flex;
     justify-content: center;
     align-items:center;
+    text-align:center;
 }
 
 /*#attackOne {
@@ -619,6 +764,50 @@ a {
 
 #attack4 {
 }
+
+#battleEnded {
+    width: 50%;
+    height: 20%;
+    position: absolute;
+    /*background-color:red;*/
+    background-color:black;
+    bottom: 5%;
+    left: 25%;
+    border: 1px solid white;
+}
+
+#lootGrid {
+    /*background-color:green;*/
+    width: 100%;
+    height: 75%;
+    display: grid;
+    grid-template-columns: repeat(7,auto);
+}
+
+.lootSlot {
+    margin:10px;
+    margin-top:7px;
+    width:3em;
+    height:3em;
+    border:1px solid white;
+    background-color:black;
+
+}
+
+#finish {
+    display: block;
+    text-align: center;
+    /*height: 1.5em;*/
+    font-size:1.25em;
+    background-color: white;
+    color: black;
+    cursor:grab;
+}
+
+    #finish:hover {
+        color:purple;
+    
+    }
 
 #readArea {
     position: absolute;

@@ -28,16 +28,20 @@ var unInitItemsArray = {
         }
     },
 
+    wifeImg: {
+        id: "wifeImg", name: "Gnomish picture", type: "item", img: "wifeImg.png", description: "A picture of a gnome woman."
+    },
+
     gnomeDagger1: {
-        id: "dagger1", name: "Dagger", type: "pWep", img: "shittyDaggerInv.png",
+        id: "gnomeDagger1", name: "Dagger", type: "pWep", img: "shittyDaggerInv.png",
         attacks: {
             attackOne: {
                 name: "Slash", type: "slash", dmgType: "physical", dmgRange: [1, 5], special: null,
-                description: "A bolt of lightning that has a chance to stun enemies."
+                description: "A fast slash."
             },
             attackTwo: {
                 name: "Stab", type: "stab", dmgType: "physical", dmgRange: [2, 6], special: { id: "bleed", maxDmg: 2, chance: 30, turns: 3 },
-                description: "A bolt of fire that has a chance to burn enemies."
+                description: "A quick stab."
             },
             attackThree: {
                 name: "Throw", type: "range", dmgType: "physical", dmgRange: [1, 3], special: { id: "disarmPlayer", chance: 5, turns: 2 },
@@ -72,11 +76,13 @@ var unInitItemsArray = {
         id: "wand1", name: "Wand", type: "mWep", img: "wand.png",
         attacks: {
             attackOne: {
-                name: "Lightning Bolt", type: "spell", dmgType: "magic", dmgRange: [1, 7], special: { id: "stun", turns: 1 },
+                name: "Lightning Bolt", type: "spell", dmgType: "magic", dmgRange: [1, 7],
+                special: { type: "stun", id: "Stunned", chance: 10, minTurns: 1, maxTurns: 2 },
                 description: "A bolt of lightning that has a chance to stun enemies."
             },
             attackTwo: {
-                name: "Fire Bolt", type: "spell", dmgType: "magic", dmgRange: [2, 6], special: { id: "burn", maxDmg: 3, turns: 3 },
+                name: "Fire Bolt", type: "spell", dmgType: "magic", dmgRange: [2, 6],
+                special: { type: "burn", id: "Burning", chance: 33, minDMG: 1, maxDMG: 3, minTurns: 1, maxTurns: 3 },
                 description: "A bolt of fire that has a chance to burn enemies."
             },
             attackThree: {
@@ -94,14 +100,41 @@ var unInitItemsArray = {
     },
 
     leatherBody: {
-        id: "leatherBody", name: "Leather Body", type: "armour", armourType: "body", img: "", 
-        description: "Body"
+        id: "leatherBody", name: "Leather Body",
+        type: "armour", armourType: "body", img: "leatherBody.png", def: 1,
+        description: "This leather body wont offer much protection."
     },
 
     healthPot: {
         id: "healthPotion", name: "Health Potion", type: "heal", img: "healthPot.png", heal: 5,
         description: "Looks like it will heal some health."
-    }
+    },
+
+    gnomeFists: {
+
+    },
+
+    playerFists: {
+        id: "fists", name: "Fists", type: "pWep", img: "fists.png", 
+        attacks: {
+            attackOne: {
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 2],
+                special: null,
+                description: "I can try hitting them."
+            },
+            attackTwo: {
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 2],
+                special: null,
+                description: "I can try hitting them."
+            },
+            attackThree: {
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 2],
+                special: null,
+                description: "I can try hitting them."
+            }
+        },
+        description: "My fists."
+    },
 }
 
 var allItems = [];
@@ -120,9 +153,15 @@ function initItems() {
                 addToInv(allItems[allItems.length - 1])
                 break;
             case "heal":
+                allItems[allItems.length] = new Health(t);
+                addToInv(allItems[allItems.length - 1]);
                 break;
             case "readable":
                 allItems[allItems.length] = new Readable(t);
+                addToInv(allItems[allItems.length - 1])
+                break;
+            case "item":
+                allItems[allItems.length] = new Item(t);
                 addToInv(allItems[allItems.length - 1])
                 break;
             case "pWep":
@@ -135,6 +174,7 @@ function initItems() {
 
 }
 
+//addToInv(allItems[])
 
 var currentQuests = [];
 
@@ -487,17 +527,17 @@ var conversationArray2 = {
 var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
 
     gnome1: {
-        id: "gnome1", name: "Gnome", weapon: unInitItemsArray.gnomeDagger1, description: "Looks like he's seen some shit...",
-        hp: 15, mana: 0, dmg: 2, level: 1,
+        id: "gnome1", name: "Gnome", weapon: unInitItemsArray.gnomeDagger1, description: "Looks like hes seen some shit...",
+        hp: 15, mana: 0, def: 3, level: 1,
         img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg",
-        lootArray: ["1 wifeImg", "5 coins"], conversationClass: conversationArray2.gnome1
+        lootArray: ["wifeImg", "gnomeDagger1"], conversationClass: conversationArray2.gnome1
     },
 
     gnomeWife: {
         id: "gnomewife", name: "Gnome", weapon: "fists", description: "An unassuming gnome.",
-        hp: 5, dmg: 1, level: 1,
+        hp: 5, def: 0, level: 1,
         img: "gnomeWife.png",
-        lootArray: ["1 goldRing", "10 coins", "1 gnomeEar"]
+        lootArray: ["1 goldRing", "10 coins", "1 gnomeEar"], conversationClass: conversationArray2.gnomeWife
     }
 
 }
@@ -531,7 +571,3 @@ var allRooms = {
     }
 
 }
-
-
-
-//var gnome1 = new NPC(allMonsters.gnome1);

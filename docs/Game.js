@@ -78,11 +78,11 @@ but by the next day, you were fit as a fiddle again, and you went for another ad
 
 
 function checkStats(stat) {
-    console.log(player.stats);
+    //console.log(player.stats);
     var temp = Object.keys(player.stats);
     for (var i = 0; i < temp.length; i++) {
         if (temp[i] == stat) {
-            console.log("ree", temp[i], player.stats[temp[i]])
+            //console.log("ree", temp[i], player.stats[temp[i]])
             return player.stats[temp[i]];
         }
     }
@@ -106,7 +106,11 @@ function checkInput(ele) {
 function checkItems(xID) {
 
     for (var i = 0; i < allItems.length; i++) {
-        if (allItems[i].name.toLowerCase() == xID.toLowerCase()) {
+        if (allItems[i].id.toLowerCase() == xID.toLowerCase()) {
+            console.log(allItems[i].id.toLowerCase(), xID.toLowerCase())
+            return allItems[i];
+        } else if(allItems[i].name.toLowerCase() == xID.toLowerCase()) {
+            console.log(allItems[i].id.toLowerCase(), xID.toLowerCase())
             return allItems[i];
         }
     }
@@ -316,9 +320,8 @@ function checkEquipped() {
 
 }
 
-
 function addToInv(item) {
-    console.log(item);
+    //console.log(item);
     for (var i = 0; i < player.inventory.length; i++) {
         if (player.inventory[i].innerHTML == "") {
 
@@ -330,57 +333,7 @@ function addToInv(item) {
         }
     }
 
-    var toPrint = 'You put the <font class="special" title="' + item.name + '" data-type="' + item.type + '">' + item.name + '</font> in your inventory.';
+    var toPrint = 'You put the <font class="special" title="' + item.name + '" data-id="'+ item.id +'" data-type="' + item.type + '">' + item.name + '</font> in your inventory.';
     print(toPrint);
     player.inventory[player.inventory.length].innerHTML = item.inventHtml;
 }
-
-//function addToInv(x) {
-
-//    for (var i = 0; i < player.inventory.length; i++) {
-//        if (player.inventory[i].innerHTML == "") {
-            
-//            print(toPrint);
-//            player.inventory[i].innerHTML = x.inventHtml;
-
-//            return;
-//        }
-//    }
-//}
-
-
-//var allItems = [];
-//var allReadables = [];
-
-//function initAllItems(k) {
-
-//    // go through init items
-//    // create a new Object for each
-//    //console.log(k)
-//    for (var i = 0; i < unInitItems.length; i++) {
-//        var x = unInitItems[i];
-//        if (x[1] == "readable") {
-//            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
-//        } else {
-//            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
-//        }
-//    }
-
-//    for (var i = 0; i < k.length; i++) {
-//        var x = k[i];
-//        if (x[1] == "readable") {
-//            allItems[i] = allReadables[allReadables.length] = new Readable(x[0], x[1], x[2], x[3], x[4]);
-//        } else {
-//            allItems[i] = new Item(x[0], x[1], x[2], x[3], x[4], x[5], x[6]);
-//        }
-//    }
-
-//}
-
-//function giveStartItems() {
-//    for (var i = 0; i < allItems.length; i++) {
-//        addToInv(allItems[i]);
-//    }
-//}
-
-//var player = new Player('test testington', 8, 10, 12, 14, 16, 20);

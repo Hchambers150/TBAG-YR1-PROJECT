@@ -760,6 +760,7 @@ a {
 }
 
 #attack3 {
+    color: #474747;
 }
 
 #attack4 {
@@ -798,10 +799,13 @@ a {
     display: block;
     text-align: center;
     /*height: 1.5em;*/
+    width:100%;
     font-size:1.25em;
     background-color: white;
     color: black;
     cursor:grab;
+    position:absolute;
+    bottom:0;
 }
 
     #finish:hover {

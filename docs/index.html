@@ -236,16 +236,18 @@
 
                         </div>
                         <div class="fightChoice right" id="attack2">Defend!</div>
-                        <div class="fightChoice bottom" id="attack3">Dick Twist!</div>
+                        <div class="fightChoice bottom" onclick="trySpare()" id="attack3">Spare them</div>
                         <div onclick="tryRun()" class="fightChoice bottom right" id="attack4">Run!</div>
                     </a>
 
                 </div>
 
                 <div id="battleEnded">
+                    <span id="endedLoot"></span>
                     <span id="finish" onclick="exitCombat()">End battle</span>
                     <div id="lootGrid">
                         <div class="lootSlot"></div>
+                        <span id="finish" onclick="exitCombat()">End battle</span>
                     </div>
                 </div>
 
@@ -265,6 +267,9 @@
             <div id="lastPage" onclick="lastPage()">🠸 Last page </div>
         </div>
 
+        <div id="lootArea">
+        </div>
+
         <div id="textArea">
             <div id="locationInfo">
                 <span id="currentArea">Area: Basement </span> | <span id="currentFloor">Floor No. -1</span>
@@ -272,7 +277,7 @@
             <br><br>
 
                 <p id="output">
-                    As a <font class="special">child</font>, your <font class="important">Father</font> never really paid attention to you.<br>
+                    You are standing in your childhood basement.
 
                     <div id="picArea">
                         <textarea style="width:inherit;height:30%;background-color:black;"></textarea>

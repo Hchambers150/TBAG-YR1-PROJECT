@@ -93,6 +93,8 @@ function test(ev) {
 
             //convert o.readText to array
 
+            console.log("hi", o.readText)
+
             var temp = "";
             for (var i = 0; i < o.readText.length; i++) {
                 if (i != o.readText.length - 1) {
@@ -103,9 +105,11 @@ function test(ev) {
 
             }
 
+            console.log(o.id)
+
             c.innerHTML = `
                 <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="enterReading([`+ temp + `])" class="menuItem">Read</span><br>
+                <span onclick="checkItems('` + o.id + `').read()" class="menuItem">Read</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
 
@@ -460,7 +464,7 @@ function enterConvo(NPC, x) {
     var all = [choiceOne, choiceTwo, choiceThree];
     //console.log(NPC, x);
 
-    document.getElementById('NPCTitle').innerText = NPC.id;
+    document.getElementById('NPCTitle').innerText = NPC.name;
     document.getElementById('NPCTitle').setAttribute('data-id', NPC.id);
     document.getElementById('NPCImg').src = NPC.img;
     document.getElementById('NPCImg').setAttribute('data-type', 'NPC');
@@ -496,27 +500,6 @@ function exitConvo() {
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
     player.isInConversation = false;
-}
-
-var currentPage;
-var tempArrayReading;
-
-function enterReading(text) { // probably change to pass in OBJECT
-    document.getElementById('textArea').style.display = 'none';
-    document.getElementById('inputWrap').style.display = 'none';
-    document.getElementById('readArea').style.display = 'block';
-    document.getElementById('battleArea').style.display = 'none';
-
-    var title = document.getElementById('pageTitle');
-    var main = document.getElementById('pageText');
-
-    for (var i = 0; i < text.length; i++) {
-        text[i] = text[i].split("|"); // this is very volatile. im tired, so i think ill come back to this tomorrow
-    }
-    title.innerText = text[0][0];
-    main.innerHTML = text[0][1];
-    currentPage = 0;
-    tempArrayReading = text;
 }
 
 function enterInspect(itemID) {
@@ -596,6 +579,28 @@ function enterInspect(itemID) {
 
 function exitInspect() { document.getElementById('iaWrap').style.display = 'none'; }
 
+var currentPage;
+var tempArrayReading;
+
+function enterReading(o) {
+    //console.log("iwuuyaufhkjhakjfs", o)
+    document.getElementById('textArea').style.display = 'none';
+    document.getElementById('inputWrap').style.display = 'none';
+    document.getElementById('readArea').style.display = 'block';
+    document.getElementById('battleArea').style.display = 'none';
+
+    var title = document.getElementById('pageTitle');
+    var main = document.getElementById('pageText');
+
+    console.log(o)
+
+    title.innerHTML = "<u>" + o.title + "</u>";
+    main.innerHTML = o.content;
+    o.parent.currentPage = o;
+    currentPage = o;
+
+}
+
 function updatePage(x) {
     var title = document.getElementById('pageTitle');
     var main = document.getElementById('pageText');
@@ -605,10 +610,8 @@ function updatePage(x) {
 }
 
 function nextPage() {
-    if (currentPage < tempArrayReading.length - 1) {
-        currentPage = currentPage + 1;
-        updatePage(currentPage);
-    }
+    console.log(currentPage)
+    checkItems(currentPage.parent).nextPage();
 }
 
 function lastPage() {
@@ -625,7 +628,6 @@ function exitReading() {
 
     document.getElementById('textArea').scrollTop = document.getElementById('output').scrollHeight;
 }
-
 
 function getCombatItems() {
 
@@ -709,15 +711,17 @@ function enterCombat(enemyID) {
 
     enemy = checkMonsters(enemyID);
 
+    //console.log(enemy.name)
     document.getElementById('monsterTitle').innerText = enemy.name;
     document.getElementById('monsterImg').src = enemy.img;
     document.getElementById('monHP').innerHTML = "Health: " + enemy.hp + "<br> Mana: " + enemy.mana;
+    updateBattleScreen();
     var inflictions = "";
     for (var i = 0; i < enemy.inflictions; i++) {
         inflictions += "<br> *" + enemy.inflictions[i] + "*"
     }
     document.getElementById('monStatus').innerText = inflictions;
-
+    
     enemy.checkInflictions();
 
 }
@@ -734,17 +738,23 @@ function updateBattleScreen() {
     for (var i = 0; i < enemy.inflictions; i++) {
         inflictions += "<br> *" + enemy.inflictions[i] + "*"
     }
+
+    if (enemy.hp <= 4) {
+        document.getElementById('attack3').style.color = "white";
+    } else {
+        document.getElementById('attack3').style.color = "#474747";
+    }
     document.getElementById('monStatus').innerText = inflictions;
 
 }
 
 function calcDamage(min, max) {
-    var damage = Math.floor(Math.random() * (max - min + 1) + min);
+    var damage = Math.floor(Math.random() * (max - min + 1) + min); // to do: add on extra str / mage dmg
     battlePrint("You hit the <font class='special'>" + enemy.name + "</font> for <font class='important'>" + damage + " damage.</font> ");
     enemy.hp -= damage;
-    updateBattleScreen();
 
     if (enemy.hp <= 0) {
+        enemy.hp = 0;
         battlePrint("The " + enemy.name + " falls to the floor.");
         enemy.description = "The " + enemy.name + " is dead, and growing cold."
         enemy.isDead = true;
@@ -752,7 +762,7 @@ function calcDamage(min, max) {
         // end battle, give loot
     }
 
-    // enemy.attack()
+    updateBattleScreen();
 
 }
 
@@ -796,8 +806,38 @@ function enemyAttack() {
     
 }
 
+function trySpare() {
+
+    // based on wisdom / con (higher)
+
+    console.log(player.stats.dex);
+
+    if (player.mods.wisMod >= player.mods.conMod) {
+        var temp = player.mods.wisMod;
+    } else { var temp = player.mods.conMod }
+
+    var chanced = Math.floor((Math.random() * 21) + temp);
+    console.log(chanced);
+    if (chanced > 15) {
+        exitCombat();
+        enemy.spared = true;
+        print("You spare the <font class='special' data-type='NPC' data-npc='" + enemy.id + "'>" + enemy.name + "</font>.");
+    }
+
+}
+
 function tryRun() {
     // dependent on dex stat
+    // base = -1, highest = 5
+    console.log(player.stats.dex);
+
+    var chanced = Math.floor((Math.random() * 21) + player.mods.dexMod);
+    console.log(chanced);
+    if (chanced > 15) {
+        exitCombat();
+        print("You run away from the <font class='special' data-type='NPC' data-npc='"+ enemy.id +"'>" + enemy.name + "</font>.");
+    }
+
 
 
 }

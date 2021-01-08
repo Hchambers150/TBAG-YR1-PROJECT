@@ -7,9 +7,12 @@ class Room {
 
         this.connectedRooms = roomClass.connectedRooms; // array [N, E, S, W] {roomAsObject}
         this.containers = roomClass.containers; // array [containerAsObject]
+        this.objects = roomClass.objects;
         this.monsters = roomClass.monsters; //array [monsterAsObject]
         this.special = roomClass.special;
         this.eventNum = 0; // increases as player events occur - special things may happen at certain events
+
+
         //allRoomsArray[]
     }
 
@@ -22,7 +25,7 @@ class Room {
                 console.log(temp[i])
                 var currentNode = this.special[temp[i]];
 
-                if (currentNode.eventNum == this.eventNum) {
+                if (currentNode.eventNum == this.eventNum || currentNode.eventNum == "*") {
                     switch (currentNode.command) {
                         case "spawn":
                             // find monster in allMonsters, add it to this.monsters;
@@ -32,17 +35,27 @@ class Room {
                                 for (var j = 0; j < currentNode.monsters.length; j++) {
 
                                     // init monster with string as object name
-                                    print("a <font class='special' data-type='NPC' data-NPC='gnome1'>creature</font> runs out from under a desk!")
-                                    var gnome1 = new NPC(allMonsters.gnome1);
-                                    this.monsters.push(gnome1);
+                                    this.monsters[this.monsters.length] = new NPC(currentNode.monsters[j]);
+                                    print(currentNode.spawnText[0] + this.monsters[this.monsters.length-1].id + currentNode.spawnText[1])
+
+                                    //print("a <font class='special' data-type='NPC' data-NPC='" + this.monsters[this.monsters.length-1].id + "'>creature</font> runs out from under a desk!")
+                                    //var gnome1 = new NPC(allMonsters.gnome1);
+                                    //this.monsters.push(gnome1);
 
                                 }
                             }
 
                             break;
                         case "print":
+                            print(currentNode.text)
                             break;
                         case "despawn":
+                            break;
+                        case "kill":
+
+                            break;
+                        default:
+                            console.log("Wrong usage!", currentNode.command)
                             break;
                     }
                 }
@@ -50,26 +63,6 @@ class Room {
         }
     }
 }
-
-//class Readable {
-//    constructor(name, type, description, invImg, readText) {
-//        this.name = name;
-//        this.type = type;
-//        this.description = description;
-//        this.invImg = invImg;
-
-//    }
-
-//    InventHtml = function (name, invImg) {
-//        var total = '<div id="' + name + 'Item" data-type="' + this.type + '" title="' + name + '" data-allowDrop="false" class="invImg" style="background-color:black;background-image: url(\'itemImgs/' + invImg + '\');" draggable="true" ondragstart="drag(event)" ondragover="preventDrop(event)"></div>';
-
-//        return total;
-//    }
-
-//    read = function () {
-//        enterReading(this.readText);
-//    }
-//}
 
 class Item {
 
@@ -186,13 +179,31 @@ class Readable extends Item {
     constructor(item) {
         super(item);
         this.readText = item.pages;
-
+        this.currentPage = this.readText.default;
         //this.inventHtml = this.InventHtml(this.name, this.img);
     }
 
     read = function () {
-        enterReading(this.pages.default);
+        enterReading(this.readText.default);
     }
+
+    getPage = function (x) {
+        //console.log(this.readText)
+        var temp = Object.keys(this.readText)
+        for (var i = 0; i < temp.length; i++) {
+            console.log("yee", x, this.readText[temp[i]].id)
+            if (x == this.readText[temp[i]].id) {
+                console.log(this.readText[temp[i]])
+                return this.readText[temp[i]];
+            }
+        }
+    }
+
+    nextPage = function () {
+        console.log(this.getPage(this.currentPage.nextPage))
+        enterReading(this.getPage(this.currentPage.nextPage));
+    }
+
 }
 
 class Health extends Item {
@@ -201,6 +212,57 @@ class Health extends Item {
         super(item);
         this.heal = item.heal;
     }
+
+    drink = function(drinker) {
+        drinker.hp += this.heal;
+        this.remove(); // how does this work?
+    }
+}
+
+class object {
+
+    constructor(object) {
+        this.name = object.name;
+        this.id = object.id;
+        this.description = object.description;
+        this.special = object.special;
+    }
+
+}
+
+class Container extends Object {
+    constructor(container) {
+        super(container);
+
+        this.loot = parseLoot(container.contains); // ["dagger", "5 apples"]
+        this.locked = container.locked; // false / "keyOne"
+    }
+
+    parseLoot = function (array) {
+        // go through allItems, match items, add items to container invent
+        // be able to have "5 apples" etc
+
+        for (var i = 0; i < array.length; i++) {
+            var temp = array.split(" ");
+            if (temp.length > 1) {
+                // locate item in allArray
+                // add specified amount to invent
+
+            } else {
+                // locate item in allArray
+                // add item to invent
+
+
+            }
+        }
+    }
+
+    tryUnlock = function (keyID) {
+        // if keyID matches this.locked, locked = false, print unlocked
+        // else, print wrong key
+    }
+
+
 }
 
 class Player {
@@ -212,10 +274,12 @@ class Player {
 
         this.name = name;
         this.stats = {};
+        this.mods = {};
         this.Stats(con, dex, str, int, wis, cha);
         this.inventory = this.Inventory();
         this.health = baseHealth + (this.stats.conMod * 2);
         this.mana = baseMana + (this.stats.intMod * 2);
+        this.inflictions = {};
 
         this.isInConversation = false;
         this.isInCombat = false;
@@ -232,12 +296,12 @@ class Player {
         this.stats.cha = cha;
 
         var tempArray = getModifiers(con, dex, str, int, wis, cha);
-        this.conMod = tempArray[0];
-        this.dexMod = tempArray[1];
-        this.strMod = tempArray[2];
-        this.intMod = tempArray[3];
-        this.wisMod = tempArray[4];
-        this.chaMod = tempArray[5];
+        this.mods.conMod = tempArray[0];
+        this.mods.dexMod = tempArray[1];
+        this.mods.strMod = tempArray[2];
+        this.mods.intMod = tempArray[3];
+        this.mods.wisMod = tempArray[4];
+        this.mods.chaMod = tempArray[5];
 
         setStats(name, con, dex, str, int, wis, cha);
 
@@ -272,6 +336,7 @@ class Monster {
 
         this.weapon = new Weapon(monster.weapon);
 
+        this.spared = false;
         this.hp = monster.hp;
         this.dmg = monster.dmg;
         this.effectiveHP = monster.hp;
@@ -279,15 +344,60 @@ class Monster {
         this.inflictions = [];
         this.turn;
     }
-
-    calcTurn = function () {
-        if (this.turn != null) {
-            // does turn
-            //for()
-
-        } else {
-            // does nothing
+    
+    getLoot = function (x) {
+        console.log("testy testy",x)
+        var items = [];
+        for (var i = 0; i < x.length; i++) {
+            var temp = x[i].split(" ")
+            if (temp.length > 1) {
+                // make the amount of items (rare!)
+                for (var j = 0; j < allItems.length; j++) {
+                    console.log("beepy booper", temp[1], allItems[j].id)
+                    if (temp[1] == allItems[j].id) {
+                        for (var k = 0; k < temp[0]; k++) {
+                            console.log("the whisle goes")
+                            items[items.length] = allItems[j];
+                        }
+                    }
+                }
+            } else {
+                console.log("be tard")
+                for (var j = 0; j < allItems.length; j++) {
+                    console.log("beepy booper",x[i], allItems[j].id)
+                    if (x[i] == allItems[j].id) {
+                        items[items.length] = allItems[j];
+                    }
+                }
+            }
         }
+
+        console.log(items);
+        return items; // return an array of DEFINITE ITEMS
+
+    }
+
+    calcTurn = function () { if (this.turn != null) { this.attack(); } else { print("The " + this.name + " cannot take its turn. ") } }
+
+    attack = function ( impairments ) {
+
+        for (var i = 0; i < impairments.split(",").length; i++) {
+
+            switch (impairments.split(" ")[0]) {
+                case "":
+                    break;
+
+                default: // nothing wrong!
+                    break;
+            }
+        }
+        // look at player's inflictions; if attack can inflict, do that
+        // else, choose highest damage attack
+
+        // calculate damage done | dmgType, dmg, level
+        // deplete players hp
+        // print damage done
+
     }
 
     checkInflictions = function () {
@@ -313,57 +423,10 @@ class Monster {
             }
         }
     }
-    
-    getLoot = function (x) {
-        console.log("testy testy",x)
-        var items = [];
-        for (var i = 0; i < x.length; i++) {
-            var temp = x[i].split(" ")
-            if (temp > 1) {
-                // make the amount of items (rare!)
-                var temp = x[i].split(" ");
 
-            } else {
-                console.log("be tard")
-                for (var j = 0; j < allItems.length; j++) {
-                    console.log("beepy booper",x[i], allItems[j].id)
-                    if (x[i] == allItems[j].id) {
-                        items[items.length] = allItems[j];
-                    }
-                }
-            }
-        }
-
-        console.log(items);
-        return items; // return an array of DEFINITE ITEMS
-
-    }
-
-    enterCombat = function () { // do this here or globally?
-        document.getElementById('textArea').style.display = 'none';
-        document.getElementById('inputWrap').style.display = 'none';
-        document.getElementById('battleArea').style.display = 'flex';
-
-        //document.getElementById('monsterTitle').innerText = this.name;
-        //document.getElementById('monsterImg').src = this.imgSource;
-        //document.getElementById('monHP').innerText = this.health;
-    }
-
-    attack = function () {
-
-        
-
-        // calculate damage done | dmgType, dmg, level
-
-        // deplete players hp
-
-        // print damage done
-
-    }
-
-    checkDeath = function () {
-        // check if this.hp <= 0
-        // remove / delete this
+    die = function () {
+       // scour currentRoom.monsters, match id to this; splice from array
+        this.isDead = true;
     }
 
 }
@@ -379,8 +442,6 @@ function getConvoPiece(ID, convoClass) {
 
 }
 
-
-
 class NPC extends Monster {
 
     constructor(monster) {
@@ -391,14 +452,6 @@ class NPC extends Monster {
         this.conversation = this.Conversation(monster.conversationClass);
         this.conversation = monster.conversationClass;
         this.currentNode;
-    }
-
-    deadEnd = function () {
-       // how to handle this?
-    }
-
-    getCurrentOptions = function () {
-        // how to handle this? so the user can revert to a point in which there are available / unexplored replies
     }
 
     speak = function () {
@@ -427,9 +480,7 @@ class NPC extends Monster {
                         enterConvo(this, temp.conditions.fail);
                     }
 
-                    //console.log("bitch", temp);
-                    //this.currentNode = temp;
-                    //enterConvo(this, this.currentNode);
+
                 }
             }
         }
@@ -437,9 +488,6 @@ class NPC extends Monster {
     }
 
     Conversation = function (x) {
-
-        
-
 
         return x;
     }

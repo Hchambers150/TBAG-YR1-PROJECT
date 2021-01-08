@@ -1,53 +1,63 @@
 ﻿// game - based javascript done here:
 
-
 function beginGame(name, con, dex, str, int, wis, cha) {
 
     // give all items
 
     player = new Player(name, con, dex, str, int, wis, cha);
-    var temp = [
-        // readables
-        ["Mom's Note", "readable", "The last thing my Mother left me...", "scroll.png", [
-            "Page 1 | " + createMomsNote(),
-            "Page 2 | Lots of text",
-            "Page 3 | Lots of text"
-        ]]
-    ];
+    //var temp = [
+    //    // readables
+    //    ["Mom's Note", "readable", "The last thing my Mother left me...", "scroll.png", [
+    //        "Page 1 | " + createMomsNote(),
+    //        "Page 2 | Lots of text",
+    //        "Page 3 | Lots of text"
+    //    ]]
+    //];
     //console.log(createMomsNote())
 
     initItems();
+    player.currentRoom.checkEvents();
     //initAllItems(temp);
     //giveStartItems();
     updateScroll();
 }
 
 function createMomsNote() {
-    var momsNote = player.name + `,
+
+    //unInitItemsArray.momsNote.pages.default.title;
+
+    var toBe = player.name + `,
     I don't know how long I've been gone, but if you've found this letter I'm probably far, far away; but there's one thing
     that I do know - one thing that will never change - I miss you.<br><br>
     `;
 
     if (player.stats.con <= 10) {
-        momsNote = momsNote + `I miss my frail little boy, whom I nursed back to health all those years ago. You probably don't remember, do you? That whole year you
+        toBe += `I miss my frail little boy, whom I nursed back to health all those years ago. You probably don't remember, do you? That whole year you
         were bed-bound; I would come and read to you every night and you would glare at me. I would describe special, magical places
-        to you and you would glare at me with eyes full of wonder, and excitement. It was horrible for me, sharing sceneries and 
+        to you and you would stare at me with eyes full of wonder, and excitement. It was horrible for me, sharing sceneries and 
         feelings with you that you couldn't go out and experience yourself.`;
     } else if (player.stats.con >= 15) {
 
-        momsNote = momsNote + `I miss my big bear! When you were very, very young, you would eat and eat and eat. Whatever I gave you, you would wolf it down! And
+        toBe += `I miss my big bear! When you were very, very young, you would eat and eat and eat. Whatever I gave you, you would wolf it down! And
 you looked so cute, with your big cheeks and soft arms, I could've gobbled you up any day! And once, when you went for an
 adventure and I didn't see you for the entire day, until you came back after dark, covered in a rash from a poison Oak -
 but by the next day, you were fit as a fiddle again, and you went for another adventure.`;
     }
 
-    
-
     if (player.stats.dex < 10) {
+        toBe += `You found your thick fingers and shaky hands cumbersome, and you were never good at anything fiddly.
+        I could always hear you stomping around the house like an animal - `;
         //momsNote = momsNote + "<br><br>But when you got older, ";
     } else if (player.stats.dex > 15) {
         //momsNote = momsNote + "<br><br>But when you got older,";
     }
+
+    unInitItemsArray.momsNote.pages.default.content = toBe;
+
+    //page two
+
+    //unInitItemsArray.momsNote.pages.pageTwo.title = "Page Two";
+    var toBe = "";
 
     if (player.stats.str < 10) {
 
@@ -55,25 +65,37 @@ but by the next day, you were fit as a fiddle again, and you went for another ad
 
     }
 
+    toBe += "The only thing your Father left behind was his workshop;";
+
     if (player.stats.int < 10) {
-
-    } else if (player.stats.str > 15) {
-
+        toBe += `and all it seemed to produce was dust. 
+The worktables lay bare; disused tools were strewn about the shelves,
+lifeless creations remained unfinished, their purposes indistinguishable. `;
+    } else if (player.stats.int > 15) {
+        toBe += `and you gave it a use. Before you encountered Magicks, you would tinker away, creating plaything 
+after plaything; from wind-up mechanical animals which would pace around your room at night, to blunt weapons 
+which were used to hack at bushes and vines on the grounds. When you attuned, however, you learned to imbue your 
+creations with the Elements. Fires brewed in the bellies of your mechanical beasts, churning their motors; 
+Water was used to extinguish them. 
+Manufactured Air currents helped guide lightweight aircraft from room to room; and you utilised the power of Earth`
     }
+
+    //unInitItemsArray.momsNote.pages.pageThree.title = "Page three";
+    var toBe = "";
 
     if (player.stats.wis < 10) {
 
-    } else if (player.stats.str > 15) {
+    } else if (player.stats.wis > 15) {
 
     }
 
     if (player.stats.cha < 10) {
 
-    } else if (player.stats.str > 15) {
+    } else if (player.stats.cha > 15) {
 
     }
 
-    return momsNote;
+    //return momsNote;
 }
 
 

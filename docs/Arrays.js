@@ -20,11 +20,14 @@ var unInitItemsArray = {
         id: "momsNote", name: "Mom's Note", type: "readable", img: "scroll.png", description: "The last thing my Mother left me...",
         pages: {
             default: {
-                title: "Page One", content: ""
+                id: "default", title: "Page One", content: "", nextPage: "pageTwo", lastPage: null, parent: "momsNote"
             },
             pageTwo: {
-                title: "Page Two", content: ""
-            }
+                id: "pageTwo", title: "Page Two", content: "", nextPage: "pageThree", lastPage: "default", parent: "momsNote"
+            },
+            pageThree: {
+                id: "pageThree", title: "Page Three", content: "", nextPage: null, lastPage: "pageTwo", parent: "momsNote"
+            },
         }
     },
 
@@ -81,7 +84,7 @@ var unInitItemsArray = {
                 description: "A bolt of lightning that has a chance to stun enemies."
             },
             attackTwo: {
-                name: "Fire Bolt", type: "spell", dmgType: "magic", dmgRange: [2, 6],
+                name: "Fire Bolt", type: "spell", dmgType: "magic", dmgRange: [15, 16],
                 special: { type: "burn", id: "Burning", chance: 33, minDMG: 1, maxDMG: 3, minTurns: 1, maxTurns: 3 },
                 description: "A bolt of fire that has a chance to burn enemies."
             },
@@ -111,14 +114,32 @@ var unInitItemsArray = {
     },
 
     gnomeFists: {
-
+        id: "gnomeFists", name: "Fists", type: "pWep", img: "fists.png",
+        attacks: {
+            attackOne: {
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 1],
+                special: null,
+                description: "I can try hitting them."
+            },
+            attackTwo: {
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 2],
+                special: null,
+                description: "I can try hitting them."
+            },
+            attackThree: {
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 2],
+                special: null,
+                description: "I can try hitting them."
+            }
+        },
+        description: "My fists."
     },
 
     playerFists: {
         id: "fists", name: "Fists", type: "pWep", img: "fists.png", 
         attacks: {
             attackOne: {
-                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 2],
+                name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 1],
                 special: null,
                 description: "I can try hitting them."
             },
@@ -141,6 +162,9 @@ var allItems = [];
 
 function initItems() {
     var temp = Object.keys(unInitItemsArray);
+
+    createMomsNote();
+
     console.log(temp)
     for (var i = 0; i < temp.length; i++) {
         var t = unInitItemsArray[temp[i]]
@@ -516,10 +540,20 @@ var conversationArray2 = {
         
     },
 
-    gnomeWife: {
+    gnomeWife_husAlive: {
         default: {
 
         }
+    },
+
+    gnomeWife_husDead: {
+        default: {
+
+        }
+    },
+
+    woot: {
+
     }
 
 }
@@ -530,14 +564,18 @@ var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
         id: "gnome1", name: "Gnome", weapon: unInitItemsArray.gnomeDagger1, description: "Looks like hes seen some shit...",
         hp: 15, mana: 0, def: 3, level: 1,
         img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg",
-        lootArray: ["wifeImg", "gnomeDagger1"], conversationClass: conversationArray2.gnome1
+        lootArray: ["wifeImg", "gnomeDagger1", "3 healthPotion"], conversationClass: conversationArray2.gnome1
     },
 
     gnomeWife: {
-        id: "gnomewife", name: "Gnome", weapon: "fists", description: "An unassuming gnome.",
+        id: "gnomewife", name: "Gnome", weapon: unInitItemsArray.gnomeFists, description: "An unassuming gnome.",
         hp: 5, def: 0, level: 1,
-        img: "gnomeWife.png",
-        lootArray: ["1 goldRing", "10 coins", "1 gnomeEar"], conversationClass: conversationArray2.gnomeWife
+        img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg",
+        lootArray: ["1 goldRing", "10 healthPotion", "1 gnomeEar"], conversationClass: conversationArray2.gnomeWife
+    },
+
+    woot: {
+        id: "woot", name: "Woot"
     }
 
 }
@@ -556,16 +594,19 @@ var allRooms = {
         monsters: [],
         special: {
             1: {
-                eventNum: 1, command: "spawn", amount: "1", monsters: [allMonsters.gnome1],
-                spawnText: "A small creature comes crawling out from underneath one of the worktables."
+                eventNum: 1, command: "spawn", amount: "1", monsters: [allMonsters.gnome1, allMonsters.gnomeWife],
+                spawnText: ["A small <font class='special' data-type='NPC' data-npc='", "' data>creature</font> comes crawling out from underneath one of the worktables."]
             },
             2: {
-                eventNum: 10, command: "print", text: "This is a test - nothing but a test! Honest!"
-            },
-            3: {
-                eventNum: 5, command: "despawn", amount: "1", monsters: ["gnome1"], 
-                despawnText: "The gnome manages to squeeze himself through a mouse hole on the other side of the room."
+                eventNum: 1, command: "print", text: "Weee!"
             }
+            //,
+            //3: {
+            //    eventNum: 0, command: "print", text:"Bitches aint shit"
+            //},
+            //4: {
+            //    eventNum: "*", command: "print", text: "Every time"
+            //}
             
         }
     }

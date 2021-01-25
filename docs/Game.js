@@ -129,10 +129,10 @@ function checkItems(xID) {
 
     for (var i = 0; i < allItems.length; i++) {
         if (allItems[i].id.toLowerCase() == xID.toLowerCase()) {
-            console.log(allItems[i].id.toLowerCase(), xID.toLowerCase())
+            //console.log(allItems[i].id.toLowerCase(), xID.toLowerCase())
             return allItems[i];
         } else if(allItems[i].name.toLowerCase() == xID.toLowerCase()) {
-            console.log(allItems[i].id.toLowerCase(), xID.toLowerCase())
+            //console.log(allItems[i].id.toLowerCase(), xID.toLowerCase())
             return allItems[i];
         }
     }
@@ -162,12 +162,23 @@ function checkMonsters(xID) {
     }
 }
 
+//function checkRooms(xID) {
+
+//    var temp = player
+
+//}
+
 var last;
 
 function scanInput(str) {
 
     // split it into words, if word1 == command -> follow command-specific instruction
     var strArray = str.split(" ");
+
+    console.log(last != str, last, str);
+    if (last != str) {
+        last = str;
+    }
 
     switch (strArray[0].toLowerCase()) {
         case "look":
@@ -176,7 +187,7 @@ function scanInput(str) {
             break;
 
         case "wait":
-            print("You do nothing.")
+            print("You do nothing.");
             player.currentRoom.eventNum++;
             break;
 
@@ -221,7 +232,14 @@ function scanInput(str) {
             break;
 
         case "examine":
-            player.currentRoom.eventNum++;
+            var empty = "";
+
+            for (var i = 1; i < strArray.length; i++) {
+                empty += strArray[i];
+            }
+            console.log("jshafkjhskajhfskaj", empty)
+            empty = empty.substring(0, empty.length);
+            examine(empty);
             break;
 
         case "read":
@@ -238,7 +256,6 @@ function scanInput(str) {
             } else {
                 enterReading(checkReadables(strArray[1]));
             }
-            
             break;
 
         case "pull":
@@ -280,8 +297,6 @@ function scanInput(str) {
             print("You do nothing. <font class='important'>[Please make sure your command is correct! Use 'help'!]</font>");
             break;
     }
-
-    last = str;
 
 }
 
@@ -358,4 +373,28 @@ function addToInv(item) {
     var toPrint = 'You put the <font class="special" title="' + item.name + '" data-id="'+ item.id +'" data-type="' + item.type + '">' + item.name + '</font> in your inventory.';
     print(toPrint);
     player.inventory[player.inventory.length].innerHTML = item.inventHtml;
+}
+
+function stealthToInv(item) {
+        //console.log(item);
+    for (var i = 0; i < player.inventory.length; i++) {
+        if (player.inventory[i].innerHTML == "") {
+            player.inventory[i].innerHTML = item.inventHtml;
+
+            return;
+        }
+    }
+
+    print(toPrint);
+    player.inventory[player.inventory.length].innerHTML = item.inventHtml;
+
+}
+
+function examine(thingID) {
+
+    for (var i = 0; i < everything.length; i++) {
+        if (everything[i].id.toLowerCase() == thingID.toLowerCase()) {
+            print(everything[i].description);
+        }
+    }
 }

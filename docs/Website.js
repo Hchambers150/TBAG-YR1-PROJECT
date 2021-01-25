@@ -36,9 +36,21 @@ function test(ev) {
     }
 
     switch (ev.path[0].getAttribute('data-type')) {
+        case "room": // examine, loot
+            var o = player.currentRoom;
+            t.innerText = o.name;
+            c.innerHTML = `
+                <span onclick='examine("basement")' class="menuItem">Examine</span><br>
+                <span onclick="print('Not yet implemented')" class="menuItem">Loot</span><br>
+            `;
+
+            m.style.height = "3em";
+            break;
+
         case "enemy":
             // enterCombat();
             break;
+
         case "helm":
         case "body":
         case "legs":
@@ -49,8 +61,6 @@ function test(ev) {
         case "item":
             var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
-            //console.log("BBBBBBBBBBBBBB",o, o.description)
-
             c.innerHTML = `
                 <span onclick="print('`+ o.description + `')" class="menuItem">Examine</span><br>
                 <span onclick='enterInspect("`+ o.name + `")' class="menuItem">Inspect</span><br>
@@ -65,26 +75,23 @@ function test(ev) {
         case "weapon":
             var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
-
             c.innerHTML = `
                 <span onclick='print("`+ o.description + `")' class="menuItem">Examine</span><br>
                 <span onclick='enterInspect("`+ o.name + `")' class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
-
             m.style.height = "4em";
             break;
+
         case "heal":
             var o = checkItems(ev.path[0].title);
             t.innerText = o.name;
-
             c.innerHTML = `
                 <span onclick="" class="menuItem">Drink</span><br>
                 <span onclick='print("`+ o.description + `")' class="menuItem">Examine</span><br>
                 <span onclick='enterInspect("`+ o.name + `")' class="menuItem">Inspect</span><br>
                 <span onclick="" class="menuItem">Drop</span><br>
             `;
-
             m.style.height = "5em";
             break;
         case "readable":
@@ -120,7 +127,6 @@ function test(ev) {
             if (player.isInConversation == false) {
                 var e = checkMonsters(ev.path[0].getAttribute('data-npc'));
                 if (e.isDead == false) {
-                    //console.log(m)
                     t.innerText = e.name;
                     c.innerHTML = `
                 <span onclick="print('`+ e.description + `')" class="menuItem">Examine</span><br>
@@ -132,17 +138,14 @@ function test(ev) {
                     t.innerText = e.name;
                     c.innerHTML = `
                 <span onclick="print('`+ e.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="print('not yet implemented')" class="menuItem">Loot</span><br>
+                <span onclick="print('Not yet implemented')" class="menuItem">Loot</span><br>
                 
                 `;
-                    m.style.height = "5em";
-
-                    // examine, loot
+                    m.style.height = "3em";
                 }
             } else {
                 var e = checkMonsters(ev.path[0].getAttribute('data-npc'));
                 if (e.isDead == false) {
-                    //console.log(m)
                     t.innerText = e.name;
                     c.innerHTML = `
                 <span onclick="print('`+ e.description + `')" class="menuItem">Examine</span><br>
@@ -154,12 +157,10 @@ function test(ev) {
                     t.innerText = e.name;
                     c.innerHTML = `
                 <span onclick="print('`+ e.description + `')" class="menuItem">Examine</span><br>
-                <span onclick="print('not yet implemented')" class="menuItem">Loot</span><br>
+                <span onclick="print('Not yet implemented')" class="menuItem">Loot</span><br>
                 
                 `;
-                    m.style.height = "5em";
-
-                    // examine, loot
+                    m.style.height = "3em";
                 }
             }
             
@@ -172,16 +173,12 @@ function test(ev) {
     }
 }
 
-//startup.style.webkitAnimationPlayState = "paused";
-
-//var statPoints = 27;
 var statPoints = 27;
 var player;
 var currentColor = "dark";
 
 function toggleSettings() {
     var settings = document.getElementById('settingsMenu');
-    //console.log(settings.style);
     if (settings.style.display == "flex") {
         settings.style.display = "";
     } else if (settings.style.display == "") {
@@ -375,13 +372,17 @@ function getStats() { // revisit; should
 
         beginGame(name, con, dex, str, int, wis, cha);
 
-    } else if (statPoints == 27) { // for testing!! delete!!!
-        document.getElementById("startup").style.display = 'none';
-        document.getElementById("main").style.display = 'block';
+    //} else if (statPoints == 27) { // for testing!! delete!!!
+    //    document.getElementById("startup").style.display = 'none';
+    //    document.getElementById("main").style.display = 'block';
 
-        beginGame(name, con, dex, str, int, wis, cha);
+    //    beginGame(name, con, dex, str, int, wis, cha);
 
-    } else if (name == "" || name.length > 20) {
+    } else if (name == "" || name.length < 1) {
+        errors.innerText = "Invalid name! Min Length: 1";
+
+    }
+    else if (name == "" || name.length > 20) {
         errors.innerText = "Invalid name! Max length: 20";
 
     } else if (statPoints != 0) {
@@ -462,7 +463,6 @@ function enterConvo(NPC, x) {
     var choiceTwo = document.getElementById('choiceTwo');
     var choiceThree = document.getElementById('choiceThree');
     var all = [choiceOne, choiceTwo, choiceThree];
-    //console.log(NPC, x);
 
     document.getElementById('NPCTitle').innerText = NPC.name;
     document.getElementById('NPCTitle').setAttribute('data-id', NPC.id);
@@ -474,7 +474,6 @@ function enterConvo(NPC, x) {
     player.isInConversation = true;
 
     for (var i = 0; i < all.length; i++) {
-            //console.log(x);
             if (x.options[Object.keys(x.options)[i]] != null) {
                 var temp = x.options[Object.keys(x.options)[i]];
                 all[i].innerHTML = temp.text;
@@ -583,7 +582,6 @@ var currentPage;
 var tempArrayReading;
 
 function enterReading(o) {
-    //console.log("iwuuyaufhkjhakjfs", o)
     document.getElementById('textArea').style.display = 'none';
     document.getElementById('inputWrap').style.display = 'none';
     document.getElementById('readArea').style.display = 'block';
@@ -592,7 +590,7 @@ function enterReading(o) {
     var title = document.getElementById('pageTitle');
     var main = document.getElementById('pageText');
 
-    console.log(o)
+    console.log(o);
 
     title.innerHTML = "<u>" + o.title + "</u>";
     main.innerHTML = o.content;
@@ -610,15 +608,13 @@ function updatePage(x) {
 }
 
 function nextPage() {
-    console.log(currentPage)
+    console.log(currentPage);
     checkItems(currentPage.parent).nextPage();
 }
 
 function lastPage() {
-    if (currentPage > 0) {
-        currentPage = currentPage - 1;
-        updatePage(currentPage);
-    }
+    console.log(currentPage);
+    checkItems(currentPage.parent).lastPage();
 }
 
 function exitReading() {
@@ -688,6 +684,7 @@ var enemy;
 function enterCombat(enemyID) {
     exitConvo();
     document.getElementById('battleEnded').style.display = "none";
+    document.getElementById("battleOutput").innerText = "";
     combatItems = getCombatItems();
 
     if (combatItems[4] != null) {
@@ -711,7 +708,6 @@ function enterCombat(enemyID) {
 
     enemy = checkMonsters(enemyID);
 
-    //console.log(enemy.name)
     document.getElementById('monsterTitle').innerText = enemy.name;
     document.getElementById('monsterImg').src = enemy.img;
     document.getElementById('monHP').innerHTML = "Health: " + enemy.hp + "<br> Mana: " + enemy.mana;
@@ -729,7 +725,7 @@ function enterCombat(enemyID) {
 function doAttack(attack) {
     console.log(attack);
     calcDamage(attack.dmgRangeMin, attack.dmgRangeMax);
-    enemy.attack();
+    enemy.calcTurn();
 }
 
 function updateBattleScreen() {
@@ -758,6 +754,7 @@ function calcDamage(min, max) {
         battlePrint("The " + enemy.name + " falls to the floor.");
         enemy.description = "The " + enemy.name + " is dead, and growing cold."
         enemy.isDead = true;
+        updateBattleScreen()
         battleEndScreen();
         // end battle, give loot
     }
@@ -799,7 +796,6 @@ function calcSpecial(special) {
         case "stun":
             break;
     }
-
 }
 
 function enemyAttack() {
@@ -822,6 +818,8 @@ function trySpare() {
         exitCombat();
         enemy.spared = true;
         print("You spare the <font class='special' data-type='NPC' data-npc='" + enemy.id + "'>" + enemy.name + "</font>.");
+    } else {
+        battlePrint("<font class='important'>You do not manage to escape from the creature!</font>");
     }
 
 }

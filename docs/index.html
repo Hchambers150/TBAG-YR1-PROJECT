@@ -6,6 +6,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="tbag.png" />
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="startup.css" />
+    <link rel="stylesheet" href="colours.css" />
 
     <script src="Classes.js"></script>
     <script src="Website.js"></script>
@@ -22,7 +23,7 @@
     <div id="startup" style="">
         <span id="title">Welcome to my project!</span>
         <br>
-        <span style="display:block;">What is your name? </span><input id="charName" type="text" value="Test Testington">
+        <span style="display:block;">What is your name? </span><input id="charName" type="text" value="">
         <br>
         <div id="remainingPointsWrapper">
             <span id="remainingText">Remaining Skillpoints: </span>
@@ -277,11 +278,12 @@
             <br><br>
 
                 <p id="output">
-                    You are standing in your childhood basement.
+                    You are standing in your childhood <font class="special" title="Basement" data-type="room">basement</font>.<br>
 
-                    <div id="picArea">
+                    <br>
+                    <!--<div id="picArea">
                         <textarea style="width:inherit;height:30%;background-color:black;"></textarea>
-                    </div>
+                    </div>-->
                 </p>
 
         </div>
@@ -398,7 +400,7 @@
 
                             </div>
                         </div>
-                        <div class="image"><img id="image" src="charImg.png"></div>
+                        <div class="image"><img id="image" src="itemImgs/charImg.png"></div>
                         <div class="gloves">
                             <div id="glovesDrop" class="drop" data-type="gloves" data-allowDrop="false" ondrop="allowDrop(event)" ondragover="checkDrop(event, this)">
 

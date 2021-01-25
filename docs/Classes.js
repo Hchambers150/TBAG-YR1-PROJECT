@@ -1,8 +1,10 @@
 ﻿var allRoomsArray = [];
+var everything = [];
+
 
 class Room {
     constructor(roomClass) {
-        this.roomID = roomClass.roomID;
+        this.id = roomClass.roomID;
         this.description = roomClass.description;
 
         this.connectedRooms = roomClass.connectedRooms; // array [N, E, S, W] {roomAsObject}
@@ -12,7 +14,7 @@ class Room {
         this.special = roomClass.special;
         this.eventNum = 0; // increases as player events occur - special things may happen at certain events
 
-
+        everything[everything.length] = this;
         //allRoomsArray[]
     }
 
@@ -22,7 +24,7 @@ class Room {
         if (this.special != null) {
             //console.log("ree",this.special[temp[0]])
             for (var i = 0; i < temp.length; i++) {
-                console.log(temp[i])
+                //console.log(temp[i])
                 var currentNode = this.special[temp[i]];
 
                 if (currentNode.eventNum == this.eventNum || currentNode.eventNum == "*") {
@@ -77,6 +79,7 @@ class Item {
         this.imgOutHtml = this.ImageOutHtml(this.name, this.invImg);
         this.inventHtml = this.InventHtml(this.name, this.invImg);
 
+        everything[everything.length] = this;
         //addToInv(this);
     }
 
@@ -189,19 +192,26 @@ class Readable extends Item {
 
     getPage = function (x) {
         //console.log(this.readText)
-        var temp = Object.keys(this.readText)
+        var temp = Object.keys(this.readText);
         for (var i = 0; i < temp.length; i++) {
-            console.log("yee", x, this.readText[temp[i]].id)
+            //console.log("yee", x, this.readText[temp[i]].id)
             if (x == this.readText[temp[i]].id) {
-                console.log(this.readText[temp[i]])
+                //console.log(this.readText[temp[i]]);
                 return this.readText[temp[i]];
             }
         }
     }
 
     nextPage = function () {
-        console.log(this.getPage(this.currentPage.nextPage))
+        //console.log(this.getPage(this.currentPage.nextPage))
         enterReading(this.getPage(this.currentPage.nextPage));
+        this.currentPage = this.currentPage.nextPage;
+    }
+
+    lastPage = function () {
+        //console.log(this.getPage(this.currentPage.nextPage))
+        enterReading(this.getPage(this.currentPage.lastPage));
+        this.currentPage = this.currentPage.nextPage;
     }
 
 }
@@ -226,6 +236,23 @@ class object {
         this.id = object.id;
         this.description = object.description;
         this.special = object.special;
+        everything[everything.length] = this;
+    }
+
+}
+
+class useable extends object {
+
+    constructor(object) {
+        super(object);
+
+        this.isActive = object.isActive;
+        this.special = {};
+
+    }
+
+    special = function () {
+
     }
 
 }
@@ -324,7 +351,6 @@ class Player {
 
 class Monster {
     constructor(monster) {
-        console.log("hello?")
         this.id = monster.id;
         this.description = monster.description;
         this.name = monster.name;
@@ -342,29 +368,25 @@ class Monster {
         this.effectiveHP = monster.hp;
         this.effectiveDmg = monster.dmg;
         this.inflictions = [];
-        this.turn;
+        this.turn = true;
+        everything[everything.length] = this;
     }
     
     getLoot = function (x) {
-        console.log("testy testy",x)
         var items = [];
         for (var i = 0; i < x.length; i++) {
             var temp = x[i].split(" ")
             if (temp.length > 1) {
                 // make the amount of items (rare!)
                 for (var j = 0; j < allItems.length; j++) {
-                    console.log("beepy booper", temp[1], allItems[j].id)
                     if (temp[1] == allItems[j].id) {
                         for (var k = 0; k < temp[0]; k++) {
-                            console.log("the whisle goes")
                             items[items.length] = allItems[j];
                         }
                     }
                 }
             } else {
-                console.log("be tard")
                 for (var j = 0; j < allItems.length; j++) {
-                    console.log("beepy booper",x[i], allItems[j].id)
                     if (x[i] == allItems[j].id) {
                         items[items.length] = allItems[j];
                     }
@@ -377,11 +399,18 @@ class Monster {
 
     }
 
-    calcTurn = function () { if (this.turn != null) { this.attack(); } else { print("The " + this.name + " cannot take its turn. ") } }
+    calcTurn = function () {
+        if (this.turn != null){
+            this.attack();
+        } else {
+            print("The " + this.name + " cannot take its turn. ");
+            checkInfliction();
+        }
+    }
 
-    attack = function ( impairments ) {
+    attack = function () {
 
-        for (var i = 0; i < impairments.split(",").length; i++) {
+        for (var i = 0; i < this.inflictions.split(",").length; i++) {
 
             switch (impairments.split(" ")[0]) {
                 case "":
@@ -419,6 +448,9 @@ class Monster {
                     break;
                 case "poisoned":
                     // health reduced per turn
+                    break;
+                case "electric":
+                    // does extra damage to armoured enemies
                     break;
             }
         }

@@ -36,7 +36,7 @@ var unInitItemsArray = {
     },
 
     gnomeDagger1: {
-        id: "gnomeDagger1", name: "Dagger", type: "pWep", img: "shittyDaggerInv.png",
+        id: "gnomeDagger", name: "Gnome Dagger", type: "pWep", img: "shittyDaggerInv.png",
         attacks: {
             attackOne: {
                 name: "Slash", type: "slash", dmgType: "physical", dmgRange: [1, 5], special: null,
@@ -56,7 +56,7 @@ var unInitItemsArray = {
     },
 
     dagger: {
-        id: "dagger1", name: "Gnome Dagger", type: "pWep", img: "shittyDaggerInv.png",
+        id: "dagger", name: "Dagger", type: "pWep", img: "shittyDaggerInv.png",
         attacks: {
             attackOne: {
                 name: "Slash", type: "slash", dmgType: "physical", dmgRange: [1, 5], special: null,
@@ -76,7 +76,7 @@ var unInitItemsArray = {
     },
 
     wand: {
-        id: "wand1", name: "Wand", type: "mWep", img: "wand.png",
+        id: "wand", name: "Wand", type: "mWep", img: "wand.png",
         attacks: {
             attackOne: {
                 name: "Lightning Bolt", type: "spell", dmgType: "magic", dmgRange: [1, 7],
@@ -114,7 +114,7 @@ var unInitItemsArray = {
     },
 
     gnomeFists: {
-        id: "gnomeFists", name: "Fists", type: "pWep", img: "fists.png",
+        id: "gnomeFists", name: "Gnome Fists", type: "pWep", img: "fists.png",
         attacks: {
             attackOne: {
                 name: "Punch", type: "blunt", dmgType: "physical", dmgRange: [1, 1],
@@ -167,38 +167,40 @@ function initItems() {
 
     console.log(temp)
     for (var i = 0; i < temp.length; i++) {
-        var t = unInitItemsArray[temp[i]]
-        console.log(t)
+        if (i != 8 ) {
+            var t = unInitItemsArray[temp[i]]
+            console.log(t);
 
-        switch (t.type) {
-            case "armour":
-                i.type = i.armourType;
-                allItems[allItems.length] = new Armour(t);
-                addToInv(allItems[allItems.length - 1])
-                break;
-            case "heal":
-                allItems[allItems.length] = new Health(t);
-                addToInv(allItems[allItems.length - 1]);
-                break;
-            case "readable":
-                allItems[allItems.length] = new Readable(t);
-                addToInv(allItems[allItems.length - 1])
-                break;
-            case "item":
-                allItems[allItems.length] = new Item(t);
-                addToInv(allItems[allItems.length - 1])
-                break;
-            case "pWep":
-            case "mWep":
-                allItems[allItems.length] = new Weapon(t);
-                addToInv(allItems[allItems.length-1])
-                break;
+            switch (t.type) {
+                case "armour":
+                    i.type = i.armourType;
+                    allItems[allItems.length] = new Armour(t);
+                    stealthToInv(allItems[allItems.length - 1])
+                    break;
+                case "heal":
+                    allItems[allItems.length] = new Health(t);
+                    stealthToInv(allItems[allItems.length - 1]);
+                    break;
+                case "readable":
+                    allItems[allItems.length] = new Readable(t);
+                    stealthToInv(allItems[allItems.length - 1])
+                    break;
+                case "item":
+                    allItems[allItems.length] = new Item(t);
+                    stealthToInv(allItems[allItems.length - 1])
+                    break;
+                case "pWep":
+                case "mWep":
+                    allItems[allItems.length] = new Weapon(t);
+                    stealthToInv(allItems[allItems.length - 1])
+                    break;
+            }
         }
     }
 
 }
 
-//addToInv(allItems[])
+//stealthToInv(allItems[])
 
 var currentQuests = [];
 
@@ -295,7 +297,7 @@ var conversationArray2 = {
                     text: `<font class="convo">"What happened?"</font>`, nextNode: "preGnottingham"
                 },
                 optionThree: {
-                    text: '<font class="convo">"The tunnel?"</font>', nextNode: "theTunnel2"
+                    text: '<font class="mystical">"The tunnel?"</font>', nextNode: "theTunnel2"
                 }
             }
         },
@@ -550,25 +552,20 @@ var conversationArray2 = {
         default: {
 
         }
-    },
-
-    woot: {
-
     }
-
 }
 
 var allMonsters = { //name, weapon, hp, dmg, level, img, lootArray, weapon
 
     gnome1: {
-        id: "gnome1", name: "Gnome", weapon: unInitItemsArray.gnomeDagger1, description: "Looks like hes seen some shit...",
+        id: "gnome1", name: "Male Gnome", weapon: unInitItemsArray.gnomeDagger1, description: "Looks like hes seen a lot...",
         hp: 15, mana: 0, def: 3, level: 1,
         img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg",
         lootArray: ["wifeImg", "gnomeDagger1", "3 healthPotion"], conversationClass: conversationArray2.gnome1
     },
 
     gnomeWife: {
-        id: "gnomewife", name: "Gnome", weapon: unInitItemsArray.gnomeFists, description: "An unassuming gnome.",
+        id: "gnomewife", name: "Female Gnome", weapon: unInitItemsArray.gnomeFists, description: "An unassuming gnome lady.",
         hp: 5, def: 0, level: 1,
         img: "https://static.wixstatic.com/media/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg/v1/fill/w_564,h_846,al_c,q_90/619502_30f1a5b8130b4290b64b146e2b17c056~mv2.jpg",
         lootArray: ["1 goldRing", "10 healthPotion", "1 gnomeEar"], conversationClass: conversationArray2.gnomeWife
@@ -588,7 +585,32 @@ var allContainers = {
 var allRooms = {
 
     basement: {
-        roomID: "basement", description: "room",
+        roomID: "basement", roomName: "Basement", description: "Your childhood basement.",
+        connectedRooms: ["room1", null, null, null],
+        containers: [],
+        monsters: [],
+        special: {
+            1: {
+                eventNum: 1, command: "spawn", amount: "1", monsters: [allMonsters.gnome1],
+                spawnText: ["A small <font class='special' data-type='NPC' data-npc='", "' data>creature</font> comes crawling out from underneath one of the worktables."]
+            },
+            2: {
+                eventNum: 2, command: "spawn", amount: "1", monsters: [allMonsters.gnomeWife],
+                spawnText: ["A small <font class='special' data-type='NPC' data-npc='", "' data>creature</font> comes crawling out from underneath one of the worktables."]
+            },
+            //,
+            //3: {
+            //    eventNum: 0, command: "print", text:"Bitches aint shit"
+            //},
+            //4: {
+            //    eventNum: "*", command: "print", text: "Every time"
+            //}
+            
+        }
+    },
+
+    room1: {
+        roomID: "room1", roomName: "", description: "Just a tight squeeze away from your childhood home; the floor, walls, and ceiling are covered in opal moss.",
         connectedRooms: ["room1", null, null, null],
         containers: [],
         monsters: [],
@@ -607,7 +629,7 @@ var allRooms = {
             //4: {
             //    eventNum: "*", command: "print", text: "Every time"
             //}
-            
+
         }
     }
 
